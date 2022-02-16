@@ -1,73 +1,62 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.PriorityQueue;
 
 public class Dijkstara {
 
-    private String asd ="";
 
-    //represents target ids with its distance to the source
-    private static class TargetWithDistance{
-        private int targetId ;
-        private int minDistance = Integer.MAX_VALUE;
-        public TargetWithDistance(int targetId, int targetDistance){
-            this.targetId = targetId;
-            this.minDistance = targetDistance;
-        }
-    }
+    public void mapMinimumDistanceDistribution(int[][][] graph, int startId) throws Exception {
 
-    public void execute(int[][][] graph, int sourceId, int targetId) {
+        boolean badData = startId >= graph.length;
+
+        if (badData) throw new Exception("Given data inconsistent"); // implement exception handler util
+        int referenceId = startId;
+        int cumulativeTotalDistance = 0; // u//source distance to itself;
+
+        Integer[] currentDistances = new Integer[graph.length];
+        currentDistances[referenceId] = cumulativeTotalDistance;
 
         // initial validation TODO
 
         // visited point track
         boolean[] visited = new boolean[graph.length];
-        TargetWithDistance initial = new TargetWithDistance(sourceId,0); /// source distance to itself
-        //visited[sourceId] = true;
-        PriorityQueue<TargetWithDistance> priorityQueue = new PriorityQueue<>((a, b) -> a.minDistance >b.minDistance ?-1:1);//TODO:Check comparasion logic priority min distance to source
-        priorityQueue.add(initial);
-        List<TargetWithDistance> result = new ArrayList<>();
-        result.add(initial);
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>((a, b) -> a > b ? 1 : -1);// min prior via min distance/use nulls for inf
 
-        int res = 0;
-        int [][] adjacencyPointsWithWeightArray = null;
-        int weight = 0;
-        int adjacentId = 0;
+        // for(int i = 0; i<distanceDistribution.length;i++){distanceDistribution[i] = Integer.MAX_VALUE;}; //initial distances are infinity
+        priorityQueue.add(cumulativeTotalDistance);
+
         while (!priorityQueue.isEmpty()) {
 
-            TargetWithDistance currentTarget = priorityQueue.poll();
 
-            if(visited[currentTarget.targetId])continue;
+            cumulativeTotalDistance = priorityQueue.poll(); // minimum distance for reference idå
+            if (visited[referenceId]) continue;
 
-            adjacencyPointsWithWeightArray = graph[currentTarget.targetId];
 
-            res = currentTarget.minDistance;
+            int[][] neighboursOf = graph[referenceId];
 
-            for (int i = 0; i < adjacencyPointsWithWeightArray.length; i++) {
+            int neighbourId = -1;
+            for (int i = 0; i < neighboursOf.length; i++) {
 
-                weight = adjacencyPointsWithWeightArray[i][1];
-                adjacentId = adjacencyPointsWithWeightArray[i][0];
+                neighbourId = neighboursOf[i][0];
+                int neighbourWeight = neighboursOf[i][1];
+                int newDistance = cumulativeTotalDistance + neighbourWeight;
 
-                TargetWithDistance adjacencyTarget = new TargetWithDistance(adjacentId,Integer.MAX_VALUE);
-                int distanceToAdjacent = currentTarget.minDistance + weight;
+                boolean updateMinDistance = currentDistances[neighbourId] == null || newDistance < currentDistances[neighbourId];
+                if (updateMinDistance) {
+                    currentDistances[neighbourId] = newDistance;
 
-                if(distanceToAdjacent < adjacencyTarget.minDistance){
-
-                    adjacencyTarget.minDistance = distanceToAdjacent;
-                    priorityQueue.add(adjacencyTarget);
-                    if(!visited[currentTarget.targetId]){
-                        visited[currentTarget.targetId] = true;
-                        result.add(adjacencyTarget);
-                    }
+                    priorityQueue.add(newDistance);
+                    visited[referenceId] = true;
+                    referenceId = neighbourId;
                 }
             }
+
         }
+
 
         System.out.println("asd");
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         int[][][] input = {
                 {{1, 1}},
@@ -78,9 +67,17 @@ public class Dijkstara {
                 {{2, 2}}
         };
 
+        int[][][] info = {
+                {{1,6},{3,1}},
+                {{0,6},{3,2},{4,2},{2,5}},
+                {{1,5},{4,5}},
+                {{0,1},{1,2},{4,1}},
+                {{1,2},{2,5},{3,1}}
+        };
+
 
         Dijkstara dijkstara = new Dijkstara();
-        dijkstara.execute(input, 0, 5);
+        dijkstara.mapMinimumDistanceDistribution(info, 0);
 
     }
 }
