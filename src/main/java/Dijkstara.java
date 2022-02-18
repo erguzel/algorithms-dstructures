@@ -43,6 +43,7 @@ public class Dijkstara {
 
         double distanceSoFar = 0;
 
+
         while (!priorityQueue.isEmpty()){
 
             MinMinDistanceTo nextLocalExtremum = priorityQueue.poll();
