@@ -1,62 +1,68 @@
+import java.util.Arrays;
 import java.util.PriorityQueue;
 
 public class Dijkstara {
 
+    private static class MinMinDistanceTo {
 
-    public void mapMinimumDistanceDistribution(int[][][] graph, int startId) throws Exception {
+        public int id = -1;
+        public MinMinDistanceTo from;
+        public double minDist = Integer.MAX_VALUE;
 
-        boolean badData = startId >= graph.length;
-
-        if (badData) throw new Exception("Given data inconsistent"); // implement exception handler util
-        int referenceId = startId;
-        int cumulativeTotalDistance = 0; // u//source distance to itself;
-
-        Integer[] currentDistances = new Integer[graph.length];
-        currentDistances[referenceId] = cumulativeTotalDistance;
-
-        // initial validation TODO
-
-        // visited point track
-        boolean[] visited = new boolean[graph.length];
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>((a, b) -> a > b ? 1 : -1);// min prior via min distance/use nulls for inf
-
-        // for(int i = 0; i<distanceDistribution.length;i++){distanceDistribution[i] = Integer.MAX_VALUE;}; //initial distances are infinity
-        priorityQueue.add(cumulativeTotalDistance);
-
-        while (!priorityQueue.isEmpty()) {
-
-
-            cumulativeTotalDistance = priorityQueue.poll(); // minimum distance for reference idå
-            if (visited[referenceId]) continue;
-
-
-            int[][] neighboursOf = graph[referenceId];
-
-            int neighbourId = -1;
-            for (int i = 0; i < neighboursOf.length; i++) {
-
-                neighbourId = neighboursOf[i][0];
-                int neighbourWeight = neighboursOf[i][1];
-                int newDistance = cumulativeTotalDistance + neighbourWeight;
-
-                boolean updateMinDistance = currentDistances[neighbourId] == null || newDistance < currentDistances[neighbourId];
-                if (updateMinDistance) {
-                    currentDistances[neighbourId] = newDistance;
-
-                    priorityQueue.add(newDistance);
-                    visited[referenceId] = true;
-                    referenceId = neighbourId;
-                }
-            }
-
-        }
-
-
-        System.out.println("asd");
     }
 
+    public void doDijkstara(int [][][] paramGraph, int paramSourceId){
+
+        MinMinDistanceTo[] results = new MinMinDistanceTo[paramGraph.length];
+        for(int i = 0; i < paramGraph.length; i++){
+            results[i] = new MinMinDistanceTo();
+        }
+
+        MinMinDistanceTo localExtremum = results[paramSourceId];
+        localExtremum.id = paramSourceId;
+        localExtremum.minDist = 0;
+        GlobalExtremum.Minimum.value = 0;
+        results[paramSourceId] = localExtremum;
+
+        boolean [] visited = new boolean[paramGraph.length];
+
+        PriorityQueue<MinMinDistanceTo> priorityQueue = new PriorityQueue<MinMinDistanceTo>((a, b)->a.minDist>b.minDist?1:-1);
+        priorityQueue.add(localExtremum);
+
+
+        double distanceSoFar = 0;
+
+        while (!priorityQueue.isEmpty()){
+
+            MinMinDistanceTo nextLocalExtremum = priorityQueue.poll();
+
+            distanceSoFar = results[nextLocalExtremum.id].minDist;
+            if(visited[nextLocalExtremum.id])continue;
+            for(int currentPointPropertyCounter=0; currentPointPropertyCounter < paramGraph[nextLocalExtremum.id].length;currentPointPropertyCounter++){
+
+                int neighbourIndex = paramGraph[nextLocalExtremum.id][currentPointPropertyCounter][0];
+                double weight = paramGraph[nextLocalExtremum.id][currentPointPropertyCounter][1];
+                double newDist = distanceSoFar + weight;
+
+                if(newDist<results[neighbourIndex].minDist){
+                    results[neighbourIndex].minDist = newDist;
+                    results[neighbourIndex].id = neighbourIndex;
+                    results[neighbourIndex].from = nextLocalExtremum;
+                    priorityQueue.add(results[neighbourIndex]);
+
+                    // GlobalExtremum.Maximum.value = GlobalExtremum.Minimum.value - weight;
+                }
+            }
+            visited[nextLocalExtremum.id] = true;
+        }
+
+        Arrays.stream(results).forEach(a-> System.out.println(paramSourceId+"->"+a.id+":"+a.minDist));
+
+    }
 
     public static void main(String[] args) throws Exception {
+
+
 
         int[][][] input = {
                 {{1, 1}},
@@ -68,16 +74,21 @@ public class Dijkstara {
         };
 
         int[][][] info = {
-                {{1,6},{3,1}},
-                {{0,6},{3,2},{4,2},{2,5}},
+                {{1,6},{3,1},{5,1},{6,5}},
+                {{0,6},{3,2},{4,2},{2,5},{6,2}},
                 {{1,5},{4,5}},
-                {{0,1},{1,2},{4,1}},
-                {{1,2},{2,5},{3,1}}
+                {{0,1},{1,2},{4,1},{5,7}},
+                {{1,2},{2,5},{3,1}},
+                {{0,1},{3,7}},
+                {{1,5},{1,2}}
         };
 
 
-        Dijkstara dijkstara = new Dijkstara();
-        dijkstara.mapMinimumDistanceDistribution(info, 0);
+
+        Dijkstara d = new Dijkstara();
+        d.doDijkstara(info,6);
+
+
 
     }
 }
