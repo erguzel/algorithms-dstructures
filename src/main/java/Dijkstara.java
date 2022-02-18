@@ -1,5 +1,4 @@
-import java.util.Arrays;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Dijkstara {
 
@@ -11,9 +10,22 @@ public class Dijkstara {
 
     }
 
-    public void doDijkstara(int [][][] paramGraph, int paramSourceId){
+    public double doShortestPath(int [][][] paramGraph, int paramSourceId, int paramDestId){
+
+        boolean isValidGraph = paramGraph == null?false:paramGraph.length == 0?false:true;
+
+        if(!isValidGraph)
+            return -1;
+
+        boolean istargetoverlaps = paramSourceId == paramDestId;
+        if(istargetoverlaps)
+            return 0;
+
+
+
 
         MinMinDistanceTo[] results = new MinMinDistanceTo[paramGraph.length];
+
         for(int i = 0; i < paramGraph.length; i++){
             results[i] = new MinMinDistanceTo();
         }
@@ -21,7 +33,6 @@ public class Dijkstara {
         MinMinDistanceTo localExtremum = results[paramSourceId];
         localExtremum.id = paramSourceId;
         localExtremum.minDist = 0;
-        GlobalExtremum.Minimum.value = 0;
         results[paramSourceId] = localExtremum;
 
         boolean [] visited = new boolean[paramGraph.length];
@@ -37,6 +48,7 @@ public class Dijkstara {
             MinMinDistanceTo nextLocalExtremum = priorityQueue.poll();
 
             distanceSoFar = results[nextLocalExtremum.id].minDist;
+
             if(visited[nextLocalExtremum.id])continue;
             for(int currentPointPropertyCounter=0; currentPointPropertyCounter < paramGraph[nextLocalExtremum.id].length;currentPointPropertyCounter++){
 
@@ -47,16 +59,19 @@ public class Dijkstara {
                 if(newDist<results[neighbourIndex].minDist){
                     results[neighbourIndex].minDist = newDist;
                     results[neighbourIndex].id = neighbourIndex;
-                    results[neighbourIndex].from = nextLocalExtremum;
                     priorityQueue.add(results[neighbourIndex]);
 
-                    // GlobalExtremum.Maximum.value = GlobalExtremum.Minimum.value - weight;
                 }
             }
             visited[nextLocalExtremum.id] = true;
         }
 
         Arrays.stream(results).forEach(a-> System.out.println(paramSourceId+"->"+a.id+":"+a.minDist));
+
+
+        System.out.println("------------");
+
+        return results[paramDestId].minDist;
 
     }
 
@@ -84,10 +99,10 @@ public class Dijkstara {
         };
 
 
-
         Dijkstara d = new Dijkstara();
-        d.doDijkstara(info,6);
+        double res = d.doShortestPath(info,0,4);
 
+        System.out.println("res:"+res);
 
 
     }
