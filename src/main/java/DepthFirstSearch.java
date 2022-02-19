@@ -1,16 +1,8 @@
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
 
-public class DebthFirstSearch {
+public class DepthFirstSearch {
 
 
-
-    ///< my global fields
-
-
-
-    ///>
 
     public void execute(int[][] points, int startPoint){
 
@@ -67,7 +59,7 @@ public class DebthFirstSearch {
         };
 
 
-        DebthFirstSearch debthFirstSearch = new DebthFirstSearch();
+        DepthFirstSearch debthFirstSearch = new DepthFirstSearch();
         debthFirstSearch.execute(input,2);
 
     }

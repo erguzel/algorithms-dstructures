@@ -22,9 +22,9 @@ public class Graph {
         Graph graph = new Graph();
         graph.initialize(info);
 
-        int [] sd = graph.sortestPathByDijkstara(0,5);
+        graph.sortestPathByDijkstara(0,1);
 
-        Arrays.stream(sd).forEach(a-> System.out.println(a));
+        //Arrays.stream(sd).forEach(a-> System.out.println(a));
     }
 
     //Represents whole graph
@@ -43,7 +43,6 @@ public class Graph {
         private List<Edge> edgeList = new ArrayList<>();
         private Point previousVertex = null;
 
-        private Map<String,Double> facilityDistances = new HashMap<>();
 
         private double minMeasure = Integer.MAX_VALUE;
 
@@ -53,24 +52,13 @@ public class Graph {
 
         }
 
-        public double gettotalDistance(){
-
-            return this.facilityDistances.values()
-                    .stream().mapToDouble(a->a)
-                    .sum();
-        }
-
         @Override
         public String toString() {
             return this.name;
 
         }
 
-        @Override
-        public boolean equals(Object o) {
 
-            return (o instanceof Graph.Point && this.id == ((Point) o).id);
-        }
 
 
         @Override
@@ -210,82 +198,6 @@ public class Graph {
         System.out.println("Dur");
     }
 
-    //    public void initializeBuildingsTest(Object[][][] graph){
-//
-//        int pointId = -1;
-//        int targetPointId = -1;
-//        Object[] facilities = null;
-//        Object[] adjacentIndices = null;
-//
-//        for(int i = 0; i < graph.length; i++){
-//
-//            pointId = i;
-//            facilities = graph[i][1];
-//            adjacentIndices = graph[i][0];
-//            Point inMap = new Point(pointId,Integer.toString(pointId));
-//            //Add facilities
-//            for(int k = 0 ; k < facilities.length; k++){
-//                inMap.facilities.add(facilities[k].toString());
-//            }
-//
-//            for (int k = 0; k < adjacentIndices.length; k++){
-//
-//                Point to = null;
-//                targetPointId = (int)adjacentIndices[k];
-//                if(!GRAPHSET.containsKey(targetPointId)){
-//                    to = new Point(targetPointId,Integer.toString(targetPointId));
-//                }else {
-//                    to = GRAPHSET.get(targetPointId);
-//                }
-//                Edge ed = new Edge(inMap,to,0);
-//
-//                inMap.edgeList.add(ed);
-//
-//            }
-//
-//            GRAPHSET.put(pointId,inMap);
-//        }
-//
-//        System.out.println("asd");
-//    }
-//
-    public void initializeBuildings(Object[][][] graph){
-
-        int pointId = -1;
-        int targetPointId = -1;
-        Object[] facilities = null;
-        Object[] adjacentIndices = null;
-
-        for(int i = 0; i < graph.length; i++){
-
-            pointId = i;
-            facilities = graph[i][1];
-            adjacentIndices = graph[i][0];
-            Point point = new Point(pointId,Integer.toString(pointId));
-            //Add facilities
-            for(int k = 0 ; k < facilities.length; k++){
-                point.facilityDistances.put(facilities[k].toString(),0.0);
-            }
-
-            GRAPHSET.put(pointId,point);
-        }
-        for(int i = 0; i < graph.length;i++){
-
-            Point inMap = GRAPHSET.get(i);
-
-            for(int j = 0; j < graph[i][0].length; j++){
-
-                targetPointId = (int)graph[i][0][j];
-                Point to = GRAPHSET.get(targetPointId);
-                Edge ed =  new Edge(inMap,to,0);
-                inMap.edgeList.add(ed);
-            }
-
-            GRAPHSET.put(i,inMap);
-        }
-
-        System.out.println("Jsadl;k");
-    }
     /**
      * Computes the shortest path from given node to target node
      *
@@ -316,7 +228,6 @@ public class Graph {
 
                     targetPointOfCurrentEdge.minMeasure = minDistance;
                     targetPointOfCurrentEdge.previousVertex = currentPoint;
-                    priorityQueue.remove(currentPoint);
                     priorityQueue.add(targetPointOfCurrentEdge);
 
                 }
@@ -338,20 +249,7 @@ public class Graph {
         return path.stream().mapToInt(a -> a.id).toArray();
     }
 
-    public int closesPathByDijkstara(String[] preferedFacilities) {
-        // 1st get the starting node
-        Point startPoint = GRAPHSET.get(0);
-        Queue<Point> queue = new LinkedList<>();
-        queue.add(startPoint);
-        while (true){
 
-            Point currentPoint = queue.poll();
-
-
-        }
-
-        //return -1;
-    }
 
     /**
      * Traverses the graph with BFS algorithm
