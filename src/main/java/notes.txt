@@ -1,0 +1,3 @@
+how many different path exists
+strongly connected components exists
+bipartite graph exisst

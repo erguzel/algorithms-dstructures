@@ -1,257 +1,125 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class DepthFirstSearch {
-
-
-    public void traverseGraph(int[][] points, int startPoint) {
-
-        // initial validation TODO
-
-        // visited point track
-        boolean[] visited = new boolean[points.length];
-        // hold candidates
-        Stack<Integer> candidatePoints = new Stack<>();
-        candidatePoints.add(startPoint);
-        visited[startPoint] = true;// mark start point visited
-
-        int currentPoint = 0;
-        int[] adjacentPoints = null;
-        int nextAdjacent = 0;
-
-        while (!candidatePoints.isEmpty()) {
-
-            currentPoint = candidatePoints.pop();
-            System.out.println("Traversing>" + currentPoint);
-
-            adjacentPoints = points[currentPoint];
-
-            for (int i = 0; i < adjacentPoints.length; i++) {
-
-                nextAdjacent = adjacentPoints[i];
-                boolean nextAdjacentVisisted = visited[nextAdjacent];
-                if (!nextAdjacentVisisted) {
-
-                    visited[nextAdjacent] = true;
-
-                    candidatePoints.push(nextAdjacent);
-
-                }
-
-            }
-        }
-    }
-
-    public void findAllShortestDistancesToSource(int[][] points, int startPoint, int endPoint) {
-
-        // initial validation TODO
-
-        // visited point track
-        boolean[] visited = new boolean[points.length];
-        // hold candidates
-        PriorityQueue<Integer> candidatePoints = new PriorityQueue<>() {
-        };
-        candidatePoints.add(startPoint);
-        visited[startPoint] = true;// mark start point visited
-
-        int[] minDistanceArray = new int[points.length];
-        Object[] previous = new Object[points.length];
-        previous[startPoint] = null;
-
-        for (int i = 0; i < minDistanceArray.length; i++) {
-            minDistanceArray[i] = Integer.MAX_VALUE;
-        }
-        ;
-
-        minDistanceArray[startPoint] = 0;
-
-        int currentPoint = 0;
-        int[] adjacentPoints = null;
-        int nextAdjacent = 0;
-        int distanceSoFar = 0;
-
-        int popCount = 0;
-        while (!candidatePoints.isEmpty()) {
-
-            currentPoint = candidatePoints.poll();
-            popCount++;
-
-            System.out.println("Traversing>" + currentPoint);
-
-            adjacentPoints = points[currentPoint];
-
-            distanceSoFar = minDistanceArray[currentPoint];
-
-            for (int i = 0; i < adjacentPoints.length; i++) {
-
-                nextAdjacent = adjacentPoints[i];
-
-                int newdist = distanceSoFar + 1;
-
-                if (newdist < minDistanceArray[nextAdjacent]) {
-                    minDistanceArray[nextAdjacent] = newdist;
-                    previous[nextAdjacent] = currentPoint;
-                }
-
-                boolean nextAdjacentVisisted = visited[nextAdjacent];
-                if (!nextAdjacentVisisted) {
-
-                    visited[nextAdjacent] = true;
-
-                    candidatePoints.add(nextAdjacent);
-
-                }
-
-            }
-        }
-        System.out.println("--->PopCount::" + popCount);
-
-        int idx = endPoint;
-        List path = new ArrayList();
-        path.add(endPoint);
-        for (int i = endPoint; i != startPoint && previous[i] != null; i = (int) previous[i]) {
-
-            path.add(previous[i]);
-
-        }
-
-        Collections.reverse(path);
-        System.out.println("==>Path :" + path);
-
-
-        Arrays.stream(minDistanceArray).forEach(a -> System.out.println("mindistanceFromSource->" + a));
-        System.out.println("stop");
-
-
-    }
-
-    public void findAllShortestDistancesToSource(int[][][] points, int startPoint, int endPoint) {
-        long startTime = System.currentTimeMillis();
-        // initial validation TODO
-
-        // visited point track
-        boolean[] visited = new boolean[points.length];
-        // hold candidates
+/**
+ * Depth-first search (DFS) is an algorithm (or technique) for traversing a graph.
+ *
+ * Following are the problems that use DFS as a building block.
+ *
+ * 1) Detecting cycle in a graph
+ * A graph has cycle if and only if we see a back edge during DFS. So we can run DFS for the graph and check for back edges. (See this for details)
+ *
+ * 2) Path Finding
+ * We can specialize the DFS algorithm to find a path between two given vertices u and z.
+ * i) Call DFS(G, u) with u as the start vertex.
+ * ii) Use a stack S to keep track of the path between the start vertex and the current vertex.
+ * iii) As soon as destination vertex z is encountered, return the path as the
+ * contents of the stack
+ *
+ * See this for details.
+ *
+ * 3) Topological Sorting
+ * Topological Sorting is mainly used for scheduling jobs from the given dependencies among jobs. In computer science, applications of this type arise in instruction scheduling, ordering of formula cell evaluation when recomputing formula values in spreadsheets, logic synthesis, determining the order of compilation tasks to perform in makefiles, data serialization, and resolving symbol dependencies in linkers [2].
+ *
+ * 4) To test if a graph is bipartite
+ * We can augment either BFS or DFS when we first discover a new vertex, color it opposited its parents, and for each other edge, check it doesn’t link two vertices of the same color. The first vertex in any connected component can be red or black! See this for details.
+ *
+ * 5) Finding Strongly Connected Components of a graph A directed graph is called strongly connected if there is a path from each vertex in the graph to every other vertex. (See this for DFS based algo for finding Strongly Connected Components)
+ *
+ * 6) Solving puzzles with only one solution, such as mazes. (DFS can be adapted to find all solutions to a maze by only including nodes on the current path in the visited set.)
+ */
+public class DepthFirstSearch{
+    ALogger<DepthFirstSearch> LOGGER = new ALogger<>(DepthFirstSearch.class);
+    public void traverseGraph(int[][][] graph, int paramsourceid, int paramtargetid){
+        Throwable stackTrace = new Throwable();
+        boolean[] visited = new boolean[graph.length];
+        List<Object> trajectory = new ArrayList<>();
+        Object[] previous = new Object[graph.length] ;//default null
         Stack<Integer> stack = new Stack<>();
-        stack.add(startPoint);
-        visited[startPoint] = true;// mark start point visited
-        int[] distances = new int[points.length];
-        Object[] previous = new Object[points.length];
-        previous[startPoint] = null;
+        stack.add(paramsourceid);
 
-        for (int i = 0; i < distances.length; i++) {
-            distances[i] = Integer.MAX_VALUE;
-        }
-
-        distances[startPoint] = 0;
-
-        int currentPoint = 0;
-        int[][] adjacentPointsFeatures = null;
-        int nextAdjacent = 0;
-        int distanceSoFar = 0;
-
-        int popCount = 0;
-        while (!stack.isEmpty()) {
-
-            currentPoint = stack.pop();
-            popCount++;
-            // System.out.println("Traversing>" + currentPoint);
-
-            distanceSoFar = distances[currentPoint];
-            adjacentPointsFeatures = points[currentPoint];
-
-            for (int i = 0; i < adjacentPointsFeatures.length; i++) {
-
-                nextAdjacent = adjacentPointsFeatures[i][0];
-                //int weight = adjacentPointsFeatures[i][1];
-                int weight = 1;
-                int newdist = distanceSoFar + weight;
-
-                if (newdist < distances[nextAdjacent]) {
-                    distances[nextAdjacent] = newdist;
-                    previous[nextAdjacent] = currentPoint;
-                    if (!visited[nextAdjacent]) {
-
-                        visited[nextAdjacent] = true;
-                        stack.add(nextAdjacent);
-                    }
-
+// navigate vertexes
+        int pollCount = 0;
+        while(!stack.isEmpty()){
+            int currentVertex = stack.pop();
+            if(visited[currentVertex]){
+                LOGGER.info("Already Visited:"+currentVertex);
+                continue;
+            }//if
+            trajectory.add(currentVertex);
+            pollCount++;
+            for(int i =0; i< graph[currentVertex].length;i++){
+                int nbidx = graph[currentVertex][i][0];
+                if(!visited[nbidx]){
+                    stack.add(nbidx);
                 }
+            }//for neighbours
+            visited[currentVertex] = true; // no need to come back
+        }//while
 
-            }
-        }
-        System.out.println("--->PopCount::" + popCount);
-
-//        int idx = endPoint;
-//        List path = new ArrayList();
-//        path.add(endPoint);
-//        for (int i = endPoint; i != startPoint && previous[i] != null; i = (int) previous[i]) {
-//
-//            path.add(previous[i]);
-//
-//        }
-
-        int i = endPoint;
-        List path = new ArrayList();
-
-        while (previous[i] != null) {
+//prepare result values
 
 
-            path.add(previous[i]);
-            i = (int) previous[i];
-        }
+        int index = paramtargetid;
+        List<Object> path = new ArrayList<>();
+        while(previous[index] != null){
+            path.add(previous[index]);
+            index = (int)previous[index];
+        }//while
 
         Collections.reverse(path);
-        System.out.println("==>Path :" + path);
 
-//        for(int i = 0; i < distances.length; i++){
-//
-//            System.out.println(startPoint+"->"+i+":"+distances[i]);
-//
-//        }
-        System.out.println("---- result---");
-        System.out.println(distances[endPoint]);
-        System.out.println("stop");
-        long endTime = System.currentTimeMillis();
-        System.out.println("Total execution time: " + (endTime - startTime) + "ms");
+        LOGGER.info("PATH:"+path,stackTrace);
+        LOGGER.info("TRAJECTORY:"+trajectory,stackTrace);
+
+        LOGGER.info("POLLCOUNT="+pollCount,stackTrace);
+
+    }//traverseGraph
+
+    public void traverseGraph(int[][] graph, int paramsourceid){
+        Throwable stackTrace = new Throwable();
+
+        boolean[] visited = new boolean[graph.length] ;//defaults false
+        Stack<Integer> stack = new Stack<>() ;//
+        List trajectory = new ArrayList();
+        stack.add(paramsourceid);
+        int popCount = 0;
+        while(!stack.isEmpty()){
+            int currentVertex = stack.pop();
+            if(visited[currentVertex]){
+                LOGGER.info("AlreadyVisited:"+currentVertex,stackTrace);
+                continue;
+            }//if already visited
+            trajectory.add(currentVertex);
+            popCount++;
+
+            for(int i = 0; i < graph[currentVertex].length;i++){
+                if(graph[currentVertex][i] != 0){
+                    if(!visited[i]){
+                        stack.add(i);
+                    }//if visited
+                }//if nonzero
+            }//for // navigate neighbours
+            visited[currentVertex] = true;
+        }//while
+
+        LOGGER.info("TRAJECTORY:"+trajectory,stackTrace);
+
+        LOGGER.info("POPCOUNT="+popCount,stackTrace);
+
+    }//traverseGraph
 
 
-    }
+
 
     public static void main(String[] args) {
+        int[][] sample = SampleInputs.GraphOnlineRu.PLANAR_GRAPH;
 
-//        int [][] input = {
-//                {1},
-//                {0,3},
-//                {3,4,5},
-//                {1,2,4},
-//                {2,3},
-//                {2}
-//        };
+        ALogger.TIMER t = new ALogger.TIMER();
+        t.startTimer();
 
-        int[][] input = {
-                {5, 3, 6, 1},
-                {6, 0, 3, 4, 2},
-                {4, 1},
-                {5, 0, 1, 4},
-                {2, 1, 3},
-                {0, 3},
-                {0, 1}
-        };
+        DepthFirstSearch d = new DepthFirstSearch();
+        d.traverseGraph(sample, 0);
 
-
-        int[][][] info = {
-                {{1, 6}, {3, 1}, {5, 1}, {6, 5}},
-                {{0, 6}, {3, 2}, {4, 2}, {2, 5}, {6, 2}},
-                {{1, 5}, {4, 5}},
-                {{0, 1}, {1, 2}, {4, 1}, {5, 7}},
-                {{1, 2}, {2, 5}, {3, 1}},
-                {{0, 1}, {3, 7}},
-                {{1, 5}, {1, 2}}
-        };
-
-        DepthFirstSearch debthFirstSearch = new DepthFirstSearch();
-        debthFirstSearch.findAllShortestDistancesToSource(SampleInputs.get18weightedShortestPath(), 9, 0);
-
+        t.getBenchmark(t);
     }
-}
+}//class
