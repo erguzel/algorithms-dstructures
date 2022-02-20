@@ -3,21 +3,28 @@ import java.util.Arrays;
 
 public class EmptyMain {
 
+    static ALogger<EmptyMain> LOGGER = new ALogger<>(EmptyMain.class);
 
     public static void main(String[] args) {
 
-       int[][][] sample = SampleInputs.get18weightedShortestPath();
+       int[][][] sample = SampleInputs.GraphOnlineRu.convertToAdjacencyList(SampleInputs.GraphOnlineRu.GO0001_ADJMTX);
+       int[][][] summer = SampleInputs.GraphOnlineRu.convertToAdjacencyList(SampleInputs.GraphOnlineRu.SUMMER);
+       int[][][] brown = SampleInputs.GraphOnlineRu.convertToAdjacencyList(SampleInputs.GraphOnlineRu.BROWN);
+       int[][][] rs001 = SampleInputs.GraphOnlineRu.convertToAdjacencyList(SampleInputs.GraphOnlineRu.RS_0001);
+//
+//        SampleInputs.printAdjacencyList(sample,"GO0001_ADJMTX");
 
-        System.out.println("=====BFS======");
-        BreadtFirstSearch breadtFirstSearch = new BreadtFirstSearch();
-        breadtFirstSearch.findShortestDistances(sample,3,8);
-        System.out.println("=====DFS======");
-        DepthFirstSearch debthFirstSearch = new DepthFirstSearch();
-        debthFirstSearch.findAllShortestDistancesToSource(sample, 3, 8);
-        System.out.println("=====DIJKS======");
+
+
+
+       SampleInputs.generateRandomGraph(14);
+
+        LOGGER.setStartTime();
+
         Dijkstara d = new Dijkstara();
-        d.getShortestPath(sample, 3, 8);
+        d.getShortestPath(rs001, 8, 0);
 
+        LOGGER.getBenchmarh();
 
 
 
