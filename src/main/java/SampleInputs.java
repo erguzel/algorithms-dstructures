@@ -39,7 +39,7 @@ public class SampleInputs {
 
         };
 
-        // http://graphonline.ru/en/?graph=mMruryKLPrTzyBCv
+        // http://graphonline.ru/en/?graph=MXMQtkdsytbriBop
         public static final int[][] RS_0001 = {
                 {0, 3, 5, 1, 0, 0, 0, 0, 0, 0},
                         {3, 0, 1, 0, 0, 3, 0, 0, 0, 0},
@@ -66,7 +66,7 @@ public class SampleInputs {
         };
 
         //http://graphonline.ru/en/?graph=rqodCEvqMhnLAItU
-        public static final int[][] GO0001_ADJMTX = {
+        public static final int[][] WEIGHTED_GRAPH = {
 
             {0, 6, 10, 0, 0, 0, 0, 0, 0, 0},
             {6, 0, 12, 11, 14, 0, 0, 0, 0, 0},
@@ -159,13 +159,13 @@ public class SampleInputs {
 
             if(graph[i] == null){
 
-                edgeNummer = (int) SampleInputs.getRandom(1,numberOfVertex);
+                edgeNummer = (int) SampleInputs.getRandom(1,numberOfVertex-1);
                 graph[i] = new int[edgeNummer][];
             }
 
             for(int j = 0; j < graph[i].length; j++){
-                int noeighbourId =(int) SampleInputs.getRandom(0,numberOfVertex);
-                int weight =(int) SampleInputs.getRandom(0,numberOfVertex);
+                int noeighbourId =(int) SampleInputs.getRandom(0,numberOfVertex-1);
+                int weight =(int) SampleInputs.getRandom(0,numberOfVertex-1);
                 graph[i][j] =  new int[]{noeighbourId,weight};
                 if(j==graph[i].length-1){
                     sb.append("{"+noeighbourId+","+weight+"}").append("\n");
@@ -188,6 +188,48 @@ public class SampleInputs {
         return graph;
 
     }
+
+    public static int[][][] generateRandomGraph(int numberOfVertex, boolean silent){
+
+        StringBuilder sb = new StringBuilder();
+        int[][][]  graph = new int[numberOfVertex][][];
+        int edgeNummer = 0;
+        for(int i = 0; i < numberOfVertex; i ++){
+
+            // number of edges
+
+
+            if(graph[i] == null){
+
+                edgeNummer = (int) SampleInputs.getRandom(1,numberOfVertex-1);
+                graph[i] = new int[edgeNummer][];
+            }
+
+            for(int j = 0; j < graph[i].length; j++){
+                int noeighbourId =(int) SampleInputs.getRandom(0,numberOfVertex-1);
+                int weight =(int) SampleInputs.getRandom(0,numberOfVertex-1);
+                graph[i][j] =  new int[]{noeighbourId,weight};
+                if(j==graph[i].length-1){
+                    sb.append("{"+noeighbourId+","+weight+"}").append("\n");
+                }else {
+                    sb.append("{"+noeighbourId+","+weight+"},");
+                }
+            }
+
+
+        }
+
+        if(!silent)
+            LOGGER.info("RANDOM GRAPH:\n"+sb.toString());
+
+
+
+
+
+        return graph;
+
+    }
+
     private static double getRandom(double low, double high){
         double rand = (int)Math.floor(Math.random()*(high-low+1)+low);
         return rand;
