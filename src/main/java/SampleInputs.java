@@ -80,6 +80,20 @@ public class SampleInputs {
             {0, 0, 0, 0, 0, 0, 6, 8, 13, 0}
 
         };
+        // http://graphonline.ru/en/?graph=uYWHxaDVSffcriuf
+        public static final int[][] PLANAR_GRAPH ={
+
+                {0, 1, 1, 1, 0, 0, 0, 0},
+                        {1, 0, 1, 0, 0, 1, 0, 1},
+                                {1, 1, 0, 1, 1, 0, 0, 1},
+                                        {1, 0, 1, 0, 1, 0, 0, 0},
+                                                {0, 0, 1, 1, 0, 0, 1, 1},
+                                                        {0, 1, 0, 0, 0, 0, 1, 1},
+                                                                {0, 0, 0, 0, 1, 1, 0, 1},
+                                                                        {0, 1, 1, 0, 1, 1, 1, 0}
+
+
+        };
 
         public static int[][][] convertToAdjacencyList(int[][] adjmtx){
 
