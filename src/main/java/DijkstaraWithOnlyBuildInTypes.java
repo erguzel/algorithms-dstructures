@@ -1,107 +1,127 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.PriorityQueue;
 
-public class Dijkstara {
+public class DijkstaraWithOnlyBuildInTypes {
 
-    ALogger<Dijkstara> LOGGER = new ALogger<>(Dijkstara.class);
+    ALogger<DijkstaraWithOnlyBuildInTypes> LOGGER = new ALogger<>(DijkstaraWithOnlyBuildInTypes.class);
 
-    private static class MinMinDistanceTo {
-
-      public int id = -1;
-        public MinMinDistanceTo from;
-        public double minDist = Integer.MAX_VALUE;
-        public int previous = -1;
-    }
-
-    public double getShortestPathAndDistance(int[][][] paramGraph, int paramSourceId, int paramDestId) {
-
+    public double getShortestPathAndDistance(int[][][] graph, int paramsourceid, int paramtargetid){
         Throwable stackTrace = new Throwable();
 
-
-        boolean isValidGraph = paramGraph == null ? false : paramGraph.length == 0 ? false : true;
+        boolean isValidGraph = graph == null ? false : graph.length == 0 ? false : true;
         if (!isValidGraph)
             return -1;
 
-        boolean istargetoverlaps = paramSourceId == paramDestId;
+        boolean istargetoverlaps = paramsourceid == paramtargetid;
         if (istargetoverlaps)
             return 0;
 
 
-        MinMinDistanceTo[] results = new MinMinDistanceTo[paramGraph.length];
+        double[] distances = new double[graph.length] ;//track min distances
+        for(int i = 0; i<distances.length; i++){distances[i]=Double.MAX_VALUE ;} // for fillint the default distances
 
-        for (int i = 0; i < paramGraph.length; i++) {
-            results[i] = new MinMinDistanceTo();
-        }
+        distances[paramsourceid] = 0 ;//distance to self
+        double [] initialPointIdxWithMinDistance = {paramsourceid,0};
+        List<Object> trajectory = new ArrayList<>();
+        boolean[] visited = new boolean[graph.length];
+
+        PriorityQueue<double[]> queue = new PriorityQueue<>((a, b)->a[1]>b[1]?1:-1) ;// keeps candidate vertexes with corresponding min distances
+        queue.add(initialPointIdxWithMinDistance) ;//add 1st starting point with ist min dist
+
+        double distanceSoFar = 0 ;// distance variable
+        double newDist = 0 ;//Overriding distance
+        double weight = 0 ;// weight of adjacent
+        double[] currentMinDist = {paramsourceid,0};
 
 
-        boolean[] visited = new boolean[paramGraph.length];
-        Queue<MinMinDistanceTo> priorityQueue = new PriorityQueue<MinMinDistanceTo>((a, b) -> a.minDist > b.minDist ? 1 : -1);
-        MinMinDistanceTo startPoint = results[paramSourceId];
-        startPoint.id = paramSourceId;
-        startPoint.minDist = 0;
-        priorityQueue.add(startPoint);
-        results[paramSourceId] = startPoint;
-        List<String> trajectory = new ArrayList<>();
+        Object[] previous = new Object[graph.length];
 
+// start looping untill
+        int pollCount = 0;
 
-        double currentPointdistance = 0;
+        while(!queue.isEmpty()){
 
-        int popCount = 0;
+            currentMinDist = queue.poll();
+            if(visited[(int) currentMinDist[0]]){
 
-        while (!priorityQueue.isEmpty()) {
-
-            MinMinDistanceTo currentPoint = priorityQueue.poll();
-
-            trajectory.add(currentPoint.previous+"->"+currentPoint.id+"="+currentPoint.minDist);
-
-           popCount++;
-
-            currentPointdistance = results[currentPoint.id].minDist;
-
-            for (int i = 0; i < paramGraph[currentPoint.id].length; i++) {
-
-                int neighbourIndex = paramGraph[currentPoint.id][i][0];
-
-                double weight = paramGraph[currentPoint.id][i][1];
-                double newDist = currentPointdistance + weight;
-
-                if (newDist < results[neighbourIndex].minDist) {
-                    results[neighbourIndex].minDist = newDist;
-                    results[neighbourIndex].id = neighbourIndex;
-                    results[neighbourIndex].previous = currentPoint.id;
-                    priorityQueue.add(results[neighbourIndex]);
-                    priorityQueue.remove(currentPoint);
-                }
+                LOGGER.info("AlreadyVisited:"+currentMinDist[0]);
+                continue;
             }
+            pollCount++;
+            trajectory.add(currentMinDist[0]);
 
-        }
-        LOGGER.info("POLLCOUNT="+popCount,stackTrace);
+            int currentId = (int)currentMinDist[0];
+            distanceSoFar = distances[currentId];
+
+// loop through nbours (features) for shortest dist
+
+            for(int i = 0; i < graph[currentId].length;i++){
+
+                int nbidx = graph[currentId][i][0];
+                weight = graph[currentId][i][1];
+                newDist = weight + distanceSoFar;
+
+                if(newDist < distances[nbidx]){
+
+                    previous[nbidx] = currentId;
+                    distances[nbidx] = newDist;
+                    double[] next = new double[2];
+                    next[0] = nbidx;
+                    next[1] = newDist;
+                    //double[] next = {nbidx,newDist};
+                    queue.add(next);
+                }//if
+
+            }//for
+
+            visited[currentId] = true;
 
 
-        int i = paramDestId;
+
+        }//while
+
+
+        LOGGER.info("POLLCOUNT="+pollCount,stackTrace);
+
+        int i = paramtargetid;
         List path = new ArrayList();
-        while (results[i].previous != -1) {
+        while (previous[i] != null) {
 
 
-            path.add(results[i].previous);
-            i = results[i].previous;
+            path.add(previous[i]);
+            i = (int)previous[i];
 
 
         }
-
-
-
-//        Arrays.stream(results).forEach(a -> System.out.println(paramSourceId + "->" + a.id + ":" + a.minDist));
 
 
         Collections.reverse(path);
         LOGGER.info("PATH:"+path,stackTrace);
-        LOGGER.info("TRAJECTORY:"+trajectory,stackTrace);
+      //  LOGGER.info("TRAJECTORY:"+trajectory,stackTrace);
 
         //System.out.println("---- result---");
-        LOGGER.info("Result:"+results[paramDestId].minDist,stackTrace);
+        LOGGER.info("Result:"+distances[paramtargetid],stackTrace);
 
-        return results[paramDestId].minDist;
+        return distances[paramtargetid];
+
+    }// getShortestPathAndDistance
+
+    public static void main(String[] args) {
+
+        int[][][] sample = SampleInputs.GraphOnlineRu.convertToAdjacencyList(SampleInputs.GraphOnlineRu.WEIGHTED_GRAPH);
+        int[][][] summer = SampleInputs.GraphOnlineRu.convertToAdjacencyList(SampleInputs.GraphOnlineRu.SUMMER);
+        int[][][] brown = SampleInputs.GraphOnlineRu.convertToAdjacencyList(SampleInputs.GraphOnlineRu.BROWN);
+        int[][][] rs001 = SampleInputs.GraphOnlineRu.convertToAdjacencyList(SampleInputs.GraphOnlineRu.RS_0001);
+        int[][][] random = SampleInputs.generateRandomGraph(15000,true);
+
+        ALogger.TIMER t = new ALogger.TIMER();
+
+        t.startTimer();
+        DijkstaraWithOnlyBuildInTypes db = new DijkstaraWithOnlyBuildInTypes();
+        db.getShortestPathAndDistance(rs001, 8, 0);
+        t.getBenchmark(t);
 
     }
-
-}
+}//class
