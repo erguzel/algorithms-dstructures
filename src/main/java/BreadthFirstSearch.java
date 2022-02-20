@@ -11,8 +11,8 @@ public class BreadthFirstSearch{
         int[] distances = new int [graph.length];
         Object[] previous = new Object [graph.length] ;//defaults are null
         for(int i = 0;  i < distances.length; i++){distances[i]=Integer.MAX_VALUE;}//for fill defaults
-        Stack<Integer> queue = new Stack<>();
-        //Queue<Integer> queue = new LinkedList<>();
+
+        Queue<Integer> queue = new LinkedList<>();
         distances[paramsourceid] = 0 ;//distance to self
         queue.add (paramsourceid);
         List<Object> trajectory = new ArrayList<>();
@@ -20,7 +20,7 @@ public class BreadthFirstSearch{
 
         int pollCount = 0;
         while(!queue.isEmpty()){
-            int currentVertex = queue.pop();
+            int currentVertex = queue.poll();
             if(visited[currentVertex]){
                 LOGGER.info("Already Visited:"+currentVertex);
                 continue;
@@ -76,7 +76,7 @@ public class BreadthFirstSearch{
         t.startTimer();
 
         BreadthFirstSearch d = new BreadthFirstSearch();
-        d.findShortestDistances(sample, 0, 9);
+        d.findShortestDistances(sample, 5, 9);
 
         t.getBenchmark(t);
     }
