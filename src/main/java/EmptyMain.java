@@ -6,16 +6,18 @@ public class EmptyMain {
 
     public static void main(String[] args) {
 
-        int [] arr = {1,2,3,4,5};
+       int[][][] sample = SampleInputs.get18weightedShortestPath();
 
-        arr = Arrays.copyOf(arr,12);
+        System.out.println("=====BFS======");
+        BreadtFirstSearch breadtFirstSearch = new BreadtFirstSearch();
+        breadtFirstSearch.findShortestDistances(sample,3,8);
+        System.out.println("=====DFS======");
+        DepthFirstSearch debthFirstSearch = new DepthFirstSearch();
+        debthFirstSearch.findAllShortestDistancesToSource(sample, 3, 8);
+        System.out.println("=====DIJKS======");
+        Dijkstara d = new Dijkstara();
+        d.getShortestPath(sample, 3, 8);
 
-        int men = arr[6];
-
-        System.out.println("asd");
-
-
-        System.out.println("hello");
 
 
 

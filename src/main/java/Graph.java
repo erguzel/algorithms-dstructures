@@ -18,17 +18,23 @@ public class Graph {
 
         int[][] nonweighted = {{1,3,2},{0},{0,4,5},{0,5},{2},{2,3,6},{5}};
 
+        long startTime = System.currentTimeMillis();
 
         Graph graph = new Graph();
-        graph.initialize(info);
+        graph.initialize(SampleInputs.generateRandomGraph(2000));
 
-        graph.sortestPathByDijkstara(0,1);
+        graph.sortestPathByDijkstara(0,9);
+
+        long endTime = System.currentTimeMillis();
+        System.out.println("Total execution time: " + (endTime - startTime) + "ms");
 
         //Arrays.stream(sd).forEach(a-> System.out.println(a));
     }
 
     //Represents whole graph
     private Map<Integer, Point> GRAPHSET = new HashMap();
+
+    private Point[] GRAPH = null;
 
     /**
      * Represents a vertex in a graph
@@ -167,12 +173,16 @@ public class Graph {
         //TODO at the end;
         //Fill the points to the graph in reference relation with each other
 
-        char letter = 'A';
+       // char letter = 'A';
+
+        GRAPH = new Point[graph.length];
 
         for (int i = 0; i < graph.length; i++) {
 
-            Point pt = new Point(i, String.valueOf( (char) (letter + i)));
-            GRAPHSET.put(i, pt);
+            Point pt = new Point(i, String.valueOf(i));
+         //   Point pt = new Point(i, String.valueOf( (char) (letter + i)));
+           // GRAPHSET.put(i, pt);
+            GRAPH[i] = pt;
         }
 
         double weight = 0;
@@ -181,16 +191,19 @@ public class Graph {
         Edge ed =null;
         for (int i = 0; i < graph.length; i++) {
 
-            Point inMap = GRAPHSET.get(i);
+            //Point inMap = GRAPHSET.get(i);
+            Point inMap = GRAPH[i];
 
             for (int j = 0; j < graph[i].length; j++) {
 
                 targetId = graph[i][j][0];
                 weight = graph[i][j][1];
-                to = GRAPHSET.get(targetId);
+              //  to = GRAPHSET.get(targetId);
+                to = GRAPH[targetId];
                 ed = new Edge(inMap,to,weight);
                 inMap.edgeList.add(ed);
-                GRAPHSET.put(i, inMap);
+                GRAPH[i]=inMap;
+                //GRAPHSET.put(i, inMap);
 
             }
         }
@@ -207,7 +220,8 @@ public class Graph {
      */
     public int[] sortestPathByDijkstara(int sourceId, int targetId) {
         // 1st get the starting node
-        Point startPoint = GRAPHSET.get(sourceId);
+        Point startPoint = GRAPH[sourceId];
+        //Point startPoint = GRAPHSET.get(sourceId);
         startPoint.minMeasure = 0; // min value
         PriorityQueue<Point> priorityQueue = new PriorityQueue<>();
         priorityQueue.add(startPoint);
@@ -215,38 +229,51 @@ public class Graph {
 
         Point targetPointOfCurrentEdge = null;
         // visit all candidate points
+
+        int count = 0;
+        double distancesofar = 0;
         while (!priorityQueue.isEmpty()) {
 
             Point currentPoint = priorityQueue.poll();
+            distancesofar = currentPoint.minMeasure;
+          //  distancesofar = GRAPHSET.get(currentPoint.id).minMeasure;
+            count++;
 
             for (Edge edge : currentPoint.edgeList) {
 
                 targetPointOfCurrentEdge = edge.targetPoint;
-                minDistance = currentPoint.minMeasure + edge.weight;
+                double newDistance = distancesofar + edge.weight;
 
-                if (minDistance < targetPointOfCurrentEdge.minMeasure) {
+                if (newDistance < targetPointOfCurrentEdge.minMeasure) {
 
-                    targetPointOfCurrentEdge.minMeasure = minDistance;
+                    targetPointOfCurrentEdge.minMeasure = newDistance;
                     targetPointOfCurrentEdge.previousVertex = currentPoint;
-                    priorityQueue.add(targetPointOfCurrentEdge);
+                    if(!targetPointOfCurrentEdge.isVisited){
+                        targetPointOfCurrentEdge.isVisited = true;
+                        priorityQueue.add(targetPointOfCurrentEdge);
+                    }
 
                 }
 
             }
         }
 
-        Point targetVertex = GRAPHSET.get(targetId);
+        Point targetVertex = GRAPH[targetId];
+        //Point targetVertex = GRAPHSET.get(targetId);
 
-        List<Point> path = new ArrayList<>();
+        List<Integer> path = new ArrayList<>();
 
         for (Point point = targetVertex; point != null; point = point.previousVertex) {
 
-            path.add(point);
+            path.add(point.id);
         }
 
         Collections.reverse(path);
-        System.out.println("lengtg:"+path.get(path.size()-1).minMeasure);
-        return path.stream().mapToInt(a -> a.id).toArray();
+        System.out.println("lengtg:"+GRAPH[targetId].minMeasure);
+        //System.out.println("lengtg:"+GRAPHSET.get(targetId).minMeasure);
+        System.out.println("path:"+path);
+        System.out.println("TotalPool:"+count);
+        return path.stream().mapToInt(a -> a).toArray();
     }
 
 

@@ -1,0 +1,25 @@
+> Task :DepthFirstSearch.main()
+Traversing>7
+Traversing>8
+Traversing>5
+Traversing>6
+Traversing>1
+Traversing>2
+Traversing>0
+Traversing>3
+Traversing>4
+--->PopCount::15
+==>Path :[9, 8, 7, 5, 2, 1, 0]
+9->0:13
+9->1:9
+9->2:8
+9->3:14
+9->4:14
+9->5:7
+9->6:9
+9->7:3
+9->8:1
+9->9:0
+---- result---
+13
+stop
