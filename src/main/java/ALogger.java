@@ -8,6 +8,28 @@ import java.time.LocalTime;
  */
 public class ALogger<T> {
 
+    public static class TIMER{
+
+        private  long start = System.currentTimeMillis();
+        private long end = -1;
+
+        public TIMER startTimer(){
+            TIMER t = new TIMER();
+            t.start = System.currentTimeMillis();
+            return t;
+        }
+
+        public void getBenchmark(TIMER t){
+
+            end = System.currentTimeMillis();
+            long elapsed = t.end - t.start;
+
+            ALogger<TIMER> LOGGER = new ALogger<>(TIMER.class);
+            LOGGER.info("Benchmark:"+elapsed);
+
+        }
+    }
+
     public enum LOG_LEVELS{
         TRACE,
         INFO,
@@ -18,7 +40,7 @@ public class ALogger<T> {
 
     private Class<?> clazz;
 
-    double startTime = 0;
+   private long startTime = System.currentTimeMillis();
 
     public ALogger(Class<?> clazz) {
         this.clazz = clazz;
@@ -31,7 +53,9 @@ public class ALogger<T> {
 
     public void  getBenchmarh(){
         long endTime =  System.currentTimeMillis();
-       info("BENCHMARK:"+(endTime-startTime)+" ms");
+        long elapsed = (long) startTime-endTime;
+        startTime = 0;
+       info("BENCHMARK:"+(elapsed)+" ms");
 
     }
 
