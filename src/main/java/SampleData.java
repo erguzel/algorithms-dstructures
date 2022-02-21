@@ -29,13 +29,12 @@ public class SampleInputs {
 
         // http://graphonline.ru/en/?graph=wzlBAENqKUvRjYLcZZcst
         public static final int[][] BROWN = {
-                {0, 7, 5, 0, 0, 0, 0},
-                        {7, 0, 0, 11, 0, 0, 0},
-                                {5, 0, 0, 0, 0, 0, 0},
-                                        {0, 11, 1, 0, 1, 0, 3},
-                                                {0, 0, 0, 1, 0, 1, 0},
-                                                        {0, 0, 0, 5, 0, 0, 0},
-                                                                {0, 0, 1, 0, 0, 0, 0}
+                {0, 7, 5, 0, 0, 0},
+                {7, 0, 0, 11, 0, 0},
+                {5, 0, 0, 0, 0, 0},
+                {0, 11, 1, 0, 1, 0},
+                {0, 0, 0, 1, 0, 1},
+                {0, 0, 0, 5, 0, 0}
 
         };
 
@@ -161,6 +160,17 @@ public class SampleInputs {
 
     }
 
+    public static int[] generateIntArray(int length, int low, int high){
+
+        int [] res = new int[length];
+
+        for(int i = 0; i < length; i++){
+
+            res[i] = (int) getRandom(low,high);
+        }
+
+        return  res;
+    }
     public static int[][][] generateRandomGraph(int numberOfVertex){
 
         StringBuilder sb = new StringBuilder();
@@ -244,7 +254,7 @@ public class SampleInputs {
 
     }
 
-    private static double getRandom(double low, double high){
+    public static double getRandom(double low, double high){
         double rand = (int)Math.floor(Math.random()*(high-low+1)+low);
         return rand;
     }
