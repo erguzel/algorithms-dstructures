@@ -21,7 +21,7 @@ public class QuickSort{
     }//sort
 
     public int partite(int [] arr, int left, int right){
-        int pivot = arr[right+left/2];
+        int pivot = arr[left + (right-left)/2];
         while(left<= right){
             while(arr[left]<pivot){left++;}//while left
             while(arr[right]>pivot){right--;}//while right
@@ -37,9 +37,8 @@ public class QuickSort{
     }//partite
     public static void main(String[] args) {
 
-         int [] arr = {1,56,0,-2,5,23,-29,213,9};
-
-//        int[] arr = SampleInputs.generateIntArray(12, -69, 64);
+       //  int [] arr = {1,56,0,-2,5,23,-29,213,9};
+        int[] arr = SampleData.generateIntArray(102, -69, 64);
 
         LOGGER.info(Arrays.stream(arr).boxed().collect(Collectors.toList()));
         ALogger.TIMER timer = new ALogger.TIMER();
