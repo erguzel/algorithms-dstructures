@@ -1,2 +1,4 @@
-package model.abstraction;public interface IGraphEdge {
+package model.abstraction;
+
+public interface IGraphEdge extends IConnectable{
 }

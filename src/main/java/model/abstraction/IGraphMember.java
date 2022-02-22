@@ -1,2 +1,4 @@
-package model.abstraction;public interface IGraphMember {
+package model.abstraction;
+
+public interface IGraphMember {
 }

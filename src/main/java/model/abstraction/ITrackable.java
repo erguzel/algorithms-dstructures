@@ -1,2 +1,8 @@
-package model.abstraction;public class ITrackable {
+package model.abstraction;
+
+public interface ITrackable {
+
+   IResultAsset getPrevious();
+   void  setPrevious(IResultAsset result);
+
 }
