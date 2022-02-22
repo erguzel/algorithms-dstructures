@@ -60,7 +60,7 @@ public class ALogger<T> {
     }
 
 
-    public Object endApplication(String message,Throwable trace){
+    public Object endApplication(Object message,Throwable trace){
 
         logWithLevel(LOG_LEVELS.FATAL,message,trace);
 
@@ -73,7 +73,7 @@ public class ALogger<T> {
      * Prints log message to consol error
      * @param message message of log
      */
-    public void info(String message, Throwable stack){
+    public void info(Object message, Throwable stack){
         System.out.println(
                 String.format(
                         "[%s] [%s] [%s]:[%s]:[%s]:[%s] - [%s]",
@@ -90,7 +90,7 @@ public class ALogger<T> {
      * Prints log message to consol error
      * @param message message of log
      */
-    public void logWithLevel(LOG_LEVELS level, String message, Throwable stack){
+    public void logWithLevel(LOG_LEVELS level, Object message, Throwable stack){
         System.out.println(
                 String.format(
                         "[%s] [%s] [%s]:[%s]:[%s]:[%s] - [%s]",
@@ -108,7 +108,7 @@ public class ALogger<T> {
      * Prints log message to consol error
      * @param message message of log
      */
-    public void info(String message){
+    public void info(Object message){
         System.out.println(
                 String.format(
                         "[%s] [%s] [%s]:[%s]:[%s]:[%s] - [%s]",
@@ -125,7 +125,7 @@ public class ALogger<T> {
      * Prints log message to consol error
      * @param message message of log
      */
-    public void logWithLevel(LOG_LEVELS level, String message){
+    public void logWithLevel(LOG_LEVELS level, Object message){
         System.out.println(
                 String.format(
                         "[%s] [%s] [%s]:[%s]:[%s]:[%s] - [%s]",
