@@ -25,21 +25,39 @@ public class Dijkstara {
 
         System.out.println();
 
-        ALogger.TIMER timer = new ALogger.TIMER();
-        timer.startTimer();
-        Dijkstara dj = new Dijkstara();
-        dj.findTrajectoryAndShortestPath(graph, 3, 6);
-        timer.getBenchmark(timer);
+        Dijkstara dj = null;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ALogger.TIMER timer = new ALogger.TIMER();
+                timer.startTimer();
+                Dijkstara dj = new Dijkstara();
+                dj.findTrajectoryAndShortestPath(graph, 3, 6);
+                timer.getBenchmark(timer, "Static Struct");
+            }
+        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ALogger.TIMER timer = new ALogger.TIMER();
+                timer.startTimer();
+                Dijkstara dj = new Dijkstara();
+                dj.findTrajectoryAndShortestPathWithArray(graph, 3, 6);
+                timer.getBenchmark(timer,"Array Queue");
+            }
+        }).start();
 
-        timer.startTimer();
-        Dijkstara dj1 = new Dijkstara();
-        dj.findTrajectoryAndShortestPathWithArray(graph, 3, 6);
-        timer.getBenchmark(timer);
+         new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ALogger.TIMER timer = new ALogger.TIMER();
+                timer.startTimer();
+                Dijkstara dj = new Dijkstara();
+                dj.findTrajectoryAndShortestPathWithSOLID(graph, 3, 6);
+                timer.getBenchmark(timer,"SOLID");
+            }
+        }).start();
 
-        timer.startTimer();
-        Dijkstara dj2 = new Dijkstara();
-        dj.findTrajectoryAndShortestPathWithSOLID(graph, 3, 6);
-        timer.getBenchmark(timer);
     }
 
     ALogger<DFS> LOGGER = new ALogger<>(DFS.class);
@@ -119,6 +137,8 @@ public class Dijkstara {
 
     // using build in type as min distances
     public void findTrajectoryAndShortestPathWithArray(int[][] graph, int paramsourceid, int paramtargetid){
+
+
         boolean[] visited = new boolean[graph.length];
         double[][] vertexDistances = new double[graph.length][2];// represents the index and min distance of a candidate
         Object [] previous = new Object[graph.length];//default null
@@ -192,6 +212,7 @@ public class Dijkstara {
 
     // using abstraction types with interface sergeration principle
     public void findTrajectoryAndShortestPathWithSOLID(int[][] graph, int paramsourceid, int paramtargetid){
+        Throwable stackTrace = new Throwable();
 
         MinDistance[] vertexDistances = new MinDistance[graph.length];// represents the index and min distance of a candidate
         List<MinDistance> trajectory = new ArrayList<>();
@@ -240,19 +261,19 @@ public class Dijkstara {
 
         if (vertexDistances[paramtargetid].isFound()) {
 
-            LOGGER.info("there exists path " + paramsourceid + "->" + paramtargetid);
+            LOGGER.info("there exists path " + paramsourceid + "->" + paramtargetid,stackTrace);
 
         }else
-            LOGGER.info("there exists NO path " + paramsourceid + "->" + paramtargetid);
+            LOGGER.info("there exists NO path " + paramsourceid + "->" + paramtargetid,stackTrace);
 
-        LOGGER.info("Tajectory:" + trajectory.stream().map(a->a.getId()).collect(Collectors.toList()));
+        LOGGER.info("Tajectory:" + trajectory.stream().map(a->a.getId()).collect(Collectors.toList()),stackTrace);
         LOGGER.info("PopCount:" + pollCount);
-        LOGGER.info("Shortest Distance:" + vertexDistances[paramtargetid].getValue());
+        LOGGER.info("Shortest Distance:" + vertexDistances[paramtargetid].getValue(),stackTrace);
 
         Object[] reversed = path.toArray();
         ReverseArray.reverse(reversed);
 
-        LOGGER.info("Path:" + Arrays.stream(reversed).collect(Collectors.toList()));
+        LOGGER.info("Path:" + Arrays.stream(reversed).collect(Collectors.toList()),stackTrace);
 
     }//findTrajectoryAndShortestPath
 
