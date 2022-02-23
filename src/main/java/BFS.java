@@ -36,7 +36,7 @@ public class BFS {
     ALogger<BFS> LOGGER = new ALogger<>(BFS.class);
 
     public static void main(String[] args) {
-        int[][][] graph = SampleData.convertToAdjacencyList(SampleData.GraphOnlineRu.DUCK_DIR_WEG);
+        int[][][] graph = SampleData.Convertors.convertAdjmtxToAdjList(SampleData.GraphOnlineRu.DUCK_DIR_WEG);
 
         System.out.println();
 

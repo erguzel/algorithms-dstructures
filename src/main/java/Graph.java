@@ -21,7 +21,7 @@ public class Graph {
         long startTime = System.currentTimeMillis();
 
         Graph graph = new Graph();
-        graph.initialize(SampleInputs.generateRandomGraph(2000));
+        graph.initialize(SampleData.Generators.generateRandomGraph(2000));
 
         graph.sortestPathByDijkstara(0,9);
 

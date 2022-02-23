@@ -24,7 +24,7 @@ public class ReverseArray {
 
     public static void main(String[] args) {
 
-        Object [] arr = Arrays.stream(SampleData.generateIntArray(15,-4,12)).mapToObj(a->a).toArray();
+        Object [] arr = Arrays.stream(SampleData.Generators.generateIntArray(15,-4,12)).mapToObj(a->a).toArray();
 
         LOGGER.info(Arrays.stream(arr).collect(Collectors.toList()));
 

@@ -1,38 +1,31 @@
 public class Benchmarker {
 
-
+    static  ALogger<Benchmarker> LOGGER = new ALogger<>(Benchmarker.class);
     public static void main(String[] args) {
 
-       int[][][] sample = SampleInputs.GraphOnlineRu.convertToAdjacencyList(SampleInputs.GraphOnlineRu.WEIGHTED_GRAPH);
-       int[][][] summer = SampleInputs.GraphOnlineRu.convertToAdjacencyList(SampleInputs.GraphOnlineRu.SUMMER);
-       int[][][] brown = SampleInputs.GraphOnlineRu.convertToAdjacencyList(SampleInputs.GraphOnlineRu.BROWN);
-       int[][][] rs001 = SampleInputs.GraphOnlineRu.convertToAdjacencyList(SampleInputs.GraphOnlineRu.RS_0001);
-       int[][][] random = SampleInputs.generateRandomGraph(15000,true);
+//       int[][][] sample = SampleData.convertToAdjacencyList(SampleData.GraphOnlineRu.DUCK_DIR_WEG);
+//       int[][][] summer = SampleData.convertToAdjacencyList(SampleData.GraphOnlineRu.SUMMER);
+//       int[][][] brown = SampleData.convertToAdjacencyList(SampleData.GraphOnlineRu.BROWN);
+//       int[][][] rs001 = SampleData.convertToAdjacencyList(SampleData.GraphOnlineRu.RS_0001);
+//       int[][][] random = SampleData.generateRandomGraph(15000,true);
 //
 //        SampleInputs.printAdjacencyList(sample,"GO0001_ADJMTX");
 
+         int[][] adjmtx = SampleData.GraphOnlineRu.WEIGHTED_GRAPH;
 
+         int[][] edgeList = SampleData.Convertors.convertAdjMtxToEdgeList(adjmtx);
+         LOGGER.info(SampleData.Csacademy.stringfyGraphForOnlineVisualisation(edgeList));
 
-        ALogger.TIMER t = new ALogger.TIMER();
+         int [][] backadmtx = SampleData.Convertors.convertEdgelistToAdjMtx(edgeList,true,0,1,null);
 
-        t.startTimer();
-        DijkstaraWithOnlyBuildInTypes db = new DijkstaraWithOnlyBuildInTypes();
-        db.getShortestPathAndDistance(sample, 8, 0);
-        t.getBenchmark(t);
+         LOGGER.info(SampleData.GraphOnlineRu.stringfyGraphForOnlineVisualisation(backadmtx));
 
+         int[][] backedgelist = SampleData.Convertors.convertAdjMtxToEdgeList(backadmtx);
 
-        t.startTimer();
+         LOGGER.info(SampleData.Csacademy.stringfyGraphForOnlineVisualisation(backedgelist));
 
-        Dijkstara d = new Dijkstara();
-        d.getShortestPathAndDistance(sample, 8, 0);
-
-        t.getBenchmark(t);
-
-
-
-
-
-
+        LOGGER.
+                info("");
 
     }
 }
