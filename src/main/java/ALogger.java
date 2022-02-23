@@ -28,6 +28,15 @@ public class ALogger<T> {
             LOGGER.info("Benchmark:"+elapsed);
 
         }
+        public void getBenchmark(TIMER t, String name){
+
+            end = System.currentTimeMillis();
+            long elapsed = t.end - t.start;
+
+            ALogger<TIMER> LOGGER = new ALogger<>(TIMER.class);
+            LOGGER.info(name+" Benchmark:"+elapsed);
+
+        }
     }
 
     public enum LOG_LEVELS{
