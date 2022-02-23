@@ -8,6 +8,12 @@ public class Edge implements IGraphEdge {
     private Vertex targetPoint;
     private double weight = 0;
 
+    public Edge(Vertex sourcePoint, Vertex targetPoint, double weight) {
+        this.sourcePoint = sourcePoint;
+        this.targetPoint = targetPoint;
+        this.weight = weight;
+    }
+
     @Override
     public void setSourcePoint(Vertex sourcePoint) {
         this.sourcePoint = sourcePoint;

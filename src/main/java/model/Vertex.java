@@ -2,11 +2,15 @@ package model;
 
 import model.abstraction.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Vertex implements IGraphVertex {
 
     private boolean isVisited = false;
     private String name = "";
     private int id;
+    private List<IGraphEdge> edges = new ArrayList<>();
 
     public Vertex(String name, int id) {
         this.name = name;
@@ -41,5 +45,15 @@ public class Vertex implements IGraphVertex {
     @Override
     public int getId() {
         return id;
+    }
+
+    @Override
+    public void setEdges(List<IGraphEdge> edges) {
+        this.edges = edges;
+    }
+
+    @Override
+    public List<IGraphEdge> getEdges() {
+        return edges;
     }
 }
