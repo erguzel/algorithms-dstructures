@@ -3,6 +3,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SampleData {
 
@@ -12,17 +14,6 @@ public class SampleData {
      * Adj martixes
      */
     public static class GraphOnlineRu {
-
-        public static String stringfyGraphForOnlineVisualisation(int[][] adjmtx) {
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < adjmtx.length; i++) {
-                for (int j = 0; j < adjmtx[i].length; j++) {
-                    stringBuilder.append(adjmtx[i][j] + ",");
-                }
-                stringBuilder.append("\n");
-            }
-            return stringBuilder.toString();
-        }
 
         // http://graphonline.ru/en/?graph=QVOSZByBcyggFfvj
         public static final int[][] DUCK_DIR_WEG = {
@@ -158,39 +149,39 @@ public class SampleData {
 
     public static class Csacademy {
 
-        //
-        //https://csacademy.com/app/graph_editor/
-        public static String stringfyGraphForOnlineVisualisation(int[][] edgelist) {
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < edgelist.length; i++) {
-                for (int j = 0; j < edgelist[i].length; j++) {
-                    if (j != edgelist[i].length - 1) {
-                        stringBuilder.append(edgelist[i][j] + " ");
-                    } else {
-                        stringBuilder.append(edgelist[i][j] + "\n");
-                    }
-                }
-            }
-            return stringBuilder.toString();
-        }
 
-        /**
-         * Adjmtx
-         */
+
+        public static int[][] CSA002={
+                {0 ,1 , 1},
+                {0 ,2 , 3},
+                {2 ,0 , 3},
+                {3 ,0 , 1},
+                {0 ,4 , 2},
+                {4 ,0 , 2},
+                {3 ,1 ,-4},
+                {2 ,4 ,-2},
+                {6 ,1 ,-5},
+                {1 ,6 ,-5},
+                {6 ,0 , 2},
+                {2 ,0 , 3}
+
+        };
+
+
         public static final int[][] CSA001 = {
 
-                {0 ,1 , 1},
-                {0 ,2 , 2},
-                {0 ,4 ,-1},
-                {2 ,3 ,-3},
-                {2 ,5 ,-6},
-                {1 ,4 , 2},
-                {4 ,2 , 6},
-                {3 ,4 ,-4},
-                {5 ,3 , 8},
-                {1 ,3 , 2},
-                {2 ,6 , 4},
-                {6 ,0 ,-5}
+                {0, 1,  1},
+                {0, 2,  2},
+                {0, 4, -1},
+                {2, 3, -3},
+                {2, 5, -6},
+                {1, 4,  2},
+                {4, 2,  9},
+                {3, 4, -4},
+                {5, 3,  8},
+                {1, 3,  2},
+                {2, 6,  4},
+                {6, 0, -5}
 
         };
     }
@@ -420,6 +411,21 @@ public class SampleData {
     }
 
     public static class Generators {
+
+        public static int [][] generateRandomMatrix(int rownum, int colnum, int low, int high){
+
+            int [][] res = new int[rownum][colnum];
+            for(int i = 0; i < rownum; i++){
+                if(res[i]==null)res[i] = new int[colnum];
+                for(int j = 0; j<colnum; j++){
+                    int val =(int) SampleData.Generators.getRandom(low,high);
+                    res[i][j] = val;
+                }
+            }
+
+            return  res;
+        }
+
         public static int[] generateIntArray(int length, int low, int high) {
 
             int[] res = new int[length];
@@ -517,30 +523,72 @@ public class SampleData {
 
     }
 
-    public static int[][][] printAdjacencyList(int[][][] adjlist, String graphName) {
+    public static class Printers{
 
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < adjlist.length; i++) {
-            for (int j = 0; j < adjlist[i].length; j++) {
-                int nbour = adjlist[i][j][0];
-                int weight = adjlist[i][j][1];
-
-                adjlist[i][j] = new int[]{nbour, weight};
-
-                if (j == adjlist[i].length - 1) {
-                    sb.append("{" + nbour + "," + weight + "}").append("\n");
-                } else {
-                    sb.append("{" + nbour + "," + weight + "},");
+        //
+        //https://csacademy.com/app/graph_editor/
+        public static String stringifyEdgeList(int[][] edgelist) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < edgelist.length; i++) {
+                for (int j = 0; j < edgelist[i].length; j++) {
+                    if (j != edgelist[i].length - 1) {
+                        stringBuilder.append(edgelist[i][j] + " ");
+                    } else {
+                        stringBuilder.append(edgelist[i][j] + "\n");
+                    }
                 }
             }
+            return stringBuilder.toString();
+        }
 
+        public static  void PrintReport(ALogger logger, Map<Object,Object> data){
+            for (Map.Entry entry : data.entrySet()){
+
+                logger.info(entry.getKey()+":"+entry.getValue());
+            }
+        }
+
+        public static String stringfyAdjacencyList(int[][][] adjlist) {
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < adjlist.length; i++) {
+                for (int j = 0; j < adjlist[i].length; j++) {
+                    int nbour = adjlist[i][j][0];
+                    int weight = adjlist[i][j][1];
+
+                    adjlist[i][j] = new int[]{nbour, weight};
+
+                    if (j == adjlist[i].length - 1) {
+                        sb.append("{" + nbour + "," + weight + "}").append("\n");
+                    } else {
+                        sb.append("{" + nbour + "," + weight + "},");
+                    }
+                }
+
+
+            }
+
+            return sb.toString();
 
         }
 
-        LOGGER.info(graphName.toUpperCase() + "_GRAPH:\n" + sb.toString());
-        return adjlist;
+        public static String stringifyAdjacencyMatrix(int[][] adjmtx) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < adjmtx.length; i++) {
+                for (int j = 0; j < adjmtx[i].length; j++) {
+                    stringBuilder.append(adjmtx[i][j] + ",");
+                }
+                stringBuilder.append("\n");
+            }
+            return stringBuilder.toString();
+        }
 
+        public static String stringifyArray(int [] arr){
+
+            return Arrays.stream(arr).boxed().collect(Collectors.toList()).toString();
+        }
     }
+
 
 
     public static void main(String[] args) {

@@ -3,25 +3,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FloydWarshall2{
+public class FloydWarshall {
 
-    static ALogger<FloydWarshall2> LOGGER = new ALogger<>(FloydWarshall2.class);
+    static ALogger<FloydWarshall> LOGGER = new ALogger<>(FloydWarshall.class);
     public static void main(String[] args) {
 
         int[][] edges = SampleData.Csacademy.CSA001;
-
         LOGGER.info("\n" + SampleData.Printers.stringifyEdgeList(edges));
-
         int[][] adjmtx = SampleData.Convertors.convertEdgelistToAdjMtx(edges, false);
-
-
         LOGGER.info("\n" + SampleData.Printers.stringifyAdjacencyMatrix(adjmtx));
 
-
-        int[][] input = SampleData.Convertors.convertEdgelistToAdjMtx(SampleData.Csacademy.CSA001, false);
-
-        FloydWarshall2 floydWarshall = new FloydWarshall2();
-        floydWarshall.findAllDistances(input, 3, 5);
+        FloydWarshall floydWarshall = new FloydWarshall();
+        floydWarshall.findAllDistances(adjmtx, 3, 5);
 
 
     }

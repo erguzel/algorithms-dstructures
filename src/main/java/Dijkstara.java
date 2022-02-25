@@ -22,7 +22,6 @@ public class Dijkstara {
     public static void main(String[] args) {
         //int[][][] graph = SampleData.convertToAdjacencyList(SampleData.GraphOnlineRu.DUCK_DIR_WEG);
         int[][] graph = SampleData.GraphOnlineRu.DUCK_DIR_WEG;
-
         System.out.println();
 
         Dijkstara dj = null;
