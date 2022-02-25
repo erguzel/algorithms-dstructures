@@ -1,0 +1,86 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class FloydWarshall2{
+
+    static ALogger<FloydWarshall2> LOGGER = new ALogger<>(FloydWarshall2.class);
+    public static void main(String[] args) {
+
+        int[][] edges = SampleData.Csacademy.CSA001;
+
+        LOGGER.info("\n" + SampleData.Printers.stringifyEdgeList(edges));
+
+        int[][] adjmtx = SampleData.Convertors.convertEdgelistToAdjMtx(edges, false);
+
+
+        LOGGER.info("\n" + SampleData.Printers.stringifyAdjacencyMatrix(adjmtx));
+
+
+        int[][] input = SampleData.Convertors.convertEdgelistToAdjMtx(SampleData.Csacademy.CSA001, false);
+
+        FloydWarshall2 floydWarshall = new FloydWarshall2();
+        floydWarshall.findAllDistances(input, 3, 5);
+
+
+    }
+
+    public void findAllDistances(int [][] admtx, int paramsourceid, int paramdestid){
+        Map<Object,Object> runReport = new HashMap<>();
+        int vertexNo = admtx.length;
+//distances
+        int[][] distances = new int[vertexNo][vertexNo];
+        int [][]  next = new int [vertexNo][vertexNo];
+
+// fill initial distances
+        for(int i =0; i < vertexNo; i++){
+            for(int j = 0; j<vertexNo; j++){
+
+                int val = admtx[i][j];
+
+                if(val == 0){
+                    val = Integer.MAX_VALUE;
+                }else{
+                    val = admtx[i][j];
+                    next[i][j] = j;
+                }
+                distances[i][j] = val;
+            }//for iniital dist inner
+        }//for initial dist
+
+// for k-1 times
+        for(int k =0; k<vertexNo; k++){
+            for(int i = 0; i<vertexNo; i++){
+                for(int j = 0; j<vertexNo; j++){
+                    int dij = distances[i][j];
+                    int dik = distances[i][k];
+                    int dkj = distances[k][j];
+                    boolean validNumber =dik != Integer.MAX_VALUE && dkj != Integer.MAX_VALUE;
+                    boolean needRelax = validNumber & dik + dkj <dij;
+                    if(needRelax){
+                        distances[i][j] = dik + dkj;
+                        next[i][j] = next[i][k];
+                    }//if need relax
+                }//for vertex inner
+            }//for vertex
+        }//for k-1 times
+
+// find path
+
+        int target = next[paramsourceid][paramdestid];
+        List<Integer> path = new ArrayList<>();
+        path.add(paramsourceid);
+
+        while(target != paramdestid){
+            path.add(target);
+            target = next[target][paramdestid];
+        }//while path
+        path.add(paramdestid);
+
+        runReport.put(paramsourceid+"->"+paramdestid,distances[paramsourceid][paramdestid]);
+        runReport.put("PATH",path);
+        SampleData.Printers.PrintReport(LOGGER,runReport);
+
+    }// findAll…
+}//class
