@@ -155,4 +155,28 @@ public class DFS {
         return pathexsist;
 
     }//findPathExists
+
+
+    public boolean pathFound(int source, int target, int[][] adjmtx) {
+        int startVertex = source;
+        boolean[] visited = new boolean[adjmtx.length];
+        visited[startVertex] = true;
+        return dfsUtil(startVertex,target,adjmtx,visited);
+    }// path found
+
+    private boolean dfsUtil(int vtx, int data, int[][] mtx, boolean[]visited){
+        if(vtx == data)return true;
+
+        for(int i = 0; i < mtx[vtx].length;i++){
+            if(mtx[vtx][i]==0)continue;//no edge
+            if(!visited[i]){
+                visited[i] = true;
+                if(dfsUtil(i,data,mtx,visited)){
+                    return true;
+                }//if visited
+            }//for nbours
+        }
+        return false;
+    }//dfs util
+
 }//class
