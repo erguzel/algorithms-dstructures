@@ -7,15 +7,43 @@ public class DFS {
 
     public static void main(String[] args) {
         // int[][][] graph = SampleData.convertToAdjacencyList(SampleData.GraphOnlineRu.DUCK_DIR_WEG);
-        int[][] graph = SampleData.GraphOnlineRu.DUCK_DIR_WEG;
+        int[][] graph = SampleData.GraphOnlineRu.TOPSORT1;
 
-        System.out.println();
+        DFS dfs = new DFS();
+       int [] track =  dfs.topologicalSort(graph);
+        System.out.println(Arrays.stream(track).boxed().collect(Collectors.toList()));
+//        System.out.println();
+//
+//        ALogger.TIMER timer = new ALogger.TIMER();
+//        timer.startTimer();
+//        DFS df = new DFS();
+//        df.findTrajectoryAndPathExists(graph, 9, 2);
+//        timer.getBenchmark(timer);
+    }
 
-        ALogger.TIMER timer = new ALogger.TIMER();
-        timer.startTimer();
-        DFS df = new DFS();
-        df.findTrajectoryAndPathExists(graph, 9, 2);
-        timer.getBenchmark(timer);
+    public int[] topologicalSort(int[][] graph){
+        boolean[] visited = new boolean[graph.length];
+        Stack<Integer> stack = new Stack<>();
+
+        for(int i = graph.length-1; i >= 0; i--){
+            if(!visited[i]){
+                topSortHelper(i,graph,stack,visited);
+            }
+
+        }
+        return stack.stream().mapToInt(a->a).toArray();
+    }
+
+    private void topSortHelper(int vertex, int[][] graph, Stack<Integer> integerStack,boolean[] visited){
+            visited[vertex] = true;
+            for(int j =graph[vertex].length-1; j >= 0;j--){
+                if(graph[vertex][j]==0)continue;
+                if(!visited[j]){
+                    topSortHelper(j,graph,integerStack,visited);
+                }
+            }
+
+            integerStack.push(vertex);
     }
 
     /**
