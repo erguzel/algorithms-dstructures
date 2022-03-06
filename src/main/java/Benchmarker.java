@@ -1,4 +1,8 @@
-import java.util.Arrays;
+import model.ABinarySearchTree;
+import model.BSTreeNode;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Benchmarker {
 
@@ -6,84 +10,57 @@ public class Benchmarker {
 
     public static void main(String[] args) {
 
-        //int [][] mtx1 = SampleData.Generators.generateRandomMatrix(4,4,-2,12);
-
-        //LOGGER.info(SampleData.Printers.stringifyAdjacencyMatrix(mtx1));
-
-        int[][] mtx = {
-                {-1, 9, 3, -1},
-                {8, 5, 11, 1},
-                {8, 6, 9, 7},
-                {7, 0, 7, -1}
-        };
-
-        LOGGER.info("Mtx\n" + SampleData.Printers.stringifyAdjacencyMatrix(mtx));
-
-//        int [][] other = new int[mtx.length][mtx[0].length];
-//
-//        int [][] empt = new int[other.length][other[0].length];
-//
-//        other = Arrays.copyOf(mtx,mtx.length);
-//
-//        for(int i = 0; i < other.length;i++){
-//            for(int j = 0; j<other[i].length; j++){
-//                if(i==1 || j==1){
-//                    empt[i][j] = other[i][j];
-//                }
-//
-//            }
-//        }
-//
-//       int[][] other2 = Arrays.copyOf(mtx,mtx.length);
-//        LOGGER.info("\n" + SampleData.Printers.stringifyAdjacencyMatrix(empt));
-//
-//        // get colum 2
-//        int [] col = new int[other2.length];
-//
-//        for(int i = 0; i < other2.length; i++){
-//            int val = -1;
-//            for(int j = 0; j < other2[i].length; j++){
-//                if(j==2){
-//                    val = other2[i][j];
-//                }
-//            }
-//            col[i] = val;
-//        }
-//
-//        LOGGER.info("\n"+SampleData.Printers.stringifyArray(col));
-//
-//        // get row 3
-//
-//        int [] row = mtx[3];
-//
-//        LOGGER.info("\n"+SampleData.Printers.stringifyArray(row));
-//
-//        // swap col index 2 and col index 3
-
-        int[][] other1 = new int[mtx.length][mtx[0].length];
-
-        for (int i = 0; i < mtx.length; i++) {
-            for (int j = 0; j < mtx[i].length; j++) {
-                other1[i][j] = mtx[i][j];
-            }
-        }
-
-        for (int i = 0; i < other1.length; i++) {
-            for (int j = 0; j < other1[i].length; j++) {
-                if (j == 2) {
-
-                    int temp = 0;
-                    temp = other1[i][2];
-                    other1[i][2] = other1[i][3];
-                    other1[i][3] = temp;
-
-                }
-            }
-        }
-
-        LOGGER.info("\n" + SampleData.Printers.stringifyAdjacencyMatrix(other1));
 
 
-        LOGGER.info("End of main");
+
+//        ABinarySearchTree binarySearchTree = new ABinarySearchTree(8);
+//
+//        BSTreeNode node = new BSTreeNode(4);
+//        BSTreeNode node2 = new BSTreeNode(6);
+//        BSTreeNode node3 = new BSTreeNode(8);
+//        BSTreeNode node4 = new BSTreeNode(10);
+//        BSTreeNode node5 = new BSTreeNode(1);
+//        BSTreeNode node6 = new BSTreeNode(2);
+//
+//
+//        Comparator<BSTreeNode> cp = Comparator.comparing(BSTreeNode::getValue);
+//        TreeSet<BSTreeNode> set =  new TreeSet<BSTreeNode>((a,b)->a.getValue()>b.getValue()?0:-1);
+//        set.add(node);
+//        set.add(node6);
+//        set.add(node2);
+//        set.add(node3);
+//        set.add(node4);
+//        set.add(node5);
+//        set.add(node6);
+//
+//
+//        System.out.println(set);
+
+//        binarySearchTree.insert(12);
+//        boolean os = binarySearchTree.insert(11);
+//        System.out.println(os);
+//        binarySearchTree.insert(23);
+//        binarySearchTree.insert(4);
+//        binarySearchTree.insert(2);
+//        binarySearchTree.insert(1);
+//        binarySearchTree.insert(3);
+//        binarySearchTree.insert(6);
+//        binarySearchTree.printBSTree();
+//        binarySearchTree.remove(23);
+//        binarySearchTree.printBSTree();
+//        binarySearchTree.insert(-34);
+//        binarySearchTree.printBSTree();
+//        binarySearchTree.remove(-34);
+//        binarySearchTree.printBSTree();
+//        boolean ccc = binarySearchTree.contains(2);
+//        System.out.println(ccc);
+//        binarySearchTree.remove(2398);
+//        binarySearchTree.printBSTree();
+
+
+
+
     }
+
+
 }
