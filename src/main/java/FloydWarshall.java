@@ -10,7 +10,7 @@ public class FloydWarshall {
 
         int[][] edges = SampleData.Csacademy.CSA001;
         LOGGER.info("\n" + SampleData.Printers.stringifyEdgeList(edges));
-        int[][] adjmtx = SampleData.Convertors.convertEdgelistToAdjMtx(edges, false);
+        int[][] adjmtx = SampleData.Convertors.convertEdgelistToAdjMtx(edges);
         LOGGER.info("\n" + SampleData.Printers.stringifyAdjacencyMatrix(adjmtx));
 
         FloydWarshall floydWarshall = new FloydWarshall();
