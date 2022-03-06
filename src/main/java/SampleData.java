@@ -153,18 +153,19 @@ public class SampleData {
 
 
         public static int[][] CSA002={
-                {0 ,1 , 1},
-                {0 ,2 , 3},
-                {2 ,0 , 3},
-                {3 ,0 , 1},
-                {0 ,4 , 2},
-                {4 ,0 , 2},
-                {3 ,1 ,-4},
-                {2 ,4 ,-2},
-                {6 ,1 ,-5},
-                {1 ,6 ,-5},
-                {6 ,0 , 2},
-                {2 ,0 , 3}
+                {0,1, 1},
+                {0,2, 3},
+                {2,0, 3},
+                {3,0, 1},
+                {0,4, 2},
+                {4,0, 2},
+                {3,1,-4},
+                {2,4,-2},
+                {6,1,-5},
+                {1,6,-5},
+                {6,0, 2},
+                {2,0, 3},
+                {5}
 
         };
 
@@ -212,114 +213,101 @@ public class SampleData {
 
     public static class Convertors {
 
-        public static int[][] convertEdgelistToAdjMtx(int[][] edges,boolean undirected,int paramfromidx, int paramtoidx, Object paramweightidx) {
+        public static int[][] convertEdgelistToAdjMtx(int[][] edges) {
             // {{1,2,1},{1,3,1}..}//
 
+            int numOfVertices = Integer.MIN_VALUE;
+            for(int i =0; i<edges.length;i++){
 
+                if(edges[i].length>0){
+                    if(edges[i][0] > numOfVertices) numOfVertices = edges[i][0];
+                }
+                if(edges[i].length>1){
+                    if(edges[i][1] > numOfVertices) numOfVertices = edges[i][1];
+                }
 
-            int[][] res = new int[edges.length][];
+            }
+
+            numOfVertices = numOfVertices+1;
+
+            int[][] res = new int[numOfVertices][numOfVertices];
 
             for (int i = 0; i < edges.length; i++) {
 
                 // {1,4,5} // {1,5}
-                int fridx = edges[i][paramfromidx];;
-                int toidx = edges[i][paramtoidx];
-                int weight =1;
-                if(paramweightidx != null){
-
-                    weight = edges[i][(int)paramweightidx];
+                int fridx = Integer.MAX_VALUE;
+                try {
+                    fridx = edges[i][0];
+                }catch (Exception e){
+                    fridx = Integer.MAX_VALUE;
+                }
+                int toidx = Integer.MAX_VALUE;
+                try {
+                   toidx = edges[i][1];
+                }catch (Exception e){
+                    toidx = Integer.MAX_VALUE;
+                }
+                int weight = 0;
+                try {
+                    weight = edges[i][2];
+                }catch (Exception e){
+                    weight = 0;
                 }
 
-                if(res[fridx] == null){
-                    res[fridx] = new int[edges.length];
-                }
-
-                res[fridx][toidx] = weight;
-                if(undirected){
-                    if(res[toidx] == null){
-
-                        res[toidx] = new int[edges.length];
-
-                    }
-                    res[toidx][fridx] = weight;
-                }
-
-
-            }
-
-            System.out.println(res.length);
-
-            int nodeCount = 0;
-            for(int i = 0; i < res.length; i++){
-
-                if(res[i] !=null){
-                    nodeCount++;
+                if(fridx != Integer.MAX_VALUE && toidx != Integer.MAX_VALUE){
+                    res[fridx][toidx] = weight;
                 }
             }
-
-
-
-            for(int i = 0; i < nodeCount; i++){
-
-                if(res[i] == null)continue;
-
-                res[i] = Arrays.copyOf(res[i],nodeCount);
-            }
-
-            res = Arrays.copyOf(res,nodeCount);
 
             return res;
         }
 
-        public static int[][] convertEdgelistToAdjMtx(int[][] edges,boolean undirected) {
+        public static int[][] convertEdgelistToAdjMtx(int[][] edges,int paramfromidx, int paramtoidx, Object paramweightidx) {
             // {{1,2,1},{1,3,1}..}//
 
-            int[][] res = new int[edges.length][];
+            int numOfVertices = Integer.MIN_VALUE;
+            for(int i =0; i<edges.length;i++){
+
+                if(edges[i].length>paramfromidx){
+                    if(edges[i][paramfromidx] > numOfVertices) numOfVertices = edges[i][paramfromidx];
+                }
+                if(edges[i].length>paramtoidx){
+                    if(edges[i][paramtoidx] > numOfVertices) numOfVertices = edges[i][paramtoidx];
+                }
+
+            }
+
+            int[][] res = new int[numOfVertices][numOfVertices];
 
             for (int i = 0; i < edges.length; i++) {
 
                 // {1,4,5} // {1,5}
-                int fridx = edges[i][0];;
-                int toidx = edges[i][1];
-                int weight = edges[i][2];
-
-                if(res[fridx] == null){
-                    res[fridx] = new int[edges.length];
+                int fridx = Integer.MAX_VALUE;
+                try {
+                    fridx = edges[i][0];
+                }catch (Exception e){
+                    fridx = Integer.MAX_VALUE;
                 }
+                int toidx = Integer.MAX_VALUE;
+                try {
+                    toidx = edges[i][1];
+                }catch (Exception e){
+                    toidx = Integer.MAX_VALUE;
+                }
+                int weight = 0;
+                try {
+                    if(paramweightidx != null){
 
-                res[fridx][toidx] = weight;
-                if(undirected){
-                    if(res[toidx] == null){
-
-                        res[toidx] = new int[edges.length];
-
+                        weight = edges[i][(int)paramweightidx];
                     }
-                    res[toidx][fridx] = weight;
+                }catch (Exception e){
+                    weight = 0;
                 }
 
-
-            }
-
-            System.out.println(res.length);
-
-            int nodeCount = 0;
-            for(int i = 0; i < res.length; i++){
-
-                if(res[i] !=null){
-                    nodeCount++;
+                if(fridx != Integer.MAX_VALUE && toidx != Integer.MAX_VALUE){
+                    res[fridx][toidx] = weight;
                 }
             }
-
-
-
-            for(int i = 0; i < nodeCount; i++){
-
-                if(res[i] == null)continue;
-
-                res[i] = Arrays.copyOf(res[i],nodeCount);
-            }
-
-            res = Arrays.copyOf(res,nodeCount);
 
             return res;
         }
