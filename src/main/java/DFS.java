@@ -10,8 +10,10 @@ public class DFS {
         int[][] graph = SampleData.GraphOnlineRu.TOPSORT1;
 
         DFS dfs = new DFS();
-       int [] track =  dfs.topologicalSort(graph);
+       int [] track =  dfs.findTopSortNonRecursive(graph);
         System.out.println(Arrays.stream(track).boxed().collect(Collectors.toList()));
+        int [] track1 =  dfs.findTopSortRecursive(graph);
+        System.out.println(Arrays.stream(track1).boxed().collect(Collectors.toList()));
 //        System.out.println();
 //
 //        ALogger.TIMER timer = new ALogger.TIMER();
@@ -21,31 +23,86 @@ public class DFS {
 //        timer.getBenchmark(timer);
     }
 
-    public int[] topologicalSort(int[][] graph){
-        boolean[] visited = new boolean[graph.length];
-        Stack<Integer> stack = new Stack<>();
+    public int[] findTopSortNonRecursive(int[][] graph){
 
-        for(int i = graph.length-1; i >= 0; i--){
+        Stack<Integer> callstack = new Stack<Integer>();//for next dfs call
+        Queue<Integer> path = new LinkedList<>();// for path
+        boolean[] visited = new boolean[graph.length];//for visited track
+        int[] cache = new int[graph.length]; // for tracking unconnected degree of vertexes
+
+// fill cache with number of connections whicht towards them
+
+        for(int i =0; i<graph.length; i++){
+            for(int j =0; j<graph.length;j++){
+                if(graph[j][i] != 0){
+                    cache[i]++;
+                }// means there is a connection to that vertex
+            }//foreach neightbour
+        }//f0r each vertex
+
+// add vertexes which has no dependen cies to call stack
+
+        for(int i = 0; i < cache.length;i++){
+            if(cache[i] ==0)callstack.add(i);
+        }// fill stack
+
+// traverse from nondependent vertexes
+
+        while(!callstack.isEmpty()){
+            int current = callstack.pop();//add to path queue
+            path.add(current);
+            if(visited[current])continue;
+            visited[current] = true;
+
+// explore neighbours (not a visit !)
+            for(int i = 0; i < graph[current].length; i++){
+                if(graph[current][i]==0)continue;
+                if(!visited[i]){
+                    if(cache[i]>0){
+                        cache[i]--;//reduce 1 for priority
+                    }
+                    if(cache[i] == 0){
+                        callstack.add(i);
+                    }//add callstack if reaches priority
+                }//if not visited
+            }//for nbours
+        }//traverse
+
+        return path.stream().mapToInt(a->a).toArray();
+    }//find topsortnonrecursinve
+
+    public int[] findTopSortRecursive(int[][] graph){
+
+        boolean[] visited = new boolean[graph.length];// track if visited
+        Queue<Integer> path = new LinkedList<>();// for path
+// for each vertex, we call dfs if necessary
+        for(int i = 0; i<graph.length; i++){
+            int current = i;
+            if(!visited[current]){
+                findTopSortRecursiveUtil(graph,current,visited,path);
+            }//call dfs
+        }//for each vertex
+
+        Integer[] as = path.toArray(new Integer[0]);
+        ReverseArray.reverse(as);
+
+        return  Arrays.stream(as).mapToInt(a->a).toArray();
+    }// find topsort recursive
+
+    private void findTopSortRecursiveUtil(int[][] graph, int current, boolean[] visited, Queue<Integer> path){
+        visited[current] = true;
+// explore nbours
+        for(int i =0; i < graph[current].length;i++){
+            if(graph[current][i]==0)continue;
+            int currentnbour = i;
             if(!visited[i]){
-                topSortHelper(i,graph,stack,visited);
-            }
+                findTopSortRecursiveUtil(graph,currentnbour,visited,path);
+            }//call deeper stack
+        }//for nbours
 
-        }
-        return stack.stream().mapToInt(a->a).toArray();
-    }
-
-    private void topSortHelper(int vertex, int[][] graph, Stack<Integer> integerStack,boolean[] visited){
-            visited[vertex] = true;
-            for(int j =graph[vertex].length-1; j >= 0;j--){
-                if(graph[vertex][j]==0)continue;
-                if(!visited[j]){
-                    topSortHelper(j,graph,integerStack,visited);
-                }
-            }
-
-            integerStack.push(vertex);
-    }
-
+//add call back value to path
+        path.add(current);
+    }// topsort recursive util
     /**
      *
      * @param graph adj mtx
@@ -189,17 +246,17 @@ public class DFS {
         int startVertex = source;
         boolean[] visited = new boolean[adjmtx.length];
         visited[startVertex] = true;
-        return dfsUtil(startVertex,target,adjmtx,visited);
+        return pathFoundUtil(startVertex,target,adjmtx,visited);
     }// path found
 
-    private boolean dfsUtil(int vtx, int data, int[][] mtx, boolean[]visited){
+    private boolean pathFoundUtil(int vtx, int data, int[][] mtx, boolean[]visited){
         if(vtx == data)return true;
 
         for(int i = 0; i < mtx[vtx].length;i++){
             if(mtx[vtx][i]==0)continue;//no edge
             if(!visited[i]){
                 visited[i] = true;
-                if(dfsUtil(i,data,mtx,visited)){
+                if(pathFoundUtil(i,data,mtx,visited)){
                     return true;
                 }//if visited
             }//for nbours
