@@ -15,6 +15,16 @@ public class SampleData {
      * Adj martixes
      */
     public static class GraphOnlineRu {
+        //http://graphonline.ru/en/?graph=zzCShjeZpDyKvysP
+        public static final int[][] TOPSORT1={
+                {0, 0, 1, 1, 0, 0},
+                {0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0},
+                {0, 1, 0, 0, 0, 0},
+                {0, 1, 1, 0, 0, 0},
+                {1, 0, 1, 0, 0, 0}
+
+        };
 
         // http://graphonline.ru/en/?graph=QVOSZByBcyggFfvj
         public static final int[][] DUCK_DIR_WEG = {
@@ -150,7 +160,14 @@ public class SampleData {
 
     public static class Csacademy {
 
-
+        public static int [][] NONE ={
+                {5,4,1},
+                        {1,2,1},
+                                {2,3,1},
+                                        {1,3,1},
+                                                {1,5,1},
+                                                        {0,0,1}
+        };
 
         public static int[][] CSA002={
                 {0,1, 1},
