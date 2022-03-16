@@ -1,7 +1,7 @@
-package model;
+package lib.model;
 
-import model.abstraction.IBSTreeNode;
-import model.abstraction.IBinaryTreeNode;
+import lib.model.abstraction.IBSTreeNode;
+import lib.model.abstraction.IBinaryTreeNode;
 
 import java.util.LinkedList;
 import java.util.Objects;

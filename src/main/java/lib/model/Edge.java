@@ -1,6 +1,6 @@
-package model;
+package lib.model;
 
-import model.abstraction.IGraphEdge;
+import lib.model.abstraction.IGraphEdge;
 
 public class Edge implements IGraphEdge {
 
@@ -43,4 +43,5 @@ public class Edge implements IGraphEdge {
     public double getWeight() {
         return weight;
     }
+
 }
