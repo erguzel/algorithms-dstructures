@@ -1,6 +1,4 @@
-package model.abstraction;
-
-import model.BSTreeNode;
+package lib.model.abstraction;
 
 public interface IBSTreeNodeMethods {
     double getExtremumRecursive(boolean isMax);

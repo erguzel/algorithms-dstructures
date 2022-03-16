@@ -1,4 +1,4 @@
-package model.abstraction;
+package lib.model.abstraction;
 
 public abstract class Result implements IResultAsset {
     private  int id;

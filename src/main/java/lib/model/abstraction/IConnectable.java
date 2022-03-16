@@ -1,6 +1,6 @@
-package model.abstraction;
+package lib.model.abstraction;
 
-import model.Vertex;
+import lib.model.Vertex;
 
 public interface IConnectable extends IWeightable {
 
