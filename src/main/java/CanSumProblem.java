@@ -1,4 +1,6 @@
-import java.util.HashMap;
+import lib.model.ProblemBase;
+import lib.util.ALogger;
+
 import java.util.Map;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Map;
  * you can use an element of the array as many times as needed
  * elements are nonnegative numbers
  */
-public class CanSumProblem extends ProblemBase{
+public class CanSumProblem extends ProblemBase {
 
     public static void main(String[] args) {
 
@@ -24,7 +26,7 @@ public class CanSumProblem extends ProblemBase{
         timer.getBenchmark(timer,"canSum");
 
 //        new Thread(()->{
-//            ALogger.TIMER timer = new ALogger.TIMER();
+//            lib.util.ALogger.TIMER timer = new lib.util.ALogger.TIMER();
 //            timer.startTimer();
 //            int result = 0;
 //            boolean num = grr.canSum1(param1,param2,result);
@@ -35,7 +37,7 @@ public class CanSumProblem extends ProblemBase{
 //        }).start();
 
 //        new Thread(()->{
-//            ALogger.TIMER timer = new ALogger.TIMER();
+//            lib.util.ALogger.TIMER timer = new lib.util.ALogger.TIMER();
 //            timer.startTimer();
 //            boolean num = grr.canSumMem(param1,param2,new HashMap<Integer,Boolean>());
 //            grr.LOGGER.info("canSumMem:"+num);

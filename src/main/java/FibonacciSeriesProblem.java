@@ -1,7 +1,10 @@
+import lib.model.ProblemBase;
+import lib.util.ALogger;
+
 /**
  * Write a function that takes a number as argument, returns the nth number of fibonacci sequence
  */
-public class FibonacciSeriesProblem extends ProblemBase{
+public class FibonacciSeriesProblem extends ProblemBase {
 
     public static void main(String[] args){
         FibonacciSeriesProblem grr = new FibonacciSeriesProblem();

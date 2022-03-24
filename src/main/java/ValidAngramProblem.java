@@ -1,12 +1,13 @@
+import lib.model.ProblemBase;
+
 import java.util.*;
 
 /**
  * 2 strings are called angram if they have the same letters with the same frequency int different order
  * Find if given 2 strings are angrams
  */
-import java.util.*;
 
-public class ValidAngramProblem extends ProblemBase{
+public class ValidAngramProblem extends ProblemBase {
 
     public static void main(String[] args) {
 

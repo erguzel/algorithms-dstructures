@@ -1,10 +1,13 @@
+import lib.model.ProblemBase;
+import lib.util.ALogger;
+
 import java.util.HashMap;
 import java.util.Map;
 /**
  * Write a function that accepts a target string and an array of strings
  * Function returns number of different ways if given target string can be constructed by given string array
  */
-public class CanStringConstructCountProblem extends ProblemBase{
+public class CanStringConstructCountProblem extends ProblemBase {
 
     public static void main(String[] args) {
 

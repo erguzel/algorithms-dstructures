@@ -1,7 +1,9 @@
+import lib.model.ProblemBase;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class AllSubArraysProblem extends ProblemBase{
+public class AllSubArraysProblem extends ProblemBase {
 
     public Set<Set<Object>> allSubArrays(List target) {
         if (target.size() == 0) return new HashSet<Set<Object>>();

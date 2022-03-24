@@ -1,7 +1,5 @@
-import model.ALinkedList;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import lib.model.ALinkedList;
+import lib.model.ProblemBase;
 
 public class RecusionGeneralProblem extends ProblemBase {
 
@@ -23,7 +21,7 @@ public class RecusionGeneralProblem extends ProblemBase {
 //        linkedList.append(4);
 //        linkedList.append(5);
 //        linkedList.reverse();
-//        int[][] data = SampleData.Convertors.convertEdgelistToAdjMtx(SampleData.Csacademy.CSA001,false);
+//        int[][] data = lib.util.SampleData.Convertors.convertEdgelistToAdjMtx(lib.util.SampleData.Csacademy.CSA001,false);
 //        boolean result = recusionGeneralProblem.dfsTraversal(data,12);
 //        recusionGeneralProblem.LOGGER.info(result);
 //        recusionGeneralProblem.LOGGER.info(recusionGeneralProblem.counter);

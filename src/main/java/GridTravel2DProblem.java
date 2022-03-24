@@ -1,3 +1,6 @@
+import lib.model.ProblemBase;
+import lib.util.ALogger;
+
 import java.util.HashMap;
 import java.util.Map;
 
