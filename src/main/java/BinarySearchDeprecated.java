@@ -1,6 +1,6 @@
 import com.sun.source.tree.BreakTree;
 
-public class BinarySearch {
+public class BinarySearchDeprecated {
 
     public static int count =0;
     public static int count1 =0;

@@ -1,13 +1,14 @@
+import deprecated.LadderClimbingProblemDeprecated;
 import lib.model.ProblemBase;
 import lib.util.ALogger;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LadderClimbingProblemTest extends ProblemBase {
+class LadderClimbingProblemTestDeprecated extends ProblemBase {
 
     private LadderClimbingProblemDeprecated instance = new LadderClimbingProblemDeprecated();
-    static ALogger<LadderClimbingProblemTest> LOGGER = new ALogger<>(LadderClimbingProblemDeprecated.class);
+    static ALogger<LadderClimbingProblemTestDeprecated> LOGGER = new ALogger<>(LadderClimbingProblemDeprecated.class);
 
     @Test
     void testGetDifferentWaysV1() {

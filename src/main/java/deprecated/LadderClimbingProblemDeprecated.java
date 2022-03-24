@@ -1,3 +1,5 @@
+package deprecated;
+
 import lib.model.ProblemBase;
 
 import java.util.*;

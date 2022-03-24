@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
  * return a 2d array containing all different combination of strings whihch can create the target string
  */
 
-public class AllStringConstructProblem extends ProblemBase {
+public class AllStringConstructProblemDeprecated extends ProblemBase {
 
     public static void main(String[] args) {
         String target = "abcdef";
@@ -28,7 +28,7 @@ public class AllStringConstructProblem extends ProblemBase {
 
 
         new Thread(() -> {
-            AllStringConstructProblem grr = new AllStringConstructProblem();
+            AllStringConstructProblemDeprecated grr = new AllStringConstructProblemDeprecated();
             ALogger.TIMER timer = new ALogger.TIMER();
             timer.startTimer();
             Set<Set<Object>> num = grr.allStringConstructX(target4, Arrays.stream(targs4).collect(Collectors.toList()));
