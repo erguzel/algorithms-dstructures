@@ -2,14 +2,12 @@ import lib.model.ProblemBase;
 import lib.util.ALogger;
 import org.junit.jupiter.api.*;
 
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class LadderClimbingProblemTest extends ProblemBase {
 
-    private LadderClimbingProblem instance = new LadderClimbingProblem();
-    static ALogger<LadderClimbingProblemTest> LOGGER = new ALogger<>(LadderClimbingProblem.class);
+    private LadderClimbingProblemDeprecated instance = new LadderClimbingProblemDeprecated();
+    static ALogger<LadderClimbingProblemTest> LOGGER = new ALogger<>(LadderClimbingProblemDeprecated.class);
 
     @Test
     void testGetDifferentWaysV1() {
@@ -97,6 +95,17 @@ class LadderClimbingProblemTest extends ProblemBase {
                         instance.getNumberOfDifferentWaysOfClimbingOnlyKJumpsAllowedForbiddenStairs(n,k,forbiddens),
                         2));
     }
+
+    @Test
+    void testGetNumberOfDifferentWaysOfClimbingOnlyKJumpsAllowedForbiddenStairs2(){
+        boolean[] forbiddens = {false,true,false,true,true,false,false};
+        int n = 7; int k = 3;
+
+        assertAll("arbitrary",
+                ()->assertEquals(
+                        instance.getNumberOfDifferentWaysOfClimbingOnlyKJumpsAllowedForbiddenStairs2(n,k,forbiddens),
+                        2));
+    }
     //
     // Optimisation probs
     //
@@ -106,6 +115,14 @@ class LadderClimbingProblemTest extends ProblemBase {
         assertAll("Arbitrary",
                 ()->assertEquals(instance.minimumCostToGetTop2steps(nofleadder,cost),want));
     }
+
+    @Test
+    void testMinimumCostToGetTop2(){
+        int nofleadder = 3; int[] cost = {0,3,2,4}; int want = 6;int maxJump = 2;
+        assertAll("Arbitrary",
+                ()->assertEquals(instance.minimumCostToGetTop_2(nofleadder,maxJump,cost),want));
+    }
+
 
     @Test
     void testMinimumCostToGetTop2stepsPath(){

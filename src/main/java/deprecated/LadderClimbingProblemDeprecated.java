@@ -9,15 +9,16 @@ import java.util.stream.IntStream;
  * in each step, you can either one or two steps
  * in how many different sequence you can reach the top of the leadder
  */
-public class LadderClimbingProblem extends ProblemBase {
+public class LadderClimbingProblemDeprecated extends ProblemBase {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
 
         int n = 4;
 
-        LadderClimbingProblem ladderClimbingProblem = new LadderClimbingProblem();
+        LadderClimbingProblemDeprecated ladderClimbingProblem = new LadderClimbingProblemDeprecated();
         int res = ladderClimbingProblem.getNumberOfDifferentWaysOfClimbingOnly2JumpsAllowed(n);
         System.out.println(res);
+
     }
 
     /**
@@ -28,7 +29,7 @@ public class LadderClimbingProblem extends ProblemBase {
      * f(1) = 1 -> in case of 1 leadder, there is only 1 way
      * f(2) = 2 -> if 2 leadders exists, we can either take 1 step or 2
      * 3. Define recurrence relation
-     * f(n) = f(n-1) + f(n-1); number of different ways of reaching nth step is the sum of number of different ways
+     * f(n) = f(n-1) + f(n-2); number of different ways of reaching nth step is the sum of number of different ways
      * to previous steps
      * 4. What is the order of execution
      * bottom up; starting from minimum to top
@@ -113,11 +114,29 @@ public class LadderClimbingProblem extends ProblemBase {
                     .forEach(allowedStepsAtOnce -> {
                         if (isForbidden[leaddernumber - 1]) {
                             dp[leaddernumber] = 0;// current leadder corresponds to i-1th isforbideen element
-                        } else {
-                            dp[leaddernumber] += dp[leaddernumber - allowedStepsAtOnce];
+                            return;
                         }
+                        dp[leaddernumber] += dp[leaddernumber - allowedStepsAtOnce];
                     });
         });
+
+        return dp[numberofleadders];
+    }
+
+    public int getNumberOfDifferentWaysOfClimbingOnlyKJumpsAllowedForbiddenStairs2(int numberofleadders, int k, boolean[] isForbidden) {
+        // base cases
+        int[] dp = new int[numberofleadders + 1];
+        dp[0] = 1 * (isForbidden[0] == true ? 0 : 1);
+        dp[1] = 1 * (isForbidden[1] == true ? 0 : 1);
+
+        IntStream.rangeClosed(1, numberofleadders).forEach(sLadderNo -> {
+            IntStream.rangeClosed(1, k).filter(i -> sLadderNo - i >= 0)
+                    .forEach(sAllowedStep -> {
+                        dp[sLadderNo] += dp[sLadderNo - sAllowedStep] * (isForbidden[sLadderNo - 1] ? 0 : 1);
+
+                    });
+        });
+
 
         return dp[numberofleadders];
     }
@@ -163,6 +182,50 @@ public class LadderClimbingProblem extends ProblemBase {
         return dp[numberofleadders];
     }
 
+    public int minimumCostToGetTop_2(int numberofleadders, int maxjumpcapacity, int[] costarray) {
+        //initalize result allocaiton
+        int[] dp = new int[numberofleadders + 1];
+        dp[0] = costarray[0];
+        dp[1] = costarray[1];
+        int[] from = new int[numberofleadders+1];
+        Arrays.fill(from,Integer.MAX_VALUE);
+
+        var streamHelper = new Object() {
+            int min = Integer.MAX_VALUE;
+            int from = -1;
+            public void reset() {
+                this.min = Integer.MAX_VALUE;
+                this.from = -1;
+            }
+        };
+
+        IntStream.rangeClosed(1, numberofleadders).forEach(sLadderNo -> {
+            IntStream.rangeClosed(1, maxjumpcapacity)
+                    .filter(i -> sLadderNo - i >= 0)
+                    .forEach(sJumpSize -> {
+                        if (dp[sLadderNo - sJumpSize] <= streamHelper.min) {
+                            streamHelper.min = dp[sLadderNo - sJumpSize];
+
+                        }
+                    });
+            dp[sLadderNo] += streamHelper.min + costarray[sLadderNo];
+            streamHelper.reset();
+        });
+
+//        for(int i = 1; i <= numberofleadders;i++){
+//            int min = Integer.MAX_VALUE;
+//            for(int j = 1; j<=maxjumpcapacity ; j++){
+//                if(i-j<0)continue;
+//                if(dp[i-j]<min){
+//                    min = dp[i-j];
+//                }
+//            }
+//            dp[i] += min+costarray[i];
+//        }
+
+        return dp[numberofleadders];
+
+    }
 
     /**
      * Given a leadder which has n steps
@@ -202,8 +265,8 @@ public class LadderClimbingProblem extends ProblemBase {
 
     public int[] minimumCostToGetTop2stepsPath(int numberofleadders, int[] costarray) {
         //initalize result allocaiton
-        int[] dp = new int[numberofleadders+1];
-        int[] from = new int[numberofleadders+1]; //for path
+        int[] dp = new int[numberofleadders + 1];
+        int[] from = new int[numberofleadders + 1]; //for path
         dp[0] = 0;
         from[0] = 0;
         dp[1] = 3;
@@ -212,8 +275,8 @@ public class LadderClimbingProblem extends ProblemBase {
 
         IntStream.range(2, numberofleadders + 1).forEach(stepno -> {
 
-            dp[stepno] = costarray[stepno] + Math.min(dp[stepno - 1],dp[stepno - 2]);
-            if (dp[stepno-1]>dp[stepno-2]) {
+            dp[stepno] = costarray[stepno] + Math.min(dp[stepno - 1], dp[stepno - 2]);
+            if (dp[stepno - 1] > dp[stepno - 2]) {
                 from[stepno] = stepno - 2;
             } else {
                 from[stepno] = stepno - 1;
@@ -225,11 +288,11 @@ public class LadderClimbingProblem extends ProblemBase {
         List<Integer> path = new ArrayList<>();
         for (int cur = numberofleadders; cur >= 0; cur = from[cur]) {
             path.add(cur);
-            if(cur==0)break;
+            if (cur == 0) break;
         }
 
         Collections.reverse(path);
-        int res [] = path.stream().mapToInt(a->a).toArray();
+        int res[] = path.stream().mapToInt(a -> a).toArray();
         return res;
     }
 
