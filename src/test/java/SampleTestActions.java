@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
+@Disabled
 class SampleTestActions extends ProblemBase {
 
     static ALogger<SampleTestActions> LOGGER = new ALogger<>(SampleTestActions.class);
