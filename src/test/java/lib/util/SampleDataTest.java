@@ -8,6 +8,73 @@ import static org.junit.jupiter.api.Assertions.*;
 class SampleDataTest extends ProblemBase {
 
     @Test
+    void testConvertAdjMatrixToAdjListWeighted(){
+        int[][] input = {
+                {0,0,1,0,2,1},
+                {0,0,0,0,0,1},
+                {0,0,0,0,3,4},
+                {0,0,0,0,-1,0},
+                {0,0,0,0,0,0},
+                {0,0,0,0,0,0},
+        };
+
+        int[][][] wantedindirect={
+                {{2,1},{4,2},{5,1}},
+                {{5,1}},
+                {{0,1},{4,3},{5,4}},
+                {{4,-1}},
+                {{0,1},{2,1},{3,1}},
+                {{0,1},{1,1},{2,1}}
+        };
+
+        int[][][] wanteddirect = {
+                {{2,1},{4,2},{5,1}},
+                {{5,1}},
+                {{4,3},{5,4}},
+                {{4,-1}},
+                {},
+                {}
+        };
+
+        assertArrayEquals(SampleData.Convertors.convertAdjMatrixToAdjListWeighted(input,false),wantedindirect);
+        assertArrayEquals(SampleData.Convertors.convertAdjMatrixToAdjListWeighted(input,true),wanteddirect);
+    }
+
+
+    @Test
+    void testConvertAdjMatrixToAdjList(){
+        int[][] input = {
+                {0,0,1,0,1,1},
+                {0,0,0,0,0,1},
+                {0,0,0,0,1,1},
+                {0,0,0,0,1,0},
+                {0,0,0,0,0,0},
+                {0,0,0,0,0,0},
+        };
+
+        int[][] wantdirected ={
+                {2,4,5},
+                {5},
+                {4,5},
+                {4},
+                {},
+                {}
+        };
+
+        int[][] wantindirected ={
+                {2,4,5},
+                {5},
+                {0,4,5},
+                {4},
+                {0,2,3},
+                {0,1,2}
+        };
+
+        assertArrayEquals(SampleData.Convertors.convertAdjMatrixToAdjList(input,true),wantdirected);
+        assertArrayEquals(SampleData.Convertors.convertAdjMatrixToAdjList(input,false),wantindirected);
+    }
+
+    @Test
     void testConvertAdjMatrixToEdgeList(){
         int[][] input = {
                 {0,0,-12,0,1,1},

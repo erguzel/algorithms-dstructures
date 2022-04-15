@@ -21,7 +21,7 @@ public class SampleData {
      */
     public static class GraphOnlineRu {
         //http://graphonline.ru/en/?graph=zzCShjeZpDyKvysP
-        public static final int[][] TOPSORT1={
+        public static final int[][] TOPSORT1 = {
                 {0, 0, 1, 1, 0, 0},
                 {0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0},
@@ -39,8 +39,6 @@ public class SampleData {
                 {1, 0, 0, 0, 0}
 
 
-
-
         };
 
         //http://graphonline.ru/en/?graph=BDCoMquhTpQxGQUM
@@ -55,14 +53,14 @@ public class SampleData {
         };
         //http://graphonline.ru/en/?graph=lMNIweuFZCqKtVCM
         public static final int[][] DIRECTED_CYCLED1 = {
-                {0, 1, 0, 0, 0, 0, 0, 0 },
-                {0, 0, 0, 0, 0, 0, 0, 0 },
-                {0, 0, 0, 0, 1, 0, 1, 0 },
-                {0, 0, 1, 0, 0, 0, 1, 0 },
-                {1, 0, 0, 0, 0, 0, 0, 1 },
-                {0, 0, 0, 0, 1, 0, 0, 0 },
-                {0, 0, 0, 0, 0, 0, 0, 0 },
-                {1, 0, 0, 0, 0, 1, 0, 0 }
+                {0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 1, 0},
+                {0, 0, 1, 0, 0, 0, 1, 0},
+                {1, 0, 0, 0, 0, 0, 0, 1},
+                {0, 0, 0, 0, 1, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0, 1, 0, 0}
 
         };
 
@@ -151,33 +149,33 @@ public class SampleData {
         };
 
         public static final int[][] PLANAR_GRAPH_EDGELIST = {
-                {0,1,3},
-                {0,2,-1},
-                {0,3,1},
-                {1,2,2},
-                {1,5,4},
-                {1,7,5},
-                {2,1,6},
-                {2,3,12},
-                {2,4,-4},
-                {2,7,5},
-                {3,2,3},
-                {3,4,2},
-                {4,2,2},
-                {4,3,1},
-                {4,6,1},
-                {4,7,1},
-                {5,1,1},
-                {5,6,1},
-                {5,7,-23},
-                {6,4,1},
-                {6,5,1},
-                {6,7,1},
-                {7,1,1},
-                {7,2,1},
-                {7,4,1},
-                {7,5,5},
-                {7,6,1}
+                {0, 1, 3},
+                {0, 2, -1},
+                {0, 3, 1},
+                {1, 2, 2},
+                {1, 5, 4},
+                {1, 7, 5},
+                {2, 1, 6},
+                {2, 3, 12},
+                {2, 4, -4},
+                {2, 7, 5},
+                {3, 2, 3},
+                {3, 4, 2},
+                {4, 2, 2},
+                {4, 3, 1},
+                {4, 6, 1},
+                {4, 7, 1},
+                {5, 1, 1},
+                {5, 6, 1},
+                {5, 7, -23},
+                {6, 4, 1},
+                {6, 5, 1},
+                {6, 7, 1},
+                {7, 1, 1},
+                {7, 2, 1},
+                {7, 4, 1},
+                {7, 5, 5},
+                {7, 6, 1}
         };
 
         // http://graphonline.ru/en/?graph=uYWHxaDVSffcriuf
@@ -204,24 +202,24 @@ public class SampleData {
     public static class Csacademy {
 
         public static int[][] NONDIRECTED_MULTICYCLED_WEIGHTED_12_15 = {
-                {0 , 9,   1},
-                {1 ,11,   3},
-                {10, 4,  12},
-                {10, 5,  11},
-                {10, 6,   8},
-                {3 , 4,  19},
-                {3 , 5,  22},
-                {5 , 8,  -4},
-                {6 , 4,   6},
-                {5 , 1,  12},
-                {8 , 6,  90},
-                {7 , 8,   6},
-                {8 , 9,   7},
-                {11, 2,   8},
-                {2 , 1,   9}
+                {0, 9, 1},
+                {1, 11, 3},
+                {10, 4, 12},
+                {10, 5, 11},
+                {10, 6, 8},
+                {3, 4, 19},
+                {3, 5, 22},
+                {5, 8, -4},
+                {6, 4, 6},
+                {5, 1, 12},
+                {8, 6, 90},
+                {7, 8, 6},
+                {8, 9, 7},
+                {11, 2, 8},
+                {2, 1, 9}
         };
 
-        public static int [][] DIRECTED_NONCYCLED_NONWEIGHTED_1_6 = {
+        public static int[][] DIRECTED_NONCYCLED_NONWEIGHTED_1_6 = {
                 {1, 2},
                 {1, 3},
                 {2, 4},
@@ -235,59 +233,59 @@ public class SampleData {
 
         public static int[][] UNDIRECTED_CYCLED_WEIGHTED_EDGELITST_7_8 = {
                 {0, 1, 10},
-                {0, 2,  1},
-                {0, 3,  4},
-                {1, 2,  3},
-                {1, 4,  0},
-                {2, 3,  2},
-                {2, 5,  8},
-                {3, 5,  2},
-                {3, 6,  7},
-                {4, 5,  1},
-                {4, 7,  8},
-                {5, 6,  6},
-                {5, 7,  9},
+                {0, 2, 1},
+                {0, 3, 4},
+                {1, 2, 3},
+                {1, 4, 0},
+                {2, 3, 2},
+                {2, 5, 8},
+                {3, 5, 2},
+                {3, 6, 7},
+                {4, 5, 1},
+                {4, 7, 8},
+                {5, 6, 6},
+                {5, 7, 9},
                 {6, 7, 12},
         };
 
         public static int[][] NONDIRECTED_CYCLED_NONWEIGHTED_EDGELIST = {
-                {0 ,  1},
-                {1 ,  2},
-                {3 ,  2},
-                {4 ,  5},
-                {4 ,  1},
-                {6 ,  4},
-                {7 ,  6},
-                {8 ,  7},
-                {9 ,  8},
-                {10,  9},
-                {5,  0},
+                {0, 1},
+                {1, 2},
+                {3, 2},
+                {4, 5},
+                {4, 1},
+                {6, 4},
+                {7, 6},
+                {8, 7},
+                {9, 8},
+                {10, 9},
+                {5, 0},
         };
 
-        public static int[][] NONDIRECTED_NONCYCLED_EDGELIST_2 ={
-                {0 , 1 , 1},
-                {1 , 0 , 1},
-                {1 , 2 , 1},
-                {2 , 1 , 1},
-                {3 , 2 , 1},
-                {2 , 3 , 1},
-                {4 , 5 , 1},
-                {5 , 4 , 1},
-                {4 , 1 , 1},
-                {1 , 4 , 1},
-                {6 , 4 , 1},
-                {4 , 6 , 1},
-                {7 , 6 , 1},
-                {6 , 7 , 1},
-                {8 , 7 , 1},
-                {7 , 8 , 1},
-                {9 , 8 , 1},
-                {8 , 9 , 1},
-                {10, 9 , 1},
-                {9 , 10, 1},
-                {9 , 10, 1},
-                {10 , 8, 1},
-                {8 , 10, 1},
+        public static int[][] NONDIRECTED_NONCYCLED_EDGELIST_2 = {
+                {0, 1, 1},
+                {1, 0, 1},
+                {1, 2, 1},
+                {2, 1, 1},
+                {3, 2, 1},
+                {2, 3, 1},
+                {4, 5, 1},
+                {5, 4, 1},
+                {4, 1, 1},
+                {1, 4, 1},
+                {6, 4, 1},
+                {4, 6, 1},
+                {7, 6, 1},
+                {6, 7, 1},
+                {8, 7, 1},
+                {7, 8, 1},
+                {9, 8, 1},
+                {8, 9, 1},
+                {10, 9, 1},
+                {9, 10, 1},
+                {9, 10, 1},
+                {10, 8, 1},
+                {8, 10, 1},
         };
 
         public static int[][] NONDIRECTED_CYCLED_EDGELIST_3 = {
@@ -308,113 +306,113 @@ public class SampleData {
         };
 
         public static int[][] NONDIRECTED_NONCYCLED_EDGELIST = {
-                {3,0,1},
-                {0,3,1},
-                {1,3,1},
-                {3,1,1},
-                {2,1,1},
-                {1,2,1},
-                {4,1,1},
-                {1,4,1},
-                {5,3,1},
-                {3,5,1}
+                {3, 0, 1},
+                {0, 3, 1},
+                {1, 3, 1},
+                {3, 1, 1},
+                {2, 1, 1},
+                {1, 2, 1},
+                {4, 1, 1},
+                {1, 4, 1},
+                {5, 3, 1},
+                {3, 5, 1}
 
         };
         public static int[][] NONDIRECTED_CYCLED_EDGELIST_2 = {
-                {0,1,1},
-                {1,0,1},
-                {2,1,1},
-                {1,2,1},
-                {3,2,1},
-                {2,3,1},
-                {3,4,1},
-                {4,3,1},
-                {4,2,1}
+                {0, 1, 1},
+                {1, 0, 1},
+                {2, 1, 1},
+                {1, 2, 1},
+                {3, 2, 1},
+                {2, 3, 1},
+                {3, 4, 1},
+                {4, 3, 1},
+                {4, 2, 1}
         };
         public static int[][] NONDIRECTED_CYCLED_EDGELIST = {
-                {3,0,1},
-                {0,3,1},
-                {1,3,1},
-                {3,1,1},
-                {2,1,1},
-                {1,2,1},
-                {4,1,1},
-                {1,4,1},
-                {4,2,1},
-                {2,4,1},
-                {5,3,1},
-                {3,5,1},
-                {5,4,1},
-                {4,5,1}
+                {3, 0, 1},
+                {0, 3, 1},
+                {1, 3, 1},
+                {3, 1, 1},
+                {2, 1, 1},
+                {1, 2, 1},
+                {4, 1, 1},
+                {1, 4, 1},
+                {4, 2, 1},
+                {2, 4, 1},
+                {5, 3, 1},
+                {3, 5, 1},
+                {5, 4, 1},
+                {4, 5, 1}
         };
 
-        public static  int[][] COURSE_SCHEDULE_1 = {
-                {0,1,1},
-                {3,0,1},
-               // {1,3,1},
-                {2,1,1},
-                {4,1,1},
-                {4,2,1},
-                {5,3,1},
-                {5,4,1}
+        public static int[][] COURSE_SCHEDULE_1 = {
+                {0, 1, 1},
+                {3, 0, 1},
+                // {1,3,1},
+                {2, 1, 1},
+                {4, 1, 1},
+                {4, 2, 1},
+                {5, 3, 1},
+                {5, 4, 1}
         };
 
-        public static  int[][] COURSE_SCHEDULE_2 = {
-                {3,0,1},
-                {1,3,1},
-                {2,1,1},
-                {4,1,1},
-                {4,2,1},
-                {5,3,1},
-                {5,4,1},
-                {0,1,1}
+        public static int[][] COURSE_SCHEDULE_2 = {
+                {3, 0, 1},
+                {1, 3, 1},
+                {2, 1, 1},
+                {4, 1, 1},
+                {4, 2, 1},
+                {5, 3, 1},
+                {5, 4, 1},
+                {0, 1, 1}
 
         };
 
-        public static  int[][]
+        public static int[][]
                 COURSE_SCHEDULE_3 = {
-                {0 ,  9, 1},
-                {1 , 11, 1},
-                {10,  4, 1},
-                {10,  5, 1},
-                {10,  6, 1},
-                {3 , 4 , 1},
-                {3 , 5 , 1},
-                {5 , 8 , 1},
-                {8 , 9 , 1},
-                {6 , 4 , 1},
-                {5 , 1 , 1},
-                {8 , 6 , 1},
-                {7 , 8 , 1},
-                {8 , 9 , 1},
-                {11,  2, 1},
-            //    {2 ,  1, 1}
+                {0, 9, 1},
+                {1, 11, 1},
+                {10, 4, 1},
+                {10, 5, 1},
+                {10, 6, 1},
+                {3, 4, 1},
+                {3, 5, 1},
+                {5, 8, 1},
+                {8, 9, 1},
+                {6, 4, 1},
+                {5, 1, 1},
+                {8, 6, 1},
+                {7, 8, 1},
+                {8, 9, 1},
+                {11, 2, 1},
+                //    {2 ,  1, 1}
 
         };
 
 
-        public static int [][] NONE ={
-                {5,4,1},
-                        {1,2,1},
-                                {2,3,1},
-                                        {1,3,1},
-                                                {1,5,1},
-                                                        {0,0,1}
+        public static int[][] NONE = {
+                {5, 4, 1},
+                {1, 2, 1},
+                {2, 3, 1},
+                {1, 3, 1},
+                {1, 5, 1},
+                {0, 0, 1}
         };
 
-        public static int[][] CSA002={
-                {0,1, 1},
-                {0,2, 3},
-                {2,0, 3},
-                {3,0, 1},
-                {0,4, 2},
-                {4,0, 2},
-                {3,1,-4},
-                {2,4,-2},
-                {6,1,-5},
-                {1,6,-5},
-                {6,0, 2},
-                {2,0, 3},
+        public static int[][] CSA002 = {
+                {0, 1, 1},
+                {0, 2, 3},
+                {2, 0, 3},
+                {3, 0, 1},
+                {0, 4, 2},
+                {4, 0, 2},
+                {3, 1, -4},
+                {2, 4, -2},
+                {6, 1, -5},
+                {1, 6, -5},
+                {6, 0, 2},
+                {2, 0, 3},
                 {5}
 
         };
@@ -422,17 +420,17 @@ public class SampleData {
 
         public static final int[][] CSA001 = {
 
-                {0, 1,  1},
-                {0, 2,  2},
+                {0, 1, 1},
+                {0, 2, 2},
                 {0, 4, -1},
                 {2, 3, -3},
                 {2, 5, -6},
-                {1, 4,  2},
-                {4, 2,  9},
+                {1, 4, 2},
+                {4, 2, 9},
                 {3, 4, -4},
-                {5, 3,  8},
-                {1, 3,  2},
-                {2, 6,  4},
+                {5, 3, 8},
+                {1, 3, 2},
+                {2, 6, 4},
                 {6, 0, -5}
 
         };
@@ -465,82 +463,147 @@ public class SampleData {
     // converts adj mtx list edges etc
     public static class Convertors {
 
-        private static void emptyListAndNullEntryCheck(int [][] d2array){
+        private static void emptyListAndNullEntryCheck(int[][] d2array) {
             boolean validatorBoolean = d2array.length == 0;
-            if(validatorBoolean){
+            if (validatorBoolean) {
                 LOGGER.info("EdgeList can not be empty");
                 System.exit(-1);
             }
-            validatorBoolean = IntStream.range(0,d2array.length).anyMatch(a->d2array[a]==null);
-            if(validatorBoolean){
+            validatorBoolean = IntStream.range(0, d2array.length).anyMatch(a -> d2array[a] == null);
+            if (validatorBoolean) {
                 LOGGER.info("EdgeList can not have null entries");
             }
         }
 
-        public static int[][] convertAdjMatrixToEdgeList(int[][] adjmtx, boolean isDirected){
+        public static int[][] convertAdjMatrixToAdjList(int[][] adjmtx, boolean isDirected) {
+            // validate
+            emptyListAndNullEntryCheck(adjmtx);
+            IntStream.range(0, adjmtx.length).forEach(vt -> {
+                IntStream.range(0, adjmtx.length).forEach(ed -> {
+                    if (!(adjmtx[vt][ed] == 0 || adjmtx[vt][ed] == 1)) {
+                        LOGGER.info("This method is not for weighted graph!!");
+                        System.exit(-1);
+                    }
+                });
+            });
+            // validate
+
+            List<Integer>[] result = new List[adjmtx.length];
+            for (int i = 0; i < result.length; i++) {
+                result[i] = new ArrayList<>();
+            }
+
+
+            IntStream.range(0, adjmtx.length).forEach(vertex -> {
+                IntStream.range(0, adjmtx.length).filter(x -> adjmtx[vertex][x] != 0)
+                        .forEach(ed -> {
+                            result[vertex].add(ed);
+                            if (!isDirected) {
+                                result[ed].add(vertex);
+                            }
+                        });
+            });
+
+
+            int[][] res = new int[adjmtx.length][adjmtx.length];
+            IntStream.range(0, res.length).forEach(x -> {
+                res[x] = result[x].stream().mapToInt(a -> a).toArray();
+            });
+
+            return res;
+        }
+
+        public static int[][][] convertAdjMatrixToAdjListWeighted(int[][] adjmtx, boolean isDirected) {
+            // validate
+            emptyListAndNullEntryCheck(adjmtx);
+            // validate
+
+            List<int[]>[] result = new List[adjmtx.length];
+            for (int i = 0; i < result.length; i++) {
+                result[i] = new ArrayList<>();
+            }
+
+            IntStream.range(0, adjmtx.length).forEach(vertex -> {
+                IntStream.range(0, adjmtx.length).filter(x -> adjmtx[vertex][x] != 0)
+                        .forEach(ed -> {
+                            result[vertex].add(new int[]{ed, adjmtx[vertex][ed]});
+                            if (!isDirected) {
+                                result[ed].add(new int[]{vertex, adjmtx[ed][vertex] == 0 ? 1 : adjmtx[ed][vertex]});
+                            }
+                        });
+            });
+
+
+            int[][][] res = new int[adjmtx.length][][];
+
+            IntStream.range(0, adjmtx.length).forEach(vertex -> {
+                res[vertex] = new int[result[vertex].size()][2];
+                List<int[]> nbours = result[vertex];
+                IntStream.range(0, nbours.size()).forEach(nb -> {
+                    res[vertex][nb] = nbours.get(nb);
+                });
+            });
+
+            return res;
+        }
+
+        public static int[][] convertAdjMatrixToEdgeList(int[][] adjmtx, boolean isDirected) {
             // validate
             emptyListAndNullEntryCheck(adjmtx);
             // validate
 
             List<int[]> result = new ArrayList<>();
 
-            IntStream.range(0,adjmtx.length).forEach(vertex->{
-                IntStream.range(0,adjmtx.length).forEach(edge->{
-                    if(adjmtx[vertex][edge] != 0){
-                        result.add(new int[]{vertex,edge,adjmtx[vertex][edge]});
-                        if(!isDirected){
-                            result.add(new int[]{edge,vertex,adjmtx[vertex][edge]});
+            IntStream.range(0, adjmtx.length).forEach(vertex -> {
+                IntStream.range(0, adjmtx.length).forEach(edge -> {
+                    if (adjmtx[vertex][edge] != 0) {
+                        result.add(new int[]{vertex, edge, adjmtx[vertex][edge]});
+                        if (!isDirected) {
+                            result.add(new int[]{edge, vertex, adjmtx[vertex][edge]});
                         }
                     }
                 });
             });
 
 
-            int [][] res = new int[result.size()][];
+            int[][] res = new int[result.size()][];
 
-            IntStream.range(0, result.size()).forEach(index->{
+            IntStream.range(0, result.size()).forEach(index -> {
                 res[index] = result.get(index);
             });
 
             return res;
         }
 
-        /**
-         *
-         * VERTEX ID Starts from 0
-         * @param edges
-         * @param isDirected
-         * @return
-         */
-        public static int [][] convertEdgeListToAdjMatrix(int [][] edges, boolean isDirected){
+        public static int[][] convertEdgeListToAdjMatrix(int[][] edges, boolean isDirected) {
             // validate
             emptyListAndNullEntryCheck(edges);
             // validate
 
-            var streamData = new Object(){
-                 int max = Integer.MIN_VALUE;
+            var streamData = new Object() {
+                int max = Integer.MIN_VALUE;
             };
 
-            IntStream.range(0,edges.length).forEach(edge->{
-                IntStream.range(0,edges[edge].length).filter(x->x<2).forEach(edgeelement->{
-                    if(edges[edge][edgeelement]>streamData.max){
+            IntStream.range(0, edges.length).forEach(edge -> {
+                IntStream.range(0, edges[edge].length).filter(x -> x < 2).forEach(edgeelement -> {
+                    if (edges[edge][edgeelement] > streamData.max) {
                         streamData.max = edges[edge][edgeelement];
                     }
                 });
             });
 
-            int numberOfVertex = streamData.max+1;
+            int numberOfVertex = streamData.max + 1;
             // adjmtx
             int[][] result = new int[numberOfVertex][numberOfVertex];
 
-            IntStream.range(0,edges.length).forEach(edge->{
+            IntStream.range(0, edges.length).forEach(edge -> {
                 int[] ed = edges[edge];
                 int src = ed[0];
                 int dst = ed[1];
-                int wt = ed.length == 3 ? ed[2]:1;
+                int wt = ed.length == 3 ? ed[2] : 1;
                 result[src][dst] = wt;
-                if(!isDirected){
-                    if(result[dst][src] != 0){
+                if (!isDirected) {
+                    if (result[dst][src] != 0) {
                         LOGGER.info("Undirected graph override value not excepted. Invalid graph definition.");
                         System.exit(-1);
                     }
@@ -555,18 +618,18 @@ public class SampleData {
             // {{1,2,1},{1,3,1}..}//
 
             int numOfVertices = Integer.MIN_VALUE;
-            for(int i =0; i<edges.length;i++){
+            for (int i = 0; i < edges.length; i++) {
 
-                if(edges[i].length>0){
-                    if(edges[i][0] > numOfVertices) numOfVertices = edges[i][0];
+                if (edges[i].length > 0) {
+                    if (edges[i][0] > numOfVertices) numOfVertices = edges[i][0];
                 }
-                if(edges[i].length>1){
-                    if(edges[i][1] > numOfVertices) numOfVertices = edges[i][1];
+                if (edges[i].length > 1) {
+                    if (edges[i][1] > numOfVertices) numOfVertices = edges[i][1];
                 }
 
             }
 
-            numOfVertices = numOfVertices+1;
+            numOfVertices = numOfVertices + 1;
 
             int[][] res = new int[numOfVertices][numOfVertices];
 
@@ -576,23 +639,23 @@ public class SampleData {
                 int fridx = Integer.MAX_VALUE;
                 try {
                     fridx = edges[i][0];
-                }catch (Exception e){
+                } catch (Exception e) {
                     fridx = Integer.MAX_VALUE;
                 }
                 int toidx = Integer.MAX_VALUE;
                 try {
-                   toidx = edges[i][1];
-                }catch (Exception e){
+                    toidx = edges[i][1];
+                } catch (Exception e) {
                     toidx = Integer.MAX_VALUE;
                 }
                 int weight = 0;
                 try {
                     weight = edges[i][2];
-                }catch (Exception e){
+                } catch (Exception e) {
                     weight = 0;
                 }
 
-                if(fridx != Integer.MAX_VALUE && toidx != Integer.MAX_VALUE){
+                if (fridx != Integer.MAX_VALUE && toidx != Integer.MAX_VALUE) {
                     res[fridx][toidx] = weight;
                 }
             }
@@ -604,13 +667,13 @@ public class SampleData {
             // {{1,2,1},{1,3,1}..}//
 
             int numOfVertices = Integer.MIN_VALUE;
-            for(int i =0; i<edges.length;i++){
+            for (int i = 0; i < edges.length; i++) {
 
-                if(edges[i].length>paramfromidx){
-                    if(edges[i][paramfromidx] > numOfVertices) numOfVertices = edges[i][paramfromidx];
+                if (edges[i].length > paramfromidx) {
+                    if (edges[i][paramfromidx] > numOfVertices) numOfVertices = edges[i][paramfromidx];
                 }
-                if(edges[i].length>paramtoidx){
-                    if(edges[i][paramtoidx] > numOfVertices) numOfVertices = edges[i][paramtoidx];
+                if (edges[i].length > paramtoidx) {
+                    if (edges[i][paramtoidx] > numOfVertices) numOfVertices = edges[i][paramtoidx];
                 }
 
             }
@@ -623,26 +686,26 @@ public class SampleData {
                 int fridx = Integer.MAX_VALUE;
                 try {
                     fridx = edges[i][0];
-                }catch (Exception e){
+                } catch (Exception e) {
                     fridx = Integer.MAX_VALUE;
                 }
                 int toidx = Integer.MAX_VALUE;
                 try {
                     toidx = edges[i][1];
-                }catch (Exception e){
+                } catch (Exception e) {
                     toidx = Integer.MAX_VALUE;
                 }
                 int weight = 0;
                 try {
-                    if(paramweightidx != null){
+                    if (paramweightidx != null) {
 
-                        weight = edges[i][(int)paramweightidx];
+                        weight = edges[i][(int) paramweightidx];
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     weight = 0;
                 }
 
-                if(fridx != Integer.MAX_VALUE && toidx != Integer.MAX_VALUE){
+                if (fridx != Integer.MAX_VALUE && toidx != Integer.MAX_VALUE) {
                     res[fridx][toidx] = weight;
                 }
             }
@@ -661,7 +724,7 @@ public class SampleData {
                     int to = j;
                     int weight = j == 0 ? Integer.MAX_VALUE : adjMtx[i][j];
                     int[] edge = {i, j, weight};
-                    if(weight != Integer.MAX_VALUE)
+                    if (weight != Integer.MAX_VALUE)
                         edges.add(edge);
                 }
             }
@@ -740,18 +803,18 @@ public class SampleData {
     //generates dummy data, array matrix etc
     public static class Generators {
 
-        public static int [][] generateRandomMatrix(int rownum, int colnum, int low, int high){
+        public static int[][] generateRandomMatrix(int rownum, int colnum, int low, int high) {
 
-            int [][] res = new int[rownum][colnum];
-            for(int i = 0; i < rownum; i++){
-                if(res[i]==null)res[i] = new int[colnum];
-                for(int j = 0; j<colnum; j++){
-                    int val =(int) SampleData.Generators.getRandom(low,high);
+            int[][] res = new int[rownum][colnum];
+            for (int i = 0; i < rownum; i++) {
+                if (res[i] == null) res[i] = new int[colnum];
+                for (int j = 0; j < colnum; j++) {
+                    int val = (int) SampleData.Generators.getRandom(low, high);
                     res[i][j] = val;
                 }
             }
 
-            return  res;
+            return res;
         }
 
         public static int[] generateIntArray(int length, int low, int high) {
@@ -853,7 +916,7 @@ public class SampleData {
 
     //print data
     //trees, graphs, matrices etc
-    public static class Printers{
+    public static class Printers {
 
         public static void printBSTree(IBinaryTreeNode root) {
             List<List<String>> lines = new ArrayList<List<String>>();
@@ -977,10 +1040,10 @@ public class SampleData {
             return stringBuilder.toString();
         }
 
-        public static  void PrintReport(ALogger logger, Map<Object,Object> data){
-            for (Map.Entry entry : data.entrySet()){
+        public static void PrintReport(ALogger logger, Map<Object, Object> data) {
+            for (Map.Entry entry : data.entrySet()) {
 
-                logger.info(entry.getKey()+":"+entry.getValue());
+                logger.info(entry.getKey() + ":" + entry.getValue());
             }
         }
 
@@ -1019,7 +1082,7 @@ public class SampleData {
             return stringBuilder.toString();
         }
 
-        public static String stringifyArray(int [] arr){
+        public static String stringifyArray(int[] arr) {
 
             return Arrays.stream(arr).boxed().collect(Collectors.toList()).toString();
         }
