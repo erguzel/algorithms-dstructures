@@ -477,6 +477,34 @@ public class SampleData {
             }
         }
 
+        public static int[][] convertAdjMatrixToEdgeList(int[][] adjmtx, boolean isDirected){
+            // validate
+            emptyListAndNullEntryCheck(adjmtx);
+            // validate
+
+            List<int[]> result = new ArrayList<>();
+
+            IntStream.range(0,adjmtx.length).forEach(vertex->{
+                IntStream.range(0,adjmtx.length).forEach(edge->{
+                    if(adjmtx[vertex][edge] != 0){
+                        result.add(new int[]{vertex,edge,adjmtx[vertex][edge]});
+                        if(!isDirected){
+                            result.add(new int[]{edge,vertex,adjmtx[vertex][edge]});
+                        }
+                    }
+                });
+            });
+
+
+            int [][] res = new int[result.size()][];
+
+            IntStream.range(0, result.size()).forEach(index->{
+                res[index] = result.get(index);
+            });
+
+            return res;
+        }
+
         /**
          *
          * VERTEX ID Starts from 0
@@ -512,6 +540,10 @@ public class SampleData {
                 int wt = ed.length == 3 ? ed[2]:1;
                 result[src][dst] = wt;
                 if(!isDirected){
+                    if(result[dst][src] != 0){
+                        LOGGER.info("Undirected graph override value not excepted. Invalid graph definition.");
+                        System.exit(-1);
+                    }
                     result[dst][src] = wt;
                 }
             });
