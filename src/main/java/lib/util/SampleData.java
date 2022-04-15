@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.IntToDoubleFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -472,7 +473,77 @@ public class SampleData {
             validatorBoolean = IntStream.range(0, d2array.length).anyMatch(a -> d2array[a] == null);
             if (validatorBoolean) {
                 LOGGER.info("EdgeList can not have null entries");
+                System.exit(-1);
+
             }
+        }
+
+        private static void emptyListAndNullEntryCheck(int[][][] d3array) {
+            boolean validatorBoolean = d3array.length == 0;
+            if (validatorBoolean) {
+                LOGGER.info("EdgeList can not be empty");
+                System.exit(-1);
+            }
+            validatorBoolean = IntStream.range(0, d3array.length).anyMatch(a -> d3array[a] == null);
+            if (validatorBoolean) {
+                LOGGER.info("EdgeList can not have null entries");
+                System.exit(-1);
+            }
+
+            var streamBoolean = new Object(){
+                boolean anyMatch = false;
+            };
+
+            IntStream.range(0, d3array.length).forEach(x -> {
+               if(IntStream.range(0, d3array[x].length).anyMatch(a -> d3array[x][a] == null)){
+                   LOGGER.info("EdgeList can not have null entries");
+                   System.exit(-1);
+               }
+            });
+        }
+
+        public static int[][] convertAdjListToAdjMatrix(int[][] adjlist, boolean isDirected) {
+            //validate
+            emptyListAndNullEntryCheck(adjlist);
+            //validate
+
+            int[][] res = new int[adjlist.length][adjlist.length];
+
+            IntStream.range(0, adjlist.length).forEach(vertex -> {
+                IntStream.range(0, adjlist[vertex].length)
+                        .forEach(ed -> {
+                            res[vertex][adjlist[vertex][ed]] = 1;
+                            if (!isDirected) {
+                                res[adjlist[vertex][ed]][vertex] = 1;
+                            }
+                        });
+            });
+
+            return res;
+        }
+
+        public static int[][] convertAdjListToAdjMatrixWeighted(int[][][] adjlist, boolean isDirected) {
+            //validate
+            emptyListAndNullEntryCheck(adjlist);
+            //validate
+
+            int[][] res = new int[adjlist.length][adjlist.length];
+
+            IntStream.range(0, adjlist.length).forEach(vertex -> {
+                IntStream.range(0,adjlist[vertex].length).forEach(edgidx->{
+                    int[] edgeweightpair = adjlist[vertex][edgidx];
+                    res[vertex][edgeweightpair[0]] = edgeweightpair[1];
+                    if(!isDirected){
+                        res[edgeweightpair[0]][vertex] =  res[edgeweightpair[0]][vertex]==0? edgeweightpair[1]: res[edgeweightpair[0]][vertex];
+                        if(res[vertex][edgeweightpair[0]]!=res[edgeweightpair[0]][vertex]){
+                            LOGGER.info("Undirected graph has different weights between edges, invalid graph");
+                            System.exit(-1);
+                        }
+                    }
+                });
+            });
+
+            return res;
         }
 
         public static int[][] convertAdjMatrixToAdjList(int[][] adjmtx, boolean isDirected) {
@@ -614,6 +685,8 @@ public class SampleData {
             return result;
         }
 
+
+        // will be deprecated
         public static int[][] _convertEdgelistToAdjMtx(int[][] edges) {
             // {{1,2,1},{1,3,1}..}//
 

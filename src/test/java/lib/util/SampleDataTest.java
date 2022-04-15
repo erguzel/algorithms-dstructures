@@ -8,6 +8,84 @@ import static org.junit.jupiter.api.Assertions.*;
 class SampleDataTest extends ProblemBase {
 
     @Test
+    void testConvertAdjListToAdjMatrixWeighted(){
+        int[][][] inputindirected = {
+                {{2,1},{4,2},{5,1}},
+                {{5,1}},
+                {{0,1},{4,3},{5,4}},
+                {{4,-1}},
+                {{0,2},{2,3},{3,-1}},
+                {{0,1},{1,1},{2,4}}
+        };
+
+        int[][] wantedindirected = {
+                {0,0,1,0,2,1},
+                {0,0,0,0,0,1},
+                {1,0,0,0,3,4},
+                {0,0,0,0,-1,0},
+                {2,0,3,-1,0,0},
+                {1,1,4,0,0,0},
+        };
+
+        int[][][] inputdirected={
+                {{2,1},{4,2},{5,1}},
+                {{5,1}},
+                {{0,1},{4,3},{5,4}},
+                {{4,-1}},
+                {{0,12},{2,3},{3,-8}},
+                {{0,1},{1,1},{2,4}}
+        };
+
+        int[][] wanteddirected = {
+                {0,0,1,0,2,1},
+                {0,0,0,0,0,1},
+                {1,0,0,0,3,4},
+                {0,0,0,0,-1,0},
+                {12,0,3,-8,0,0},
+                {1,1,4,0,0,0},
+        };
+
+
+
+        assertArrayEquals(SampleData.Convertors.convertAdjListToAdjMatrixWeighted(inputdirected,true),wanteddirected);
+        assertArrayEquals(SampleData.Convertors.convertAdjListToAdjMatrixWeighted(inputindirected,false),wantedindirected);
+    }
+
+    @Test
+    void testConvertAdjListToAdjMatrix(){
+
+        int[][] input ={
+                {2,4,5},
+                {5},
+                {4,5},
+                {4},
+                {},
+                {}
+        };
+
+        int[][] wantdirected = {
+                {0,0,1,0,1,1},
+                {0,0,0,0,0,1},
+                {0,0,0,0,1,1},
+                {0,0,0,0,1,0},
+                {0,0,0,0,0,0},
+                {0,0,0,0,0,0},
+        };
+
+        int[][] wantindirected = {
+                {0,0,1,0,1,1},
+                {0,0,0,0,0,1},
+                {1,0,0,0,1,1},
+                {0,0,0,0,1,0},
+                {1,0,1,1,0,0},
+                {1,1,1,0,0,0},
+        };
+
+        assertArrayEquals(SampleData.Convertors.convertAdjListToAdjMatrix(input,true),wantdirected);
+        assertArrayEquals(SampleData.Convertors.convertAdjListToAdjMatrix(input,false),wantindirected);
+    }
+
+    @Test
     void testConvertAdjMatrixToAdjListWeighted(){
         int[][] input = {
                 {0,0,1,0,2,1},
@@ -39,7 +117,6 @@ class SampleDataTest extends ProblemBase {
         assertArrayEquals(SampleData.Convertors.convertAdjMatrixToAdjListWeighted(input,false),wantedindirect);
         assertArrayEquals(SampleData.Convertors.convertAdjMatrixToAdjListWeighted(input,true),wanteddirect);
     }
-
 
     @Test
     void testConvertAdjMatrixToAdjList(){
