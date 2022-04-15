@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * TODO: Accept only valid edgelist, adjmtx and adjlist
@@ -464,7 +465,61 @@ public class SampleData {
     // converts adj mtx list edges etc
     public static class Convertors {
 
-        public static int[][] convertEdgelistToAdjMtx(int[][] edges) {
+        private static void emptyListAndNullEntryCheck(int [][] d2array){
+            boolean validatorBoolean = d2array.length == 0;
+            if(validatorBoolean){
+                LOGGER.info("EdgeList can not be empty");
+                System.exit(-1);
+            }
+            validatorBoolean = IntStream.range(0,d2array.length).anyMatch(a->d2array[a]==null);
+            if(validatorBoolean){
+                LOGGER.info("EdgeList can not have null entries");
+            }
+        }
+
+        /**
+         *
+         * VERTEX ID Starts from 0
+         * @param edges
+         * @param isDirected
+         * @return
+         */
+        public static int [][] convertEdgeListToAdjMatrix(int [][] edges, boolean isDirected){
+            // validate
+            emptyListAndNullEntryCheck(edges);
+            // validate
+
+            var streamData = new Object(){
+                 int max = Integer.MIN_VALUE;
+            };
+
+            IntStream.range(0,edges.length).forEach(edge->{
+                IntStream.range(0,edges[edge].length).filter(x->x<2).forEach(edgeelement->{
+                    if(edges[edge][edgeelement]>streamData.max){
+                        streamData.max = edges[edge][edgeelement];
+                    }
+                });
+            });
+
+            int numberOfVertex = streamData.max+1;
+            // adjmtx
+            int[][] result = new int[numberOfVertex][numberOfVertex];
+
+            IntStream.range(0,edges.length).forEach(edge->{
+                int[] ed = edges[edge];
+                int src = ed[0];
+                int dst = ed[1];
+                int wt = ed.length == 3 ? ed[2]:1;
+                result[src][dst] = wt;
+                if(!isDirected){
+                    result[dst][src] = wt;
+                }
+            });
+
+            return result;
+        }
+
+        public static int[][] _convertEdgelistToAdjMtx(int[][] edges) {
             // {{1,2,1},{1,3,1}..}//
 
             int numOfVertices = Integer.MIN_VALUE;
@@ -513,7 +568,7 @@ public class SampleData {
             return res;
         }
 
-        public static int[][] convertEdgelistToAdjMtx(int[][] edges,int paramfromidx, int paramtoidx, Object paramweightidx) {
+        public static int[][] _convertEdgelistToAdjMtx(int[][] edges, int paramfromidx, int paramtoidx, Object paramweightidx) {
             // {{1,2,1},{1,3,1}..}//
 
             int numOfVertices = Integer.MIN_VALUE;
@@ -563,7 +618,7 @@ public class SampleData {
             return res;
         }
 
-        public static int[][] convertAdjMtxToEdgeList(int[][] adjMtx) {
+        public static int[][] _convertAdjMtxToEdgeList(int[][] adjMtx) {
 
             List<int[]> edges = new ArrayList<>();
             for (int i = 0; i < adjMtx.length; i++) {
@@ -589,7 +644,7 @@ public class SampleData {
             return res;
         }
 
-        public static int[][][] convertAdjmtxToAdjList(int[][] adjmtx) {
+        public static int[][][] _convertAdjmtxToAdjList(int[][] adjmtx) {
 
             int[][][] adjList = new int[adjmtx.length][][];
 
@@ -628,7 +683,7 @@ public class SampleData {
             return adjList;
         }
 
-        public static int[][] convertAdjListToAdjMtx(int[][][] adjlist) {
+        public static int[][] _convertAdjListToAdjMtx(int[][][] adjlist) {
 
             int[][] res = new int[adjlist.length][adjlist.length];
 
