@@ -3,8 +3,18 @@
  */
 public class BinarySearch {
 
+    public static void main(String[] args) {
+
+        int[] arra = {-1, 2,3,44,55,63};
+
+        BinarySearch generalTest = new BinarySearch();
+        int res  = generalTest.search(arra, 55);
+
+        System.out.println(res);
+    }
+
     public int searchRecursive(int arr[], int left, int right , int key){
-        if (arr.length == 0)return -1;
+        if (arr.length == 0)return Integer.MIN_VALUE;
 
         int mid = (left+right)/2;
 
@@ -20,34 +30,30 @@ public class BinarySearch {
 
         }
 
-        return -1;
+        return Integer.MIN_VALUE;
     }
 
-    /**
-     * Returns the index of key element
-     * @param arr
-     * @param key
-     * @return
-     */
-    public int search(int[] arr, int key){
-        if (arr.length == 0)return -1;
-
+    // log(n)
+//sorted arrays
+    public int search(int arr[], int key){
 
         int low = 0;
-        int high = arr.length;
+        int high = arr.length-1;
 
-        while (low<=high){
-            int mid = (low+high)/2;
-            if(arr[mid]==key){
-                return arr[mid];
-            }
-            else if(arr[mid]<key){
-                low = mid+1;
-            }else if(arr[mid]>key){
+        while(low<=high){
+            int  mid = (low+high)/2;
+
+            if(key==arr[mid]){
+                return key;
+            }//if found
+            else if(key< arr[mid]){
                 high = mid-1;
-            }
-        }
+            }// key at left
+            else if(key>arr[mid]){
+                low = mid +1;
+            }//key at right
+        }//while low at low
 
-        return -1;
-    }
+        return Integer.MIN_VALUE;
+    }//search
 }
