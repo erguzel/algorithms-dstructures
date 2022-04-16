@@ -1,5 +1,6 @@
 import lib.model.ProblemBase;
 import org.junit.jupiter.api.*;
+import problem.MatrixGridPathProblem;
 
 import static org.junit.jupiter.api.Assertions.*;
 

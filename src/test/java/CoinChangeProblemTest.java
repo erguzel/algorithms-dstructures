@@ -1,5 +1,6 @@
 import lib.model.ProblemBase;
 import org.junit.jupiter.api.Test;
+import problem.CoinChangeProblem;
 
 import static org.junit.jupiter.api.Assertions.*;
 

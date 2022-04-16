@@ -1,3 +1,5 @@
+package deprecated;
+
 import lib.model.ProblemBase;
 import lib.util.ALogger;
 
@@ -34,7 +36,7 @@ public class AllStringConstructProblemDeprecated extends ProblemBase {
             Set<Set<Object>> num = grr.allStringConstructX(target4, Arrays.stream(targs4).collect(Collectors.toList()));
             grr.LOGGER.info("AllStringConstructProblemRes:" + num);
             grr.LOGGER.info("AllStringConstructProblemCalls:" + grr.counter);
-            timer.getBenchmark(timer, "AllStringConstructProblem");
+            timer.getBenchmark(timer, "problem.AllStringConstructProblem");
         }).start();
     }
 

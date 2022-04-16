@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Test;
+import problem.LadderClimbingProblem;
 
 import static org.junit.jupiter.api.Assertions.*;
 

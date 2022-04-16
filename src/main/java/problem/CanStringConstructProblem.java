@@ -1,3 +1,5 @@
+package problem;
+
 import lib.model.ProblemBase;
 import lib.util.ALogger;
 

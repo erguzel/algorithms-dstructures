@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import problem.StudentAttendanceRecordAwardProblem;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
