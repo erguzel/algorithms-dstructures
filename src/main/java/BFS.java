@@ -347,7 +347,7 @@ public class BFS {
         }
         Collections.reverse(path);
         return path.stream().mapToInt(a -> a).toArray();
-    }//pathExists
+    }//getPath_EDLIST
 
 
 }//class
