@@ -1,5 +1,8 @@
-import model.abstraction.IResultAsset;
-import model.abstraction.MinDistance;
+import lib.model.abstraction.IResultAsset;
+import lib.model.abstraction.MinDistance;
+import lib.util.ALogger;
+import lib.util.DataUtil;
+import lib.util.SampleData;
 
 import java.util.*;
 
@@ -17,7 +20,6 @@ public class BellmanFord {
 
     public static void main(String[] args) {
         int[][] sample = SampleData.Csacademy.CSA001;
-
 
         new Thread(() -> {
             ALogger.TIMER timer = new ALogger.TIMER();
@@ -144,7 +146,7 @@ public class BellmanFord {
 
         runReport.put("path", path);
         runReport.put("minDist", distances.get(paramdestid).getValue());
-        SampleData.Printers.PrintReport(LOGGER, runReport);
+        DataUtil.Printers.PrintReport(LOGGER, runReport);
 
 
     }//findShortest..
@@ -227,7 +229,7 @@ public class BellmanFord {
 
         runReport.put("path", path);
         runReport.put("minDist", distances[paramdestid].value);
-        SampleData.Printers.PrintReport(LOGGER, runReport);
+        DataUtil.Printers.PrintReport(LOGGER, runReport);
 
 
     }//findShortest..
@@ -311,7 +313,7 @@ public class BellmanFord {
 
         runReport.put("path", path);
         runReport.put("minDist", distances[paramdestid].getValue());
-        SampleData.Printers.PrintReport(LOGGER, runReport);
+        DataUtil.Printers.PrintReport(LOGGER, runReport);
 
 
     }//findShortest..
@@ -394,7 +396,7 @@ public class BellmanFord {
 
         runReport.put("path", path);
         runReport.put("minDist", distances.get(paramdestid));
-        SampleData.Printers.PrintReport(LOGGER, runReport);
+        DataUtil.Printers.PrintReport(LOGGER, runReport);
 
 
     }//findShortest..
@@ -474,7 +476,7 @@ public class BellmanFord {
 
         runReport.put("path", path);
         runReport.put("minDist", distances[paramdestid]);
-        SampleData.Printers.PrintReport(LOGGER, runReport);
+        DataUtil.Printers.PrintReport(LOGGER, runReport);
 
 
     }//findShortest..

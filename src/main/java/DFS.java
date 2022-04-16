@@ -1,267 +1,157 @@
+import lib.util.ALogger;
+import lib.util.SampleData;
+
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class DFS {
 
     ALogger<DFS> LOGGER = new ALogger<>(DFS.class);
 
+    private int count=0;
     public static void main(String[] args) {
-        // int[][][] graph = SampleData.convertToAdjacencyList(SampleData.GraphOnlineRu.DUCK_DIR_WEG);
-        int[][] graph = SampleData.GraphOnlineRu.TOPSORT1;
 
+        int[][] graph = SampleData.Csacademy.NONDIRECTED_CYCLED_EDGELIST_3;
+        int[][] edgesDirected = {
+
+                {1, 2, 3},
+                {2, 3, 2},
+                {3, 4, 1},
+                {4, 5, 4},
+                {5, 0, 2},
+                {1, 4, 1},
+                {6, 2, 1},
+                {0, 6, 1},
+                //   {4, 2, 1},
+        };
         DFS dfs = new DFS();
-       int [] track =  dfs.findTopSortNonRecursive(graph);
-        System.out.println(Arrays.stream(track).boxed().collect(Collectors.toList()));
-        int [] track1 =  dfs.findTopSortRecursive(graph);
-        System.out.println(Arrays.stream(track1).boxed().collect(Collectors.toList()));
-//        System.out.println();
-//
-//        ALogger.TIMER timer = new ALogger.TIMER();
-//        timer.startTimer();
-//        DFS df = new DFS();
-//        df.findTrajectoryAndPathExists(graph, 9, 2);
-//        timer.getBenchmark(timer);
+      //  dfs.traverseGraphEdgeListRecursive(graph, 6, 4 ,true);
+        // int[] res = dfs.findPathIfExistsEdgeListRecursive(graph, 6, 4 ,0,true);
+       // dfs.LOGGER.info(Arrays.stream(res).boxed().collect(Collectors.toList()));
+        //dfs.hasCycleDirectedEdgeListRecursive(edgesDirected,7,true);
+        System.out.println("cnt:"+dfs.count);
+        //System.out.println("res:"+res);
     }
 
-    public int[] findTopSortNonRecursive(int[][] graph){
+    public int[] findPathIfExistsEdgeList(int[][] graph, int nofvertices, int source, int dest) {
+        boolean[] visited = new boolean[nofvertices];
+        Stack<Integer> callstack = new Stack<>();
+        callstack.add(source);
+        Object[] previous = new Object[nofvertices];
 
-        Stack<Integer> callstack = new Stack<Integer>();//for next dfs call
-        Queue<Integer> path = new LinkedList<>();// for path
-        boolean[] visited = new boolean[graph.length];//for visited track
-        int[] cache = new int[graph.length]; // for tracking unconnected degree of vertexes
 
-// fill cache with number of connections whicht towards them
-
-        for(int i =0; i<graph.length; i++){
-            for(int j =0; j<graph.length;j++){
-                if(graph[j][i] != 0){
-                    cache[i]++;
-                }// means there is a connection to that vertex
-            }//foreach neightbour
-        }//f0r each vertex
-
-// add vertexes which has no dependen cies to call stack
-
-        for(int i = 0; i < cache.length;i++){
-            if(cache[i] ==0)callstack.add(i);
-        }// fill stack
-
-// traverse from nondependent vertexes
-
-        while(!callstack.isEmpty()){
-            int current = callstack.pop();//add to path queue
-            path.add(current);
-            if(visited[current])continue;
+        while (!callstack.isEmpty()) {
+            count++;
+            int current = callstack.pop();
             visited[current] = true;
-
-// explore neighbours (not a visit !)
-            for(int i = 0; i < graph[current].length; i++){
-                if(graph[current][i]==0)continue;
-                if(!visited[i]){
-                    if(cache[i]>0){
-                        cache[i]--;//reduce 1 for priority
-                    }
-                    if(cache[i] == 0){
-                        callstack.add(i);
-                    }//add callstack if reaches priority
-                }//if not visited
-            }//for nbours
-        }//traverse
-
-        return path.stream().mapToInt(a->a).toArray();
-    }//find topsortnonrecursinve
-
-    public int[] findTopSortRecursive(int[][] graph){
-
-        boolean[] visited = new boolean[graph.length];// track if visited
-        Queue<Integer> path = new LinkedList<>();// for path
-// for each vertex, we call dfs if necessary
-        for(int i = 0; i<graph.length; i++){
-            int current = i;
-            if(!visited[current]){
-                findTopSortRecursiveUtil(graph,current,visited,path);
-            }//call dfs
-        }//for each vertex
-
-        Integer[] as = path.toArray(new Integer[0]);
-        ReverseArray.reverse(as);
-
-        return  Arrays.stream(as).mapToInt(a->a).toArray();
-    }// find topsort recursive
-
-    private void findTopSortRecursiveUtil(int[][] graph, int current, boolean[] visited, Queue<Integer> path){
-        visited[current] = true;
-// explore nbours
-        for(int i =0; i < graph[current].length;i++){
-            if(graph[current][i]==0)continue;
-            int currentnbour = i;
-            if(!visited[i]){
-                findTopSortRecursiveUtil(graph,currentnbour,visited,path);
-            }//call deeper stack
-        }//for nbours
-
-//add call back value to path
-        path.add(current);
-    }// topsort recursive util
-    /**
-     *
-     * @param graph adj mtx
-     * @param paramsourceid
-     * @param paramtargetid
-     */
-    public void findTrajectoryAndPathExists(int[][] graph, int paramsourceid, int paramtargetid) {
-
-        boolean[] visited = new boolean[graph.length];
-        boolean[] pathExists = new boolean[graph.length];
-        Object[] previous = new Object[graph.length];
-
-        Stack<Integer> stack = new Stack<>();
-        stack.add(paramsourceid);
-        List<Integer> trajectory = new ArrayList<>();
-        int popcount = 0;
-        while (!stack.isEmpty()) {
-            int currentPoint = stack.pop();
-            popcount++;
-            if (visited[currentPoint]) {
-                continue;
-            }//if visited
-            trajectory.add(currentPoint);
-            visited[currentPoint] = true;
-// explore nbours
-            for (int i = 0; i < graph[currentPoint].length; i++) {
-                if (graph[currentPoint][i] != 0) {
-                    int nbidx = i;
-                    pathExists[nbidx] = true;
-                    if (!visited[nbidx]) {
-                        previous[nbidx] = currentPoint;
-                        stack.add(nbidx);
-                    }// if visited
-                }//if
-            }//for point
-        }//while stack isempty
-
-        int tgt = paramtargetid;
-        List<Object> pathFound = new ArrayList<>();
-        pathFound.add(paramtargetid);
-
-        while (previous[tgt] != null) {
-            pathFound.add(previous[tgt]);
-            tgt = (int) previous[tgt];
-        }//while
-
-        Object[] reversed = pathFound.toArray();
-        ReverseArray.reverse(reversed);
-
-
-        if (pathExists[paramtargetid]) {
-
-            LOGGER.info("there exists path " + paramsourceid + "->" + paramtargetid);
-
-        }
-        LOGGER.info("Tajectory:" + trajectory);
-        LOGGER.info("PopCount:" + popcount);
-        LOGGER.info("Found Path:" + Arrays.stream(reversed).collect(Collectors.toList()));
-
-
-    }//findTrajectoryAndPathExists
-
-
-    /**
-     * @param graph         as adj lists
-     * @param paramsourceid
-     * @param paramtargetid
-     * @return
-     */
-    public boolean findTrajectoryAndPathExists(int[][][] graph, int paramsourceid, int paramtargetid) {
-
-        List<Integer> trajectory = new ArrayList<>();
-        Stack<Integer> stack = new Stack<>();
-        stack.add(paramsourceid);
-
-        Object[] previous = new Object[graph.length];
-        boolean[] visited = new boolean[graph.length];
-        boolean[] pathExists = new boolean[graph.length];
-
-        int pollcount = 0;
-        boolean pathexsist = false;
-
-        while (!stack.isEmpty()) {
-
-            int current = stack.pop();
-            pollcount++;
-
-            if (visited[current]) {
-                continue;
-            }
-            trajectory.add(current);
-            visited[current] = true;
-
-            for (int i = 0; i < graph[current].length; i++) {
-
-                int nbid = graph[current][i][0];
-                int weight = graph[current][i][1]; // weight no of use in DFS
-
-                pathExists[nbid] = true;
-
+            for (int i = 0; i < graph.length; i++) {
+                if (graph[i][0] != current) continue;
+                int nbid = graph[i][1];
                 if (!visited[nbid]) {
                     previous[nbid] = current;
-                    stack.add(nbid);
+                    callstack.add(nbid);
+                    visited[nbid] = true;
+                    if(nbid==source){
+                        break;
+                    }
                 }
 
-
-            }//for
-        }//while
-
-        if (pathExists[paramtargetid]) {
-
-            LOGGER.info("there exists path " + paramsourceid + "->" + paramtargetid);
-
+            }
         }
 
-        LOGGER.info("Tajectory:" + trajectory);
-        LOGGER.info("PopCount:" + pollcount);
-
-        int target = paramtargetid;
         List<Object> path = new ArrayList<>();
-        path.add(paramtargetid);
+        Object src = source;
+        Object des = dest;
+        while (des != null) {
+            path.add(previous[(int)des]);
+            des = previous[(int) des];
+        }
+        Collections.reverse(path);
 
-        while (previous[target] != null) {
+        return path.stream().filter(a->a!=null).mapToInt(a->Integer.parseInt(a.toString())).toArray();
 
-            path.add(previous[target]);
-            target = (int) previous[target];
+
+    }
+    public int[] findPathIfExistsEdgeListRecursive(int[][] graph,int nofvertices,int source, int dest, boolean isVerbose){
+        boolean[] visited = new boolean[nofvertices];
+        Object[] prev = new Object[nofvertices];
+        if(isVerbose)LOGGER.info("recursion starts: source="+source);
+        findPathIfExistsEdgeListRecursiveUtil(source,graph,visited,prev,dest,isVerbose);
+
+        if(prev.length==0)return new int[0];
+
+        List path = new ArrayList();
+        int dess = dest;
+        while (prev[dess] != null){
+            path.add(prev[dess]);
+            dess = (int)prev[dess];
+        }
+        Collections.reverse(path);
+        return path.stream().filter(a->a!=null).mapToInt(a->Integer.parseInt(a.toString())).toArray();
+
+    }
+    private void findPathIfExistsEdgeListRecursiveUtil(int vertex, int[][] graph, boolean[]visited,Object[]prev, int destination, boolean isVerbose){
+        count++;
+        if(isVerbose)LOGGER.info(String.format("recursion %d : ",count));
+        if(isVerbose)LOGGER.info(String.format("vertex %d : ",vertex));
+        visited[vertex]=true;
+        for(int i = 0; i<graph.length;i++){
+            if(graph[i][0]!=vertex)continue;
+            int nbid = graph[i][1];
+            if(!visited[nbid]){
+                prev[nbid]= vertex;
+                visited[nbid] = true;
+                if(destination == nbid){
+                    return;
+                }else
+                    findPathIfExistsEdgeListRecursiveUtil(nbid,graph,visited,prev,destination,isVerbose);
+
+            }
+        }
+    }
+
+    public void traverseGraphEdgeList(int[][] graph, int nofvertices, int source, boolean isVerbose){
+        boolean[] visited = new boolean[nofvertices];
+        Stack<Integer> callstack = new Stack<>();
+        callstack.add(source);
+        if(isVerbose)LOGGER.info("traverse starts: source="+source);
+        while (!callstack.isEmpty()){
+            count++;
+            int current = callstack.pop();
+            System.out.println(current);
+            visited[current] = true;
+            for(int i = 0; i < graph.length;i++){
+                if(graph[i][0]!=current)continue;
+                int nbid = graph[i][1];
+                if(!visited[nbid]){
+                    if(isVerbose)LOGGER.info(String.format("adding neighbour of %d -> %d",current,nbid));
+                    callstack.add(nbid);
+                    visited[nbid] = true;
+                }
+            }
+
         }
 
-        Object[] reversed = path.toArray();
-        ReverseArray.reverse(reversed);
+    }
+    public void traverseGraphEdgeListRecursive(int[][] graph, int nofvertices,int source, boolean isVerbose){
+        boolean[] visited = new boolean[nofvertices];
+        if(isVerbose)LOGGER.info("traverse starts: source="+source);
+        traverseGraphEdgeListRecursiveUtil(source,graph,visited,isVerbose);
+    }
+    private void traverseGraphEdgeListRecursiveUtil(int vertex, int[][] graph,boolean[]visited,boolean isVerbose){
+        count++;
+        System.out.println(vertex);
+        if(isVerbose)LOGGER.info(String.format("recursion %d : ",count));
+        if(isVerbose)LOGGER.info(String.format("vertex %d : ",vertex));
+        visited[vertex] = true;
+        for(int i = 0;i<graph.length;i++){
+            if(graph[i][0]!= vertex)continue;
+            int nbid = graph[i][1];
+            if(!visited[nbid]){
+                visited[nbid] =true;
+                traverseGraphEdgeListRecursiveUtil(nbid,graph,visited,isVerbose);
+            }
 
-        LOGGER.info("Path:" + Arrays.stream(reversed).collect(Collectors.toList()));
-
-
-        return pathexsist;
-
-    }//findPathExists
-
-
-    public boolean pathFound(int source, int target, int[][] adjmtx) {
-        int startVertex = source;
-        boolean[] visited = new boolean[adjmtx.length];
-        visited[startVertex] = true;
-        return pathFoundUtil(startVertex,target,adjmtx,visited);
-    }// path found
-
-    private boolean pathFoundUtil(int vtx, int data, int[][] mtx, boolean[]visited){
-        if(vtx == data)return true;
-
-        for(int i = 0; i < mtx[vtx].length;i++){
-            if(mtx[vtx][i]==0)continue;//no edge
-            if(!visited[i]){
-                visited[i] = true;
-                if(pathFoundUtil(i,data,mtx,visited)){
-                    return true;
-                }//if visited
-            }//for nbours
         }
-        return false;
-    }//dfs util
+    }
 
-}//class
+}

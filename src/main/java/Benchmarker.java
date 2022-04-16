@@ -1,8 +1,14 @@
-import model.ABinarySearchTree;
-import model.BSTreeNode;
+import lib.model.ABinaryTree;
+import lib.model.MyBSTree;
+import lib.util.ALogger;
+import lib.util.DataUtil;
+import lib.util.SampleData;
 
+import javax.xml.parsers.SAXParser;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Benchmarker {
 
@@ -10,55 +16,11 @@ public class Benchmarker {
 
     public static void main(String[] args) {
 
+        int input [][] = SampleData.GraphOnlineRu.DUCK_DIR_WEG;
 
-
-
-//        ABinarySearchTree binarySearchTree = new ABinarySearchTree(8);
-//
-//        BSTreeNode node = new BSTreeNode(4);
-//        BSTreeNode node2 = new BSTreeNode(6);
-//        BSTreeNode node3 = new BSTreeNode(8);
-//        BSTreeNode node4 = new BSTreeNode(10);
-//        BSTreeNode node5 = new BSTreeNode(1);
-//        BSTreeNode node6 = new BSTreeNode(2);
-//
-//
-//        Comparator<BSTreeNode> cp = Comparator.comparing(BSTreeNode::getValue);
-//        TreeSet<BSTreeNode> set =  new TreeSet<BSTreeNode>((a,b)->a.getValue()>b.getValue()?0:-1);
-//        set.add(node);
-//        set.add(node6);
-//        set.add(node2);
-//        set.add(node3);
-//        set.add(node4);
-//        set.add(node5);
-//        set.add(node6);
-//
-//
-//        System.out.println(set);
-
-//        binarySearchTree.insert(12);
-//        boolean os = binarySearchTree.insert(11);
-//        System.out.println(os);
-//        binarySearchTree.insert(23);
-//        binarySearchTree.insert(4);
-//        binarySearchTree.insert(2);
-//        binarySearchTree.insert(1);
-//        binarySearchTree.insert(3);
-//        binarySearchTree.insert(6);
-//        binarySearchTree.printBSTree();
-//        binarySearchTree.remove(23);
-//        binarySearchTree.printBSTree();
-//        binarySearchTree.insert(-34);
-//        binarySearchTree.printBSTree();
-//        binarySearchTree.remove(-34);
-//        binarySearchTree.printBSTree();
-//        boolean ccc = binarySearchTree.contains(2);
-//        System.out.println(ccc);
-//        binarySearchTree.remove(2398);
-//        binarySearchTree.printBSTree();
-
-
-
+        LOGGER.info("\n"+ DataUtil.Printers.stringifyEdgeList(
+                DataUtil.Convertors.convertAdjMatrixToEdgeList(input,true)
+        ));
 
     }
 

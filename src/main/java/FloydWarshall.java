@@ -1,3 +1,7 @@
+import lib.util.ALogger;
+import lib.util.DataUtil;
+import lib.util.SampleData;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,9 +13,9 @@ public class FloydWarshall {
     public static void main(String[] args) {
 
         int[][] edges = SampleData.Csacademy.CSA001;
-        LOGGER.info("\n" + SampleData.Printers.stringifyEdgeList(edges));
-        int[][] adjmtx = SampleData.Convertors.convertEdgelistToAdjMtx(edges);
-        LOGGER.info("\n" + SampleData.Printers.stringifyAdjacencyMatrix(adjmtx));
+        LOGGER.info("\n" + DataUtil.Printers.stringifyEdgeList(edges));
+        int[][] adjmtx = DataUtil.Convertors._convertEdgelistToAdjMtx(edges);
+        LOGGER.info("\n" + DataUtil.Printers.stringifyAdjacencyMatrix(adjmtx));
 
         FloydWarshall floydWarshall = new FloydWarshall();
         floydWarshall.findAllDistances(adjmtx, 3, 5);
@@ -73,7 +77,7 @@ public class FloydWarshall {
 
         runReport.put(paramsourceid+"->"+paramdestid,distances[paramsourceid][paramdestid]);
         runReport.put("PATH",path);
-        SampleData.Printers.PrintReport(LOGGER,runReport);
+        DataUtil.Printers.PrintReport(LOGGER,runReport);
 
     }// findAll…
 }//class

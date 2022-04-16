@@ -1,5 +1,8 @@
+import lib.util.ALogger;
+import lib.util.DataUtil;
+import lib.util.SampleData;
+
 import java.util.Arrays;
-import java.util.Timer;
 import java.util.stream.Collectors;
 
 public class ReverseArray {
@@ -24,7 +27,7 @@ public class ReverseArray {
 
     public static void main(String[] args) {
 
-        Object [] arr = Arrays.stream(SampleData.Generators.generateIntArray(15,-4,12)).mapToObj(a->a).toArray();
+        Object [] arr = Arrays.stream(DataUtil.Generators.generateIntArray(15,-4,12)).mapToObj(a->a).toArray();
 
         LOGGER.info(Arrays.stream(arr).collect(Collectors.toList()));
 
