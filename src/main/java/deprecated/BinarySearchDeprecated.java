@@ -1,3 +1,5 @@
+package deprecated;
+
 import com.sun.source.tree.BreakTree;
 
 public class BinarySearchDeprecated {
@@ -8,15 +10,13 @@ public class BinarySearchDeprecated {
 
         int [] list = {-8,1,2,3,4,5,6,7,12,128};
 
-        int res = searchBinary(-8,list);
+        int res = searchBinary(12,list);
 
         System.out.println(res);
-        System.out.println(count1);
 
-        int res1 = searchBinaryRecursive(list,0,list.length-1,-8);
+        int res1 = searchBinaryRecursive(list,0,list.length-1,-48);
 
         System.out.println(res1);
-        System.out.println(count);
 
     }
     public static int searchBinary(int value, int[] list){
