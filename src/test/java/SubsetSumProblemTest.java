@@ -10,11 +10,16 @@ class SubsetSumProblemTest extends ProblemBase {
     private SubsetSumProblem instance = new SubsetSumProblem();
     @Test
     void subsetSumElements() {
-        int [] set = {2,8,4,12};
-        int target = 12; boolean want = true;
+        int [] set = {6,9,3,2,11};
+        int target = 11;
+        int[][] want = {
+                {9,2},
+                {6,3,2},
+                {11}
+        };
 
         assertAll("Test",
-                ()->assertEquals(instance.subsetSumElements(set,target,new HashMap<Integer,Boolean>()),want));
+                ()->assertEquals(instance.subsetSumElements(set,target),want));
 
         instance.LOGGER.info("cc:"+instance.counter);
     }

@@ -23,13 +23,12 @@ public class SubsetSumProblem extends ProblemBase {
      * @param target
      * @return
      */
-    public boolean subsetSumElements(int[] set, int target, Map<Integer, Boolean> mem) {
-        /**
-         * f(i,g(j)) true if i sums up to g(j)
-         *
-         */
+    public int[][] subsetSumElements(int[] set, int target) {
+        for(int i = 0; i < set.length;i++){
 
-        return false;
+        }
+
+        return null;
     }
 
 }
