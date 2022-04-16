@@ -1,3 +1,7 @@
+import lib.util.ALogger;
+import lib.util.DataUtil;
+import lib.util.SampleData;
+
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -6,7 +10,7 @@ public class SelectionSort {
     static ALogger<SelectionSort> LOGGER = new ALogger<>(SelectionSort.class);
 
     public static void main(String[] args) {
-        int [] arr = SampleData.Generators.generateIntArray(10,-100,100);
+        int [] arr = DataUtil.Generators.generateIntArray(10,-100,100);
         LOGGER.info(Arrays.stream(arr).boxed().collect(Collectors.toList()));
 
         SelectionSort sort = new SelectionSort();

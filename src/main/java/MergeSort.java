@@ -1,3 +1,7 @@
+import lib.util.ALogger;
+import lib.util.DataUtil;
+import lib.util.SampleData;
+
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -7,7 +11,7 @@ public class MergeSort {
 
     public static void main(String[] args) {
 
-//        int[] arrr = SampleData.Generators.generateIntArray(5,-17,17);
+//        int[] arrr = lib.util.SampleData.Generators.generateIntArray(5,-17,17);
 //
 //        LOGGER.info("\n"+ Arrays.stream(arrr).boxed().collect(Collectors.toList()));
 //
@@ -18,7 +22,7 @@ public class MergeSort {
 
 
         MergeSort mergeSort = new MergeSort();
-        int[] arr1 = SampleData.Generators.generateIntArray(8,-50,50);
+        int[] arr1 = DataUtil.Generators.generateIntArray(8,-50,50);
 
         System.out.println(Arrays.stream(arr1).boxed().collect(Collectors.toList()));
 

@@ -1,4 +1,7 @@
-import model.Heap;
+import lib.model.Heap;
+import lib.util.ALogger;
+import lib.util.DataUtil;
+import lib.util.SampleData;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -9,7 +12,7 @@ public class HeapSort {
 
     public static void main(String[] args) {
 
-        int [] arr =SampleData.Generators.generateIntArray(5,30,130);
+        int [] arr = DataUtil.Generators.generateIntArray(5,30,130);
 
 
         LOGGER.info("\n" + Arrays.stream(arr).boxed().collect(Collectors.toList()));
