@@ -47,8 +47,8 @@ class SampleDataTest extends ProblemBase {
 
 
 
-        assertArrayEquals(SampleData.Convertors.convertAdjListToAdjMatrixWeighted(inputdirected,true),wanteddirected);
-        assertArrayEquals(SampleData.Convertors.convertAdjListToAdjMatrixWeighted(inputindirected,false),wantedindirected);
+        assertArrayEquals(DataUtil.Convertors.convertAdjListToAdjMatrixWeighted(inputdirected,true),wanteddirected);
+        assertArrayEquals(DataUtil.Convertors.convertAdjListToAdjMatrixWeighted(inputindirected,false),wantedindirected);
     }
 
     @Test
@@ -81,8 +81,8 @@ class SampleDataTest extends ProblemBase {
                 {1,1,1,0,0,0},
         };
 
-        assertArrayEquals(SampleData.Convertors.convertAdjListToAdjMatrix(input,true),wantdirected);
-        assertArrayEquals(SampleData.Convertors.convertAdjListToAdjMatrix(input,false),wantindirected);
+        assertArrayEquals(DataUtil.Convertors.convertAdjListToAdjMatrix(input,true),wantdirected);
+        assertArrayEquals(DataUtil.Convertors.convertAdjListToAdjMatrix(input,false),wantindirected);
     }
 
     @Test
@@ -114,8 +114,8 @@ class SampleDataTest extends ProblemBase {
                 {}
         };
 
-        assertArrayEquals(SampleData.Convertors.convertAdjMatrixToAdjListWeighted(input,false),wantedindirect);
-        assertArrayEquals(SampleData.Convertors.convertAdjMatrixToAdjListWeighted(input,true),wanteddirect);
+        assertArrayEquals(DataUtil.Convertors.convertAdjMatrixToAdjListWeighted(input,false),wantedindirect);
+        assertArrayEquals(DataUtil.Convertors.convertAdjMatrixToAdjListWeighted(input,true),wanteddirect);
     }
 
     @Test
@@ -147,8 +147,8 @@ class SampleDataTest extends ProblemBase {
                 {0,1,2}
         };
 
-        assertArrayEquals(SampleData.Convertors.convertAdjMatrixToAdjList(input,true),wantdirected);
-        assertArrayEquals(SampleData.Convertors.convertAdjMatrixToAdjList(input,false),wantindirected);
+        assertArrayEquals(DataUtil.Convertors.convertAdjMatrixToAdjList(input,true),wantdirected);
+        assertArrayEquals(DataUtil.Convertors.convertAdjMatrixToAdjList(input,false),wantindirected);
     }
 
     @Test
@@ -191,8 +191,8 @@ class SampleDataTest extends ProblemBase {
                 //{2, 0,24},
         };
 
-        assertArrayEquals(SampleData.Convertors.convertAdjMatrixToEdgeList(input,true),wanteddirected);
-        assertArrayEquals(SampleData.Convertors.convertAdjMatrixToEdgeList(input,false),wantedindirected);
+        assertArrayEquals(DataUtil.Convertors.convertAdjMatrixToEdgeList(input,true),wanteddirected);
+        assertArrayEquals(DataUtil.Convertors.convertAdjMatrixToEdgeList(input,false),wantedindirected);
 
     }
 
@@ -227,8 +227,8 @@ class SampleDataTest extends ProblemBase {
                 {1,1,0,0,0,0}
         };
 
-        assertArrayEquals(SampleData.Convertors.convertEdgeListToAdjMatrix(input,true),wantDirected);
-        assertArrayEquals(SampleData.Convertors.convertEdgeListToAdjMatrix(input,false),wantindirected);
+        assertArrayEquals(DataUtil.Convertors.convertEdgeListToAdjMatrix(input,true),wantDirected);
+        assertArrayEquals(DataUtil.Convertors.convertEdgeListToAdjMatrix(input,false),wantindirected);
     }
 
 }
