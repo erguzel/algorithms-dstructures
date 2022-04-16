@@ -1,9 +1,8 @@
-import lib.model.MyBSTree;
+package problem;
+
 import lib.model.ProblemBase;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
