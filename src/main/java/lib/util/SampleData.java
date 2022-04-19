@@ -217,7 +217,7 @@ public class SampleData {
     //edge lists
     public static class Csacademy {
 
-        public static int[][] NONDIRECTED_MULTICYCLED_WEIGHTED_12_15 = {
+        public static final int[][] NONDIRECTED_MULTICYCLED_WEIGHTED_12_15 = {
                 {0, 9, 1},
                 {1, 11, 3},
                 {10, 4, 12},
@@ -235,7 +235,7 @@ public class SampleData {
                 {2, 1, 9}
         };
 
-        public static int[][] DIRECTED_NONCYCLED_NONWEIGHTED_1_6 = {
+        public static final int[][] DIRECTED_NONCYCLED_NONWEIGHTED_1_6 = {
                 {1, 2},
                 {1, 3},
                 {2, 4},
@@ -247,7 +247,7 @@ public class SampleData {
 
         };
 
-        public static int[][] UNDIRECTED_CYCLED_WEIGHTED_EDGELITST_7_8 = {
+        public static final int[][] UNDIRECTED_CYCLED_WEIGHTED_EDGELITST_7_8 = {
                 {0, 1, 10},
                 {0, 2, 1},
                 {0, 3, 4},
@@ -264,7 +264,7 @@ public class SampleData {
                 {6, 7, 12},
         };
 
-        public static int[][] NONDIRECTED_CYCLED_NONWEIGHTED_EDGELIST = {
+        public static final int[][] NONDIRECTED_CYCLED_NONWEIGHTED_EDGELIST = {
                 {0, 1},
                 {1, 2},
                 {3, 2},
@@ -278,7 +278,7 @@ public class SampleData {
                 {5, 0},
         };
 
-        public static int[][] NONDIRECTED_NONCYCLED_EDGELIST_2 = {
+        public static final int[][] NONDIRECTED_NONCYCLED_EDGELIST_2 = {
                 {0, 1, 1},
                 {1, 0, 1},
                 {1, 2, 1},
@@ -304,7 +304,7 @@ public class SampleData {
                 {8, 10, 1},
         };
 
-        public static int[][] NONDIRECTED_CYCLED_EDGELIST_3 = {
+        public static final int[][] NONDIRECTED_CYCLED_EDGELIST_3 = {
                 {1, 2, 1},
                 {2, 1, 1},
                 {1, 3, 1},
@@ -321,7 +321,7 @@ public class SampleData {
                 {0, 5, 1}
         };
 
-        public static int[][] NONDIRECTED_NONCYCLED_EDGELIST = {
+        public static final int[][] NONDIRECTED_NONCYCLED_EDGELIST = {
                 {3, 0, 1},
                 {0, 3, 1},
                 {1, 3, 1},
@@ -334,7 +334,7 @@ public class SampleData {
                 {3, 5, 1}
 
         };
-        public static int[][] NONDIRECTED_CYCLED_EDGELIST_2 = {
+        public static final int[][] NONDIRECTED_CYCLED_EDGELIST_2 = {
                 {0, 1, 1},
                 {1, 0, 1},
                 {2, 1, 1},
@@ -345,7 +345,7 @@ public class SampleData {
                 {4, 3, 1},
                 {4, 2, 1}
         };
-        public static int[][] NONDIRECTED_CYCLED_EDGELIST = {
+        public static final int[][] NONDIRECTED_CYCLED_EDGELIST = {
                 {3, 0, 1},
                 {0, 3, 1},
                 {1, 3, 1},
@@ -362,7 +362,7 @@ public class SampleData {
                 {4, 5, 1}
         };
 
-        public static int[][] COURSE_SCHEDULE_1 = {
+        public static final int[][] COURSE_SCHEDULE_1 = {
                 {0, 1, 1},
                 {3, 0, 1},
                 // {1,3,1},
@@ -373,7 +373,7 @@ public class SampleData {
                 {5, 4, 1}
         };
 
-        public static int[][] COURSE_SCHEDULE_2 = {
+        public static final int[][] COURSE_SCHEDULE_2 = {
                 {3, 0, 1},
                 {1, 3, 1},
                 {2, 1, 1},
@@ -385,29 +385,29 @@ public class SampleData {
 
         };
 
-        public static int[][]
+        public static final int[][]
                 COURSE_SCHEDULE_3 = {
-                {0, 9, 1},
-                {1, 11, 1},
-                {10, 4, 1},
-                {10, 5, 1},
-                {10, 6, 1},
-                {3, 4, 1},
-                {3, 5, 1},
-                {5, 8, 1},
-                {8, 9, 1},
-                {6, 4, 1},
-                {5, 1, 1},
-                {8, 6, 1},
-                {7, 8, 1},
-                {8, 9, 1},
-                {11, 2, 1},
+                {0,  9,  1},
+                {1,  11, 1},
+                {10, 4,  1},
+                {10, 5,  1},
+                {10, 6,  1},
+                {3,  4,  1},
+                {3,  5,  1},
+                {5,  8,  1},
+                {8,  9,  1},
+                {6,  4,  1},
+                {5,  1,  1},
+                {8,  6,  1},
+                {7,  8,  1},
+                {8,  9,  1},
+                {11, 2,  1},
                 //    {2 ,  1, 1}
 
         };
 
 
-        public static int[][] NONE = {
+        public static final int[][] NONE = {
                 {5, 4, 1},
                 {1, 2, 1},
                 {2, 3, 1},
@@ -416,7 +416,7 @@ public class SampleData {
                 {0, 0, 1}
         };
 
-        public static int[][] CSA002 = {
+        public static final int[][] CSA002 = {
                 {0, 1, 1},
                 {0, 2, 3},
                 {2, 0, 3},
