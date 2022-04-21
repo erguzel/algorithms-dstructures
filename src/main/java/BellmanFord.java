@@ -6,6 +6,12 @@ import lib.util.SampleData;
 
 import java.util.*;
 
+/**
+ * Single source shortest path
+ * Dynnamic programming O(E.V)
+ * Negative cycles detectable
+ * No LinkedList required
+ */
 public class BellmanFord {
 
     public static class NestedMinDistance{

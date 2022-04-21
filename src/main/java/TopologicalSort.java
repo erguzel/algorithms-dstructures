@@ -11,12 +11,15 @@ import java.util.stream.IntStream;
  */
 public class TopologicalSort {
 
+    //O(V + E)
+
     // define indegree value of vertexes (#of vertexes which are dependent to each vertex
     // add all indegree-0 vertexes to callqueue
     // traverse graph, visit all  nodes until the queue empty
     // reduce the indegree of a vertex if it is not zero,
     // add the vertex which has 0 in degree value to callqueue
     // check result length is the same as number of vertexes given
+
 
     public int[] sortTopologicallyIfExists_Khan(int[][] edges, int numberofvertex){
         boolean[] visited = new boolean[edges.length];
