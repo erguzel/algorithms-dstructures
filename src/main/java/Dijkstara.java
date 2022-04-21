@@ -3,7 +3,11 @@ import java.util.stream.IntStream;
 
 
 /**
+ * Single source shortest path
  * Works on graphs with has no negative weights for can not detect - cycles.
+ *
+ * Greedy- O(V log E)
+ * Uses PriorityQueue
  */
 public class Dijkstara {
 
