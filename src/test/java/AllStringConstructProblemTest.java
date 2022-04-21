@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import problem.AllStringConstructProblem;
 
@@ -10,6 +11,7 @@ class AllStringConstructProblemTest {
 
     private AllStringConstructProblem instance = new AllStringConstructProblem();
 
+    @Disabled
     @Test
     void allStringConstruct() {
         String target = "cozul";

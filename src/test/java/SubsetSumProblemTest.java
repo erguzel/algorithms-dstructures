@@ -1,4 +1,5 @@
 import lib.model.ProblemBase;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import problem.SubsetSumProblem;
 
@@ -7,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class SubsetSumProblemTest extends ProblemBase {
 
     private SubsetSumProblem instance = new SubsetSumProblem();
+
+    @Disabled
     @Test
     void subsetSumElements() {
         int [] set = {6,9,3,2,11};
@@ -18,8 +21,9 @@ class SubsetSumProblemTest extends ProblemBase {
         };
 
         assertAll("Test",
-                ()->assertEquals(instance.subsetSumElements(set,target),want));
+                ()->assertEquals(instance.subsetSumElements(set,target),want)
+        );
 
-        instance.LOGGER.info("cc:"+instance.counter);
+
     }
 }
