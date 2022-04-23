@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 public class DataUtil {
 
     private static ALogger<DataUtil> LOGGER = new ALogger<>(DataUtil.class);
+
     // converts adj mtx list edges etc
     public static class Convertors {
 
@@ -28,10 +29,10 @@ public class DataUtil {
             }
         }
 
-        private static void isArrayElementsUnique(int[][] d2array){
-            boolean hasRepeatingElements = IntStream.range(0,d2array.length)
-                    .filter(r->Arrays.stream(d2array[r]).boxed().collect(Collectors.toSet()).size() != d2array[r].length)
-                    .count()>0;
+        private static void isArrayElementsUnique(int[][] d2array) {
+            boolean hasRepeatingElements = IntStream.range(0, d2array.length)
+                    .filter(r -> Arrays.stream(d2array[r]).boxed().collect(Collectors.toSet()).size() != d2array[r].length)
+                    .count() > 0;
             if (hasRepeatingElements) {
                 LOGGER.info("this 2darray can not have non-unique entries");
                 System.exit(-1);
@@ -51,16 +52,28 @@ public class DataUtil {
                 System.exit(-1);
             }
 
-            var streamBoolean = new Object(){
+            var streamBoolean = new Object() {
                 boolean anyMatch = false;
             };
 
             IntStream.range(0, d3array.length).forEach(x -> {
-                if(IntStream.range(0, d3array[x].length).anyMatch(a -> d3array[x][a] == null)){
+                if (IntStream.range(0, d3array[x].length).anyMatch(a -> d3array[x][a] == null)) {
                     LOGGER.info("EdgeList can not have null entries");
                     System.exit(-1);
                 }
             });
+        }
+
+        private static void emptyEdgeWeightPair(int[][][] d3adjListWeighted){
+            boolean validator = IntStream.range(0,d3adjListWeighted.length)
+                    .mapToObj(o->d3adjListWeighted[o])
+                    .flatMap(Stream::of)
+                    .anyMatch(k->k.length==0 || k.length>2);
+
+            if(validator){
+                LOGGER.info("AdjList edge-weight pair array can not be empty or longer than 2");
+                System.exit(-1);
+            }
         }
 
         /**
@@ -68,7 +81,7 @@ public class DataUtil {
          * Can be used for non-weighted adj lists.
          * Can be used directed or undirected graphs.
          *
-         * @param adjlist of adjacent vertexes without weight information.
+         * @param adjlist    of adjacent vertexes without weight information.
          * @param isDirected true if input graph is directed. In that case adds symmetric element to the result matrix
          * @return
          */
@@ -78,12 +91,12 @@ public class DataUtil {
             isArrayElementsUnique(adjlist);
             //validate
 
-            OptionalInt max = IntStream.range(0,adjlist.length)
-                    .filter(x->adjlist[x].length!=0)
-                    .map(m->IntStream.of(adjlist[m]).max().getAsInt())
+            OptionalInt max = IntStream.range(0, adjlist.length)
+                    .filter(x -> adjlist[x].length != 0)
+                    .map(m -> IntStream.of(adjlist[m]).max().getAsInt())
                     .max();
 
-            int numberofvertices = Math.max(max.isPresent()?max.getAsInt()+1:0, adjlist.length);
+            int numberofvertices = Math.max(max.isPresent() ? max.getAsInt() + 1 : 0, adjlist.length);
 
             //result
             int[][] res = new int[numberofvertices][numberofvertices];
@@ -108,42 +121,109 @@ public class DataUtil {
          * Can be used directed or undirected graphs.
          * Prints result matrix
          *
-         * @param adjlist of adjacent vertexes without weight information.
+         * @param adjlist    of adjacent vertexes without weight information.
          * @param isDirected true if input graph is directed. In that case adds symmetric element to the result matrix
-         * @param isVerbose souts result matrix
+         * @param isVerbose  souts result matrix
          * @return
          */
         public static int[][] convertAdjListToAdjMatrix(int[][] adjlist, boolean isDirected, boolean isVerbose) {
 
-            int[][] res = convertAdjListToAdjMatrix(adjlist,isDirected);
-            if(isVerbose)
-                LOGGER.info("\n"+DataUtil.Printers.stringifyAdjacencyMatrix(res));
+            int[][] res = convertAdjListToAdjMatrix(adjlist, isDirected);
+            if (isVerbose)
+                LOGGER.info("\n" + DataUtil.Printers.stringifyAdjacencyMatrix(res));
             return res;
 
         }
 
+
+        /**
+         * Converts adj list to adj matrix for weighted graphs.
+         * Allows 0 weights, allows weights to itself including 0 weight
+         * If weight is not provided, default weight is 0
+         * Weights of unconnected vertexes are Integer.MAX_VAL
+         * Can be used for weighted adj lists.
+         * Can be used directed or undirected graphs.
+         *
+         * @param adjlist    of adjacent vertexes without weight information.
+         * @param isDirected true if input graph is directed. In that case adds symmetric element to the result matrix
+         * @return
+         */
         public static int[][] convertAdjListToAdjMatrixWeighted(int[][][] adjlist, boolean isDirected) {
             //validate
             emptyListAndNullEntryCheck(adjlist);
+            emptyEdgeWeightPair(adjlist);
             //validate
 
-            int[][] res = new int[adjlist.length][adjlist.length];
 
-            IntStream.range(0, adjlist.length).forEach(vertex -> {
-                IntStream.range(0,adjlist[vertex].length).forEach(edgidx->{
-                    int[] edgeweightpair = adjlist[vertex][edgidx];
-                    res[vertex][edgeweightpair[0]] = edgeweightpair[1];
-                    if(!isDirected){
-                        res[edgeweightpair[0]][vertex] =  res[edgeweightpair[0]][vertex]==0? edgeweightpair[1]: res[edgeweightpair[0]][vertex];
-                        if(res[vertex][edgeweightpair[0]]!=res[edgeweightpair[0]][vertex]){
-                            LOGGER.info("Undirected graph has different weights between edges, invalid graph");
-                            System.exit(-1);
-                        }
-                    }
+            OptionalInt max = IntStream.range(0, adjlist.length)
+                    .filter(f -> adjlist[f].length != 0)
+                    .mapToObj(a -> adjlist[a])
+                    .flatMap(s -> Arrays.stream(s))
+                    .flatMapToInt(kk -> IntStream.of(kk[0]))
+                    .max();
+
+
+            int numberofvertices = Math.max(max.isPresent() ? max.getAsInt() + 1 : 0, adjlist.length);
+
+            int[][] res = new int[numberofvertices][numberofvertices];
+
+            IntStream.range(0,numberofvertices).forEach(row->{
+                IntStream.range(0,numberofvertices).forEach(col->{
+                    res[row][col] = Integer.MAX_VALUE;
+                });
+            });
+
+            IntStream.range(0, adjlist.length).filter(m -> adjlist[m].length > 0)
+                    .forEach(vertex -> {
+                        IntStream.range(0, adjlist[vertex].length)
+                                .forEach(edgidx -> {
+                                    int[] edgeweightpair = adjlist[vertex][edgidx];
+                                    final int dest = edgeweightpair[0];
+                                    final int weight = edgeweightpair.length==2?edgeweightpair[1]:0;
+                                    res[vertex][dest] = weight;
+                                    //res[vertex][dest] = vertex==dest && weight==Integer.MAX_VALUE ? 0: weight;
+
+                                    if (!isDirected) {
+                                        boolean conflictingEdgesInUndirectedGraph = res[vertex][dest]!=Integer.MAX_VALUE &&
+                                                res[dest][vertex] != Integer.MAX_VALUE &&
+                                                res[vertex][dest] !=res[dest][vertex];
+                                        if (conflictingEdgesInUndirectedGraph) {
+                                            LOGGER.info("Undirected graph has different weights between edges, invalid graph");
+                                            System.exit(-1);
+                                        }
+                                        res[dest][vertex] = res[vertex][dest];// == 0 ? weight: res[dest][vertex];
+                                    }
+                                });
+                    });
+
+            IntStream.range(0,res.length).forEach(v->{
+                IntStream.range(0,res[v].length)
+                        .filter(k->v==k && res[v][k]==Integer.MAX_VALUE)
+                        .forEach(ed->{
+                            res[v][ed]=0;
                 });
             });
 
             return res;
+        }
+
+        /**
+         * Converts adj list to adj matrix for weighted graphs.
+         * Allows 0 weights, allows weights to itself including 0 weight
+         * Can be used for weighted adj lists. Default value of unconnected vertexes are Integer.MAX_VAL
+         * Can be used directed or undirected graphs.
+         * Prints result matrix
+         *
+         * @param adjlist  of adjacent vertexes with weight information.
+         * @param isDirected true if input graph is directed. In that case adds symmetric element to the result matrix
+         * @param isVerbose souts result data
+         * @return
+         */
+        public static int [][] convertAdjListToAdjMatrixWeighted(int[][][] adjlist, boolean isDirected,boolean isVerbose){
+            int[][] rese = convertAdjListToAdjMatrixWeighted(adjlist,isDirected);
+            if(isVerbose)
+                LOGGER.info("\n"+DataUtil.Printers.stringifyAdjacencyMatrix(rese));
+            return rese;
         }
 
         public static int[][] convertAdjMatrixToAdjList(int[][] adjmtx, boolean isDirected) {
@@ -749,7 +829,7 @@ public class DataUtil {
                 for (int j = 0; j < adjmtx[i].length; j++) {
                     stringBuilder.append(adjmtx[i][j] + ",");
                 }
-                stringBuilder.deleteCharAt(stringBuilder.length()-1);
+                stringBuilder.deleteCharAt(stringBuilder.length() - 1);
                 stringBuilder.append("\n");
             }
             return stringBuilder.toString();
