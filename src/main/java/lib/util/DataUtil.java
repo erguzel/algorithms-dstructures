@@ -2,28 +2,38 @@ package lib.util;
 
 import lib.model.abstraction.IBinaryTreeNode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import javax.xml.crypto.Data;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class DataUtil {
 
-    private static ALogger<SampleData> LOGGER = new ALogger<>(SampleData.class);
+    private static ALogger<DataUtil> LOGGER = new ALogger<>(DataUtil.class);
     // converts adj mtx list edges etc
     public static class Convertors {
 
         private static void emptyListAndNullEntryCheck(int[][] d2array) {
             boolean validatorBoolean = d2array.length == 0;
             if (validatorBoolean) {
-                LOGGER.info("EdgeList can not be empty");
+                LOGGER.info("this 2darray can not be empty");
                 System.exit(-1);
             }
             validatorBoolean = IntStream.range(0, d2array.length).anyMatch(a -> d2array[a] == null);
             if (validatorBoolean) {
-                LOGGER.info("EdgeList can not have null entries");
+                LOGGER.info("this 2darray can not have null entries");
+                System.exit(-1);
+
+            }
+        }
+
+        private static void isArrayElementsUnique(int[][] d2array){
+            boolean hasRepeatingElements = IntStream.range(0,d2array.length)
+                    .filter(r->Arrays.stream(d2array[r]).boxed().collect(Collectors.toSet()).size() != d2array[r].length)
+                    .count()>0;
+            if (hasRepeatingElements) {
+                LOGGER.info("this 2darray can not have non-unique entries");
                 System.exit(-1);
 
             }
@@ -53,12 +63,30 @@ public class DataUtil {
             });
         }
 
+        /**
+         * Converts adj list to adj matrix.
+         * Can be used for non-weighted adj lists.
+         * Can be used directed or undirected graphs.
+         *
+         * @param adjlist of adjacent vertexes without weight information.
+         * @param isDirected true if input graph is directed. In that case adds symmetric element to the result matrix
+         * @return
+         */
         public static int[][] convertAdjListToAdjMatrix(int[][] adjlist, boolean isDirected) {
             //validate
             emptyListAndNullEntryCheck(adjlist);
+            isArrayElementsUnique(adjlist);
             //validate
 
-            int[][] res = new int[adjlist.length][adjlist.length];
+            OptionalInt max = IntStream.range(0,adjlist.length)
+                    .filter(x->adjlist[x].length!=0)
+                    .map(m->IntStream.of(adjlist[m]).max().getAsInt())
+                    .max();
+
+            int numberofvertices = Math.max(max.isPresent()?max.getAsInt()+1:0, adjlist.length);
+
+            //result
+            int[][] res = new int[numberofvertices][numberofvertices];
 
             IntStream.range(0, adjlist.length).forEach(vertex -> {
                 IntStream.range(0, adjlist[vertex].length)
@@ -71,6 +99,27 @@ public class DataUtil {
             });
 
             return res;
+
+        }
+
+        /**
+         * Converts adj list to adj matrix.
+         * Can be used for non-weighted adj lists.
+         * Can be used directed or undirected graphs.
+         * Prints result matrix
+         *
+         * @param adjlist of adjacent vertexes without weight information.
+         * @param isDirected true if input graph is directed. In that case adds symmetric element to the result matrix
+         * @param isVerbose souts result matrix
+         * @return
+         */
+        public static int[][] convertAdjListToAdjMatrix(int[][] adjlist, boolean isDirected, boolean isVerbose) {
+
+            int[][] res = convertAdjListToAdjMatrix(adjlist,isDirected);
+            if(isVerbose)
+                LOGGER.info("\n"+DataUtil.Printers.stringifyAdjacencyMatrix(res));
+            return res;
+
         }
 
         public static int[][] convertAdjListToAdjMatrixWeighted(int[][][] adjlist, boolean isDirected) {
@@ -235,7 +284,6 @@ public class DataUtil {
 
             return result;
         }
-
 
         // will be deprecated
         public static int[][] _convertEdgelistToAdjMtx(int[][] edges) {
@@ -701,6 +749,7 @@ public class DataUtil {
                 for (int j = 0; j < adjmtx[i].length; j++) {
                     stringBuilder.append(adjmtx[i][j] + ",");
                 }
+                stringBuilder.deleteCharAt(stringBuilder.length()-1);
                 stringBuilder.append("\n");
             }
             return stringBuilder.toString();
