@@ -1,12 +1,14 @@
+package deprecated;
+
 import lib.util.ALogger;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
-public class CycleInGraph {
+public class CycleInGraphDeprecated {
 
     public static void main(String[] args) {
-        CycleInGraph cycleInGraph = new CycleInGraph() ;
+        CycleInGraphDeprecated cycleInGraph = new CycleInGraphDeprecated() ;
 
         int[][] graph= {
                 {0, 1, 10},
@@ -77,7 +79,7 @@ public class CycleInGraph {
     }
 
     private int count = 0;
-    ALogger<CycleInGraph> LOGGER = new ALogger<>(CycleInGraph.class);
+    ALogger<CycleInGraphDeprecated> LOGGER = new ALogger<>(CycleInGraphDeprecated.class);
     public boolean hasCycleDirectedEdgeList(int[][] graph, int nofvertices, boolean isVerbose){
         boolean[] visited = new boolean[nofvertices];
         boolean[] onstack = new boolean[nofvertices];

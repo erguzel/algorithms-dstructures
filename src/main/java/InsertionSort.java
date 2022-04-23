@@ -17,7 +17,6 @@ public class InsertionSort{
 
         LOGGER.info(Arrays.stream(arr).boxed().collect(Collectors.toList()));
 
-
     }
 
     public void sort(int[] arr){

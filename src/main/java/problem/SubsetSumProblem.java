@@ -13,9 +13,9 @@ import java.util.stream.IntStream;
  * if multiple combinations found, you may return any of these.
  */
 public class SubsetSumProblem extends ProblemBase {
-    private Stack<Integer> vals = new Stack<>();
 
     public static void main(String[] args) {
+
 
 
     }
@@ -25,12 +25,36 @@ public class SubsetSumProblem extends ProblemBase {
      * @param target
      * @return
      */
-    public int[][] subsetSumElements(int[] set, int target) {
-        for(int i = 0; i < set.length;i++){
+    public boolean subsetSumElements(int[] set, int target) {
 
-        }
+        int setLength = set.length;
+        int targetLength = target;
 
-        return null;
+        int[][] dp = new int[setLength+1][targetLength+1];
+        dp[0][0] = 1;
+        //1st column
+        IntStream.range(1,setLength+1).forEach(r->{
+            dp[r][0]=1;
+        });
+
+        IntStream.range(1,targetLength+1).forEach(c->{
+            if(c < setLength+1){
+                if(set[c-1]==c){
+                    dp[0][c] =1;
+                }
+            }
+        });
+
+        IntStream.range(1,setLength+1).forEach(r->{
+            IntStream.range(1,targetLength+1).forEach(c->{
+                if(c-set[c-1]==0){
+                    dp[r][c]=dp[r-1][c-set[c-1]];
+                }
+            });
+        });
+
+
+        return false;
     }
 
 }

@@ -4,6 +4,10 @@ import lib.util.SampleData;
 
 import java.util.*;
 
+/**
+ * Prims
+ *  O(E.log V)
+ */
 public class MinimumCostSpanningTree {
 
     private static class BestEdge{

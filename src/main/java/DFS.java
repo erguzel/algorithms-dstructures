@@ -3,6 +3,9 @@ import lib.util.SampleData;
 
 import java.util.*;
 
+/**
+ * O(E+V)
+ */
 public class DFS {
 
     ALogger<DFS> LOGGER = new ALogger<>(DFS.class);

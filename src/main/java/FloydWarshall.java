@@ -19,7 +19,7 @@ public class FloydWarshall {
     static ALogger<FloydWarshall> LOGGER = new ALogger<>(FloydWarshall.class);
     public static void main(String[] args) {
 
-        int[][] edges = SampleData.Csacademy.CSA001;
+        int[][] edges = SampleData.Csacademy.DIRECTED_CYCLED_7_WEIGHTEDNEG;
         LOGGER.info("\n" + DataUtil.Printers.stringifyEdgeList(edges));
         int[][] adjmtx = DataUtil.Convertors._convertEdgelistToAdjMtx(edges);
         LOGGER.info("\n" + DataUtil.Printers.stringifyAdjacencyMatrix(adjmtx));
@@ -53,7 +53,7 @@ public class FloydWarshall {
             }//for iniital dist inner
         }//for initial dist
 
-// for k-1 times
+// for V-1 times
         for(int k =0; k<vertexNo; k++){
             for(int i = 0; i<vertexNo; i++){
                 for(int j = 0; j<vertexNo; j++){

@@ -5,6 +5,10 @@ import lib.util.SampleData;
 import java.util.*;
 import java.util.stream.IntStream;
 
+/**
+ * O(V+E) time using Kosaraju’s
+ */
+
 public class StronglyConnectedComponents {
 
     static ALogger<StronglyConnectedComponents> LOGGER = new ALogger<>(StronglyConnectedComponents.class);
