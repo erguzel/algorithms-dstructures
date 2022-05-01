@@ -97,6 +97,8 @@ public class ALogger<T> {
                         message));
     }
 
+
+
     /**
      * Prints log message to consol error
      * @param message message of log
@@ -120,6 +122,23 @@ public class ALogger<T> {
      * @param message message of log
      */
     public void info(Object message){
+        System.out.println(
+                String.format(
+                        "[%s] [%s] [%s]:[%s]:[%s]:[%s] - [%s]",
+                        "lib.util.ALogger-INFO",
+                        LocalTime.now().toString(),
+                        this.clazz.getSimpleName(),
+                        Thread.currentThread().getName(),
+                        Thread.currentThread().getId(),
+                        Thread.currentThread().getState().name(),
+                        message));
+    }
+
+    /**
+     * Prints log message to consol error
+     * @param message message of log
+     */
+    public void error(Object message){
         System.out.println(
                 String.format(
                         "[%s] [%s] [%s]:[%s]:[%s]:[%s] - [%s]",
