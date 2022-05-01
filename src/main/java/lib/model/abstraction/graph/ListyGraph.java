@@ -126,6 +126,8 @@ public class ListyGraph extends ArrayList<IVertex> implements IGraph {
      */
     public boolean addEdge(int vId, IEdge edge){
 
+        //TODO: update size order degree indegree
+
         if(higherEdgeVerticeIdThanNumberOfVertex.test(edge))
             new InconsistentGraphException("higherEdgeVerticeIdThanNumberOfVertex",null)
                     .AddDataPair("BadEdgeId",edge.getId())
@@ -158,6 +160,8 @@ public class ListyGraph extends ArrayList<IVertex> implements IGraph {
      * @return true if edge element exists
      */
     public boolean removeEdge(int vId, IEdge edge){
+
+        //TODO: update size order degree indegree
 
         if(higherEdgeVerticeIdThanNumberOfVertex.test(edge))
             new InconsistentGraphException("higherEdgeVerticeIdThanNumberOfVertex",null)
