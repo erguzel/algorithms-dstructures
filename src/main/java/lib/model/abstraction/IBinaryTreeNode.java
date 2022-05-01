@@ -1,6 +1,9 @@
 package lib.model.abstraction;
 
-public interface IBinaryTreeNode extends IValuable{
+public interface IBinaryTreeNode {
+
+    double getValue();
+    void setValue(double value);
 
     IBinaryTreeNode getLeft();
     void setLeft(IBinaryTreeNode node);
