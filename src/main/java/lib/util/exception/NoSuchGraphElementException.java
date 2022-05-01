@@ -1,4 +1,4 @@
-package lib.model.exception;
+package lib.util.exception;
 
 public class NoSuchGraphElementException extends BaseException{
     public NoSuchGraphElementException(String message, Throwable cause) {

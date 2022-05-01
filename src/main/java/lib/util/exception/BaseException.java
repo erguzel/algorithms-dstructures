@@ -1,4 +1,4 @@
-package lib.model.exception;
+package lib.util.exception;
 
 import lib.util.ALogger;
 
