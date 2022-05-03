@@ -5,6 +5,7 @@ import lib.util.ALogger;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class BaseException extends RuntimeException {
@@ -158,6 +159,13 @@ public class BaseException extends RuntimeException {
             em = new BaseException(message, t, killApp, false, logIt);
         }
         em.Act(true);
+    }
+
+    public static <T> void  exceptionValidator(T instance, Predicate<T> condition, BaseException exception){
+
+        if(condition.test(instance)){
+            exception.Act();
+        }
     }
 
 }
