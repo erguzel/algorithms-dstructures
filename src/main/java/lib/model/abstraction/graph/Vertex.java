@@ -1,8 +1,9 @@
 package lib.model.abstraction.graph;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-public class Vertex implements IVertex {
+class Vertex implements IVertex {
 
     @Override
     public void setId(int id) {
@@ -52,6 +53,12 @@ public class Vertex implements IVertex {
 
     public Vertex(int id) {
         this.id = id;
+    }
+
+
+    @Override
+    public String toString(){
+       return String.format(getId()+"->"+nbours.toString());
     }
 
 

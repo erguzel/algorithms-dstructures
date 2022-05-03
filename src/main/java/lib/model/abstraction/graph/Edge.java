@@ -3,7 +3,7 @@ package lib.model.abstraction.graph;
 
 import java.util.Objects;
 
-public class Edge  implements IEdge{
+class Edge  implements IEdge{
 
     @Override
     public int getId() {
@@ -42,5 +42,10 @@ public class Edge  implements IEdge{
     @Override
     public int hashCode(){
         return Objects.hash(this.targetVertexId,this.weight);
+    }
+
+    @Override
+    public String toString(){
+        return String.format("to "+getId()+"="+getWeight());
     }
 }
