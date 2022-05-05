@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 /**
  * Benefical when:
  * Number of vertex is known.
- * No vertex addition or removal operation required
+ * No vertex-edge addition or removal operation required
  * Graph is directed
  */
 public class ListyGraph extends ArrayList<IVertex> implements IGraph {
@@ -55,11 +55,15 @@ public class ListyGraph extends ArrayList<IVertex> implements IGraph {
     private Predicate<int[][]> graphLengthDifferentThanNumberOfVertex = a -> a.length != order;
 
 
-    public ListyGraph(int[][] adjList, int numberOfVertices) {
+    public ListyGraph(int[][] graph, int numberOfVertices, IGraph.GraphTypes graphTypes) {
         super(numberOfVertices);
         this.order = numberOfVertices;
         this.indegreeMap = new int[order];
-        this.initializeAdjList(adjList);
+        switch (graphTypes){
+            case ADJMTX -> this.initializeAdjMtx(graph);
+            case ADJLIST -> this.initializeAdjList(graph);
+            default -> new InconsistentGraphException("GraphType required",null).throwIt().logIt().Act();
+        }
         this.setIndegree();
         this.setExtremumIndegree();
     }
@@ -143,7 +147,7 @@ public class ListyGraph extends ArrayList<IVertex> implements IGraph {
                             .logIt()
             );
 
-            IntStream.range(0, graph1[vtxid].length).forEach(edgeidx -> { //O(E)
+            IntStream.range(0, graph1[vtxid].length).filter(m->graph1[vtxid][m]!=0).forEach(edgeidx -> { //O(E)
                 IEdge edge = new Edge(edgeidx, graph1[vtxid][edgeidx]);
 
                 BaseException.exceptionValidator(edge, higherEdgeVerticeIdThanNumberOfVertex,
@@ -222,6 +226,8 @@ public class ListyGraph extends ArrayList<IVertex> implements IGraph {
                     .Act();
         }
 
+        this.size++;
+        this.indegreeMap[edge.getId()]++;
         return vertex.getNbours().add(edge);
     }
 
@@ -262,6 +268,8 @@ public class ListyGraph extends ArrayList<IVertex> implements IGraph {
                     .Act();
         }
 
+        this.size--;
+        this.indegreeMap[edge.getId()]--;
         return vertex.getNbours().remove(edge);
     }
 
