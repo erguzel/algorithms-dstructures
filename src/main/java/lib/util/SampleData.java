@@ -17,7 +17,24 @@ public class SampleData {
 
     private static ALogger<SampleData> LOGGER = new ALogger<>(SampleData.class);
 
-
+    public static class AdjLists {
+        /**
+         * Directed
+         * Nonweighted
+         * No cyles (tree)
+         * 8 vertices
+         */
+        public static final int[][] DNW_TREE_8_1 = {
+                {1,2},
+                {3},
+                {4,5},
+                {},
+                {},
+                {6,7},
+                {},
+                {}
+        };
+    }
 
     //
     // TODO: Handle isolated edges

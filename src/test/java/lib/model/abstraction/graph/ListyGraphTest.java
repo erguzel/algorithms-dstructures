@@ -4,27 +4,69 @@ import lib.model.ProblemBase;
 import lib.util.DataUtil;
 import lib.util.SampleData;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ListyGraphTest extends ProblemBase {
 
     @Test
     public void testInitializationAdjList(){
-        int [][] t11 = SampleData.AdjLists.DNW_TREE_8_1;
-        int t12 = 8;
-        IGraph.GraphTypes t13 = IGraph.GraphTypes.ADJLIST;
-        // adj mtx
-        int[][] t21 = DataUtil.Convertors.convertAdjListToAdjMatrix(SampleData.AdjLists.DNW_TREE_8_1,true);
-        int t22 = 8;
-        IGraph.GraphTypes t23 = IGraph.GraphTypes.ADJMTX;
+        int [][] adjlist = SampleData.AdjLists.DNW_TREE_8_1;
+        int nofvertices = 8;
+        IGraph.GraphTypes graphType = IGraph.GraphTypes.ADJLIST;
+        ListyGraph listyGraph = new ListyGraph(adjlist,nofvertices,graphType);
+        //want
+        int order = 8;
+        int size = 7;
 
+        //
 
-        ListyGraph listyGraph = new ListyGraph(t11,t12,t13);
+        assertAll("adjList1",
+                ()->assertEquals(listyGraph.getSize(),size),
+                ()->assertEquals(listyGraph.getOrder(),order)
+        );
 
-        ListyGraph listyGraph1 = new ListyGraph(t21,t22,t23);
+    }
 
-        LOGGER.info("end of test");
+    @Test
+    public void testInitializationAdjMtx(){
+        int[][] adjmtx = DataUtil.Convertors.convertAdjListToAdjMatrix(SampleData.AdjLists.DNW_TREE_8_1,true);
+        int nofvertices = 8;
+        IGraph.GraphTypes graphType = IGraph.GraphTypes.ADJMTX;
+        ListyGraph listyGraph = new ListyGraph(adjmtx,nofvertices,graphType);
+        //want
+        int order = 8;
+        int size = 7;
 
+        assertAll("adjList1",
+                ()->assertEquals(listyGraph.getSize(),size),
+                ()->assertEquals(listyGraph.getOrder(),order)
+        );
+    }
 
+    @Test
+    public void testInitializationEdgeList(){
+        int[][] elist = new int[][]{
+                {0, 1},
+                {0, 2},
+                {1, 3},
+                {2, 4},
+                {2, 5},
+                {   3},
+                {   4},
+                {5, 6},
+                {5, 7},
+        };
 
+        int nofvertices = 8;
+        IGraph.GraphTypes graphType = IGraph.GraphTypes.EDGELIST;
+        ListyGraph listyGraph = new ListyGraph(elist,nofvertices,graphType);
+        //want
+        int order = 8;
+        int size = 7;
+
+        assertAll("adjList1",
+                ()->assertEquals(listyGraph.getSize(),size),
+                ()->assertEquals(listyGraph.getOrder(),order)
+        );
     }
 }

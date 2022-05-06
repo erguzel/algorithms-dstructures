@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SampleDataTest extends ProblemBase {
 
+    //
+    //
     @Test
     void testConvertAdjListToAdjMatrixWeighted(){
         int[][][] inputindirected = {
@@ -50,7 +52,8 @@ class SampleDataTest extends ProblemBase {
         assertArrayEquals(DataUtil.Convertors.convertAdjListToAdjMatrixWeighted(inputdirected,true),wanteddirected);
         assertArrayEquals(DataUtil.Convertors.convertAdjListToAdjMatrixWeighted(inputindirected,false),wantedindirected);
     }
-
+    //
+    //
     @Test
     void testConvertAdjListToAdjMatrix(){
 
@@ -84,7 +87,8 @@ class SampleDataTest extends ProblemBase {
         assertArrayEquals(DataUtil.Convertors.convertAdjListToAdjMatrix(input,true),wantdirected);
         assertArrayEquals(DataUtil.Convertors.convertAdjListToAdjMatrix(input,false),wantindirected);
     }
-
+    //
+    //
     @Test
     void testConvertAdjMatrixToAdjListWeighted(){
         int[][] input = {

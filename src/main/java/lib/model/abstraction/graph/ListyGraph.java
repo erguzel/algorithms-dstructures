@@ -6,6 +6,7 @@ import lib.util.exception.InconsistentGraphException;
 import lib.util.exception.NoSuchGraphElementException;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
@@ -32,22 +33,15 @@ public class ListyGraph extends ArrayList<IVertex> implements IGraph {
         return (double) this.size == (double) (this.order) * (this.order - 1) / 2;
     }
 
-    @Override
-    public IVertex getMinimumIndegreeVertex() {
-        return this.minimumIndegreeVertex;
-    }
-
     // indegree map
     int[] indegreeMap = null;
+    int[] degreemap = null;
     // #of vertices
     private int order = 0;
     // #of edges
     // max n(n-1)/2
     private int size = 0;
-    private IVertex minDegreeVertex;
-    private IVertex maxDegreeVertex;
-    private IVertex minimumIndegreeVertex;
-    private IVertex maximumIndegreeVertex;
+
 
     // validation conditions
     private Predicate<IVertex> higherVerticeIdThanNumberOfVertex = a -> a.getId() > order - 1;
@@ -59,13 +53,51 @@ public class ListyGraph extends ArrayList<IVertex> implements IGraph {
         super(numberOfVertices);
         this.order = numberOfVertices;
         this.indegreeMap = new int[order];
-        switch (graphTypes){
+        switch (graphTypes) {
             case ADJMTX -> this.initializeAdjMtx(graph);
             case ADJLIST -> this.initializeAdjList(graph);
-            default -> new InconsistentGraphException("GraphType required",null).throwIt().logIt().Act();
+            case EDGELIST -> this.initializeEdgeList(graph);
+            default -> new InconsistentGraphException("GraphType required", null).throwIt().logIt().Act();
         }
         this.setIndegree();
-        this.setExtremumIndegree();
+    }
+
+    /**
+     * Initializes graph in to an arraylists. Index of the arraylist elements are the same as the getId
+     * method of the Vertice objects.
+     *
+     * @param graph1 as edge list [source, weight] without weight
+     * @throws InconsistentGraphException
+     */
+    private void initializeEdgeList(int[][] graph1) throws InconsistentGraphException {
+
+        IntStream.range(0,order).forEach(x->{
+            this.add(new Vertex(x));
+        });
+
+        IntStream.range(0, graph1.length).forEach(vtxid -> { // O(E)
+            IVertex vertex = this.get(graph1[vtxid][0]);
+            IEdge edge = graph1[vtxid].length == 2 ? new Edge(graph1[vtxid][1], 1) : null;
+            if (edge != null) {
+                BaseException.exceptionValidator(edge, higherEdgeVerticeIdThanNumberOfVertex,
+                        new InconsistentGraphException("higherEdgeVerticeIdThanNumberOfVertex", null)
+                                .AddDataPair("BadEdgeId", edge.getId())
+                                .AddDataPair("BadEdgeWeight", edge.getWeight())
+                                .throwIt()
+                                .logIt());
+
+
+                if (vertex.getNbours().add(edge)) {
+                    this.indegreeMap[edge.getId()]++;// update indegree map
+                }
+            }
+
+            this.set(graph1[vtxid][0], vertex);
+
+        });
+
+        this.size = this.stream().mapToInt(x -> x.getDegree()).sum(); //O(V)
+
     }
 
     /**
@@ -110,9 +142,7 @@ public class ListyGraph extends ArrayList<IVertex> implements IGraph {
                 this.indegreeMap[edge.getId()]++;// update indegree map
                 vertex.getNbours().add(edge); // O(1)
             });
-            //TODO: handle multiple extremum degree values
-            this.minDegreeVertex = this.minDegreeVertex == null ? vertex : this.minDegreeVertex.getDegree() < vertex.getDegree() ? this.minDegreeVertex : vertex;
-            this.maxDegreeVertex = this.maxDegreeVertex == null ? vertex : this.maxDegreeVertex.getDegree() > vertex.getDegree() ? this.maxDegreeVertex : vertex;
+
             this.size = this.size + vertex.getDegree();// Updating graph size
             this.add(vtxid, vertex); // O(1) with initial capacity
         });
@@ -147,7 +177,7 @@ public class ListyGraph extends ArrayList<IVertex> implements IGraph {
                             .logIt()
             );
 
-            IntStream.range(0, graph1[vtxid].length).filter(m->graph1[vtxid][m]!=0).forEach(edgeidx -> { //O(E)
+            IntStream.range(0, graph1[vtxid].length).filter(m -> graph1[vtxid][m] != 0).forEach(edgeidx -> { //O(E)
                 IEdge edge = new Edge(edgeidx, graph1[vtxid][edgeidx]);
 
                 BaseException.exceptionValidator(edge, higherEdgeVerticeIdThanNumberOfVertex,
@@ -161,9 +191,6 @@ public class ListyGraph extends ArrayList<IVertex> implements IGraph {
                 this.indegreeMap[edge.getId()]++;// update indegree map
                 vertex.getNbours().add(edge); // O(1)
             });
-            //TODO: handle multiple extremum degree values
-            this.minDegreeVertex = this.minDegreeVertex == null ? vertex : this.minDegreeVertex.getDegree() < vertex.getDegree() ? this.minDegreeVertex : vertex;
-            this.maxDegreeVertex = this.maxDegreeVertex == null ? vertex : this.maxDegreeVertex.getDegree() > vertex.getDegree() ? this.maxDegreeVertex : vertex;
             this.size = this.size + vertex.getDegree();// Updating graph size
             this.add(vtxid, vertex); // O(1) with initial capacity
         });
@@ -177,19 +204,6 @@ public class ListyGraph extends ArrayList<IVertex> implements IGraph {
 
         IntStream.range(0, order).forEach(v -> {
             this.get(v).setIndegree(this.indegreeMap[v]);
-        });
-    }
-
-    /**
-     * Set max and min indegree vertices
-     */
-    private void setExtremumIndegree() {
-        // set min-max degree vertices
-
-        IntStream.range(0, order).forEach(v -> {
-            this.minimumIndegreeVertex = this.minimumIndegreeVertex == null ? this.get(v) : this.get(v).getIndegree() < this.minimumIndegreeVertex.getIndegree() ? this.get(v) : this.minimumIndegreeVertex;
-            this.maximumIndegreeVertex = this.maximumIndegreeVertex == null ? this.get(v) : this.get(v).getIndegree() > this.maximumIndegreeVertex.getIndegree() ? this.get(v) : this.maximumIndegreeVertex;
-
         });
     }
 
