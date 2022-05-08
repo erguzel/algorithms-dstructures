@@ -21,6 +21,11 @@ public class TopologicalSort {
     // check result length is the same as number of vertexes given
 
 
+    public int[] sortTopologicallyIfExists(int[][] edges, int numberofvertex){
+
+        return null;
+    }
+
     public int[] sortTopologicallyIfExists_Khan(int[][] edges, int numberofvertex){
         boolean[] visited = new boolean[edges.length];
         ArrayDeque<Integer> callqueue = new ArrayDeque<>();

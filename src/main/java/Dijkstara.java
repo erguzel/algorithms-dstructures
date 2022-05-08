@@ -1,3 +1,7 @@
+import lib.model.abstraction.graph.IEdge;
+import lib.model.abstraction.graph.IVertex;
+import lib.model.abstraction.graph.ListyGraph;
+
 import java.util.*;
 import java.util.stream.IntStream;
 

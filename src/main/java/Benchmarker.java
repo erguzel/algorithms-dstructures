@@ -1,15 +1,18 @@
 
+import lib.model.abstraction.graph.*;
 import lib.util.ALogger;
 import lib.util.DataUtil;
+import lib.util.SampleData;
+import lib.util.exception.BaseException;
 
 import java.util.*;
-import java.util.function.*;
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 public class Benchmarker {
 
     static ALogger<Benchmarker> LOGGER = new ALogger<>(Benchmarker.class);
-
+    private static Predicate<IVertex> higherVerticeIdThanNumberOfVertex = a->a.getId()>-1;
 
     static class EmploInfo{
         int id ;
@@ -141,38 +144,47 @@ public class Benchmarker {
     }
     public static void main(String[] args) {
 
+        //some();
 
 
-        Predicate<Integer> predicate = a->a.equals(0);
-        int [][] sample1 = {
-                {0, 1},
-                {0, 2},
-                {1, 3},
-                {2, 4},
-                {3, 5},
-                {1, 6},
-                {2, 7},
 
-        };
+        int[][] gra = SampleData.EdgeLists.GRAPH01_NW_UNDCYX_DCY0_8;
+        int[][] mtx = DataUtil.Convertors.convertEdgeListToAdjMatrix(gra,true);
+       // gra = DataUtil.Convertors.convertAdjMatrixToAdjList(mtx,true);
 
-        OptionalInt op = IntStream.range(100,200).filter(a->a<100).max();
+      //  System.out.println(gra.length);8
 
-        var streamHelper = new Object(){
-            int val = -1;
-        };
+        try {
+            ListyGraph listyGraph = new ListyGraph(mtx,8, IGraph.GraphTypes.ADJMTX);
+        }catch (Exception exception){
+            BaseException.HandleSlient("Catch here",false,true,exception);
+        }
 
-        op.ifPresentOrElse(a-> streamHelper.val=a+1,()->{
-            streamHelper.val = 12;
-        });
+        traverse(gra,1);
 
-
-        System.out.println(streamHelper.val);
-
-//        int[][] input1 = DataUtil.Convertors.convertAdjMatrixToEdgeList(DataUtil.Convertors.convertEdgeListToAdjMatrix(sample1,false),false);
-//
-//        System.out.println("\n"+DataUtil.Printers.stringifyEdgeList(input1));;
-
+  //      System.out.println("b");
     }
 
+    public static void  traverse(int [][] graph, int startId){
+        ListyGraph lg = new ListyGraph(graph, graph.length, IGraph.GraphTypes.ADJLIST);
+        Stack<IVertex> vertexStack = new Stack<>();
+        vertexStack.add(lg.get(startId));
+
+        while (!vertexStack.isEmpty()){
+            IVertex current = vertexStack.pop();
+            if(!current.isVisited()){
+                System.out.println(current.getId()); // sour vertexid // O(1)
+                current.setVisited(true);
+            }
+            for(IEdge e : current.getNbours()){
+
+                if(!lg.get(e.getId()).isVisited()){
+                    vertexStack.add(lg.get(e.getId()));
+                }
+            }
+
+        }
+
+    }
 
 }

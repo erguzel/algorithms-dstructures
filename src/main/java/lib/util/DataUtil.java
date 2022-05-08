@@ -18,6 +18,9 @@ public class DataUtil {
     // converts adj mtx list edges etc
     public static class Convertors {
 
+        //
+        //Validators
+        //
         private static void emptyListAndNullEntryCheck(int[][] d2array) {
             boolean validatorBoolean = d2array.length == 0;
             if (validatorBoolean) {
@@ -93,6 +96,11 @@ public class DataUtil {
                 System.exit(-1);
             }
         }
+        //
+        // Validators end
+        //
+
+
         /**
          * Converts adj list to adj matrix.
          * Can be used for non-weighted adj lists.

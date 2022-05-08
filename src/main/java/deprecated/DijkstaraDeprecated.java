@@ -1,6 +1,5 @@
 package deprecated;
 
-import lib.model.abstraction.MinDistance;
 import lib.util.ALogger;
 import lib.util.SampleData;
 
@@ -74,17 +73,17 @@ public class DijkstaraDeprecated {
                 timer.getBenchmark(timer,"Array Queue");
             }
         }).start();
-
-         new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ALogger.TIMER timer = new ALogger.TIMER();
-                timer.startTimer();
-                DijkstaraDeprecated dj = new DijkstaraDeprecated();
-                dj.findTrajectoryAndShortestPathWithSOLID(graph, 3, 6);
-                timer.getBenchmark(timer,"SOLID");
-            }
-        }).start();
+//
+//         new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                ALogger.TIMER timer = new ALogger.TIMER();
+//                timer.startTimer();
+//                DijkstaraDeprecated dj = new DijkstaraDeprecated();
+//                dj.findTrajectoryAndShortestPathWithSOLID(graph, 3, 6);
+//                timer.getBenchmark(timer,"SOLID");
+//            }
+//        }).start();
 
     }
 
@@ -243,73 +242,73 @@ public class DijkstaraDeprecated {
     }//findTrajectoryAndShortestPath
 
     // using abstraction types with interface sergeration principle
-    public void findTrajectoryAndShortestPathWithSOLID(int[][] graph, int paramsourceid, int paramtargetid){
-        Throwable stackTrace = new Throwable();
-
-        MinDistance[] vertexDistances = new MinDistance[graph.length];// represents the index and min distance of a candidate
-        List<MinDistance> trajectory = new ArrayList<>();
-        for(int i = 0; i < vertexDistances.length; i++){vertexDistances[i] = new MinDistance();}
-        vertexDistances[paramsourceid].setId(paramsourceid);
-        vertexDistances[paramsourceid].setValue(0);
-        vertexDistances[paramsourceid].setPrevious(null);
-        PriorityQueue<MinDistance> queue = new PriorityQueue<>((a,b)->a.getValue()>b.getValue()?1:-1);// smaller valiue first
-        queue.add(vertexDistances [paramsourceid]);
-
-        int pollCount = 0;
-        while(!queue.isEmpty()){
-
-            MinDistance current = queue.poll();
-            pollCount++;
-            if(current.isVisited()){continue;}// if visited
-            current.setVisited(true);
-            trajectory.add(current);
-
-            double distanceSoFar = vertexDistances[current.getId()].getValue();
-            for(int i =0; i < graph[current.getId()].length; i++){
-                int nbid = i;
-                if(graph[current.getId()][nbid]!=0){
-                    double weight =graph[current.getId()][nbid];
-                    double newDistance =  distanceSoFar + weight;
-                    if(newDistance<vertexDistances[nbid].getValue()){
-                        vertexDistances[nbid].setId(nbid);
-                        vertexDistances[nbid].setValue(newDistance);
-                        vertexDistances[nbid].setPrevious(current);
-                        if(!vertexDistances[nbid].isVisited()){
-                            vertexDistances[nbid].setFound(true);
-                            queue.add(vertexDistances[nbid]);
-                        }// if visited
-                    }//if smaller relax new dist
-                }//if nonzero
-            }// for nbour explore
-        }// while queue
-
-        int target = paramtargetid;
-        List<Object> path  = new ArrayList<>();
-        path.add(paramtargetid);
-        while(vertexDistances[target]!= null && vertexDistances[target].getPrevious() != null){
-            path.add(vertexDistances[target].getPrevious().getId());
-            target  = vertexDistances[target].getPrevious().getId();
-        }// while nonnull prev
-
-        if (vertexDistances[paramtargetid].isFound()) {
-
-            LOGGER.info("there exists path " + paramsourceid + "->" + paramtargetid,stackTrace);
-
-        }else
-            LOGGER.info("there exists NO path " + paramsourceid + "->" + paramtargetid,stackTrace);
-
-        LOGGER.info("Tajectory:" + trajectory.stream().map(a->a.getId()).collect(Collectors.toList()),stackTrace);
-        LOGGER.info("PopCount:" + pollCount);
-        LOGGER.info("Shortest Distance:" + vertexDistances[paramtargetid].getValue(),stackTrace);
-
-        Collections.reverse(path);
-//        Object[] reversed = path.toArray();
-//        ReverseArray.reverse(reversed);
-
-        LOGGER.info("Path:" + path,stackTrace);
-        //LOGGER.info("Path:" + Arrays.stream(reversed).collect(Collectors.toList()),stackTrace);
-
-    }//findTrajectoryAndShortestPath
+//    public void findTrajectoryAndShortestPathWithSOLID(int[][] graph, int paramsourceid, int paramtargetid){
+//        Throwable stackTrace = new Throwable();
+//
+//        MinDistance[] vertexDistances = new MinDistance[graph.length];// represents the index and min distance of a candidate
+//        List<MinDistance> trajectory = new ArrayList<>();
+//        for(int i = 0; i < vertexDistances.length; i++){vertexDistances[i] = new MinDistance();}
+//        vertexDistances[paramsourceid].setId(paramsourceid);
+//        vertexDistances[paramsourceid].setValue(0);
+//        vertexDistances[paramsourceid].setPrevious(null);
+//        PriorityQueue<MinDistance> queue = new PriorityQueue<>((a,b)->a.getValue()>b.getValue()?1:-1);// smaller valiue first
+//        queue.add(vertexDistances [paramsourceid]);
+//
+//        int pollCount = 0;
+//        while(!queue.isEmpty()){
+//
+//            MinDistance current = queue.poll();
+//            pollCount++;
+//            if(current.isVisited()){continue;}// if visited
+//            current.setVisited(true);
+//            trajectory.add(current);
+//
+//            double distanceSoFar = vertexDistances[current.getId()].getValue();
+//            for(int i =0; i < graph[current.getId()].length; i++){
+//                int nbid = i;
+//                if(graph[current.getId()][nbid]!=0){
+//                    double weight =graph[current.getId()][nbid];
+//                    double newDistance =  distanceSoFar + weight;
+//                    if(newDistance<vertexDistances[nbid].getValue()){
+//                        vertexDistances[nbid].setId(nbid);
+//                        vertexDistances[nbid].setValue(newDistance);
+//                        vertexDistances[nbid].setPrevious(current);
+//                        if(!vertexDistances[nbid].isVisited()){
+//                            vertexDistances[nbid].setFound(true);
+//                            queue.add(vertexDistances[nbid]);
+//                        }// if visited
+//                    }//if smaller relax new dist
+//                }//if nonzero
+//            }// for nbour explore
+//        }// while queue
+//
+//        int target = paramtargetid;
+//        List<Object> path  = new ArrayList<>();
+//        path.add(paramtargetid);
+//        while(vertexDistances[target]!= null && vertexDistances[target].getPrevious() != null){
+//            path.add(vertexDistances[target].getPrevious().getId());
+//            target  = vertexDistances[target].getPrevious().getId();
+//        }// while nonnull prev
+//
+//        if (vertexDistances[paramtargetid].isFound()) {
+//
+//            LOGGER.info("there exists path " + paramsourceid + "->" + paramtargetid,stackTrace);
+//
+//        }else
+//            LOGGER.info("there exists NO path " + paramsourceid + "->" + paramtargetid,stackTrace);
+//
+//        LOGGER.info("Tajectory:" + trajectory.stream().map(a->a.getId()).collect(Collectors.toList()),stackTrace);
+//        LOGGER.info("PopCount:" + pollCount);
+//        LOGGER.info("Shortest Distance:" + vertexDistances[paramtargetid].getValue(),stackTrace);
+//
+//        Collections.reverse(path);
+////        Object[] reversed = path.toArray();
+////        ReverseArray.reverse(reversed);
+//
+//        LOGGER.info("Path:" + path,stackTrace);
+//        //LOGGER.info("Path:" + Arrays.stream(reversed).collect(Collectors.toList()),stackTrace);
+//
+//    }//findTrajectoryAndShortestPath
 
 
 }//class Dijkstara
