@@ -75,9 +75,11 @@ public class ListyGraph extends ArrayList<IVertex> implements IGraph {
             this.add(new Vertex(x));
         });
 
-        IntStream.range(0, graph1.length).forEach(vtxid -> { // O(E)
-            IVertex vertex = this.get(graph1[vtxid][0]);
-            IEdge edge = graph1[vtxid].length == 2 ? new Edge(graph1[vtxid][1], 1) : null;
+        IntStream.range(0, graph1.length).forEach(vtxidx -> { // O(E)
+            IVertex vertex = this.get(graph1[vtxidx][0]);
+            IEdge edge = graph1[vtxidx].length == 2 ? new Edge(graph1[vtxidx][1], 1) :
+                    graph1[vtxidx].length == 3?new Edge(graph1[vtxidx][1],graph1[vtxidx][2]):null;
+
             if (edge != null) {
                 BaseException.exceptionValidator(edge, higherEdgeVerticeIdThanNumberOfVertex,
                         new InconsistentGraphException("higherEdgeVerticeIdThanNumberOfVertex", null)
@@ -92,7 +94,7 @@ public class ListyGraph extends ArrayList<IVertex> implements IGraph {
                 }
             }
 
-            this.set(graph1[vtxid][0], vertex);
+            this.set(graph1[vtxidx][0], vertex);
 
         });
 
