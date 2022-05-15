@@ -1,6 +1,14 @@
+import lib.model.abstraction.graph.IEdge;
+import lib.model.abstraction.graph.IGraph;
+import lib.model.abstraction.graph.IVertex;
+import lib.model.abstraction.graph.ListyGraph;
+import lib.util.exception.NoIndegreeZeroVertexExistsException;
+import lib.util.exception.NotTopologicallySortableException;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 /**
@@ -21,9 +29,47 @@ public class TopologicalSort {
     // check result length is the same as number of vertexes given
 
 
-    public int[] sortTopologicallyIfExists(int[][] edges, int numberofvertex){
+    public int[] sortTopologicallyIfExists_Khan(int[][] edges, int numofvertices, IGraph.GraphTypes graphType){
+        ListyGraph graph = new ListyGraph(edges,numofvertices, IGraph.GraphTypes.EDGELIST);
+        ArrayDeque<IVertex> callqueue = new ArrayDeque<>();
+        List<Integer> path = new ArrayList<>();
+        graph.stream().filter(x->x.getIndegree()==0).forEach(a->{
+            callqueue.add(a);
+        });
 
-        return null;
+        if(callqueue.size()==0){
+            new NoIndegreeZeroVertexExistsException("No vertex found which as 0 indegree",null)
+                    .logIt()
+                    .Act(true);
+
+            return  null;
+        }
+
+        while (!callqueue.isEmpty()){
+            IVertex current = callqueue.poll();
+            if(current.isExplored())continue;
+            current.setExplored(true);
+            path.add(current.getId());
+            for(IEdge edge: current.getNbours()){
+                IVertex nb = graph.get(edge.getId());
+                if(nb.getIndegree()>0){
+                    nb.setIndegree(nb.getIndegree()-1);
+                }
+                if(nb.getIndegree()==0){
+                    callqueue.offer(nb);
+                }
+            }
+        }
+
+        if(path.size()!=graph.getOrder()){
+            new NotTopologicallySortableException("There are cycles in directed graph",null)
+                    .logIt()
+                    .Act(true);
+            return null;
+        }
+
+        int [] res = path.stream().mapToInt(a->a).toArray();
+        return res;
     }
 
     public int[] sortTopologicallyIfExists_Khan(int[][] edges, int numberofvertex){
