@@ -8,7 +8,6 @@ import lib.util.exception.NotTopologicallySortableException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 /**
@@ -29,7 +28,7 @@ public class TopologicalSort {
     // check result length is the same as number of vertexes given
 
 
-    public int[] sortTopologicallyIfExists_Khan(int[][] edges, int numofvertices, IGraph.GraphTypes graphType){
+    public int[] sortTopologicallyIfExists_Khan_ListyGraph(int[][] edges, int numofvertices, IGraph.GraphTypes graphType){
         ListyGraph graph = new ListyGraph(edges,numofvertices, IGraph.GraphTypes.EDGELIST);
         ArrayDeque<IVertex> callqueue = new ArrayDeque<>();
         List<Integer> path = new ArrayList<>();
@@ -54,6 +53,7 @@ public class TopologicalSort {
                 IVertex nb = graph.get(edge.getId());
                 if(nb.getIndegree()>0){
                     nb.setIndegree(nb.getIndegree()-1);
+
                 }
                 if(nb.getIndegree()==0){
                     callqueue.offer(nb);
@@ -97,7 +97,7 @@ public class TopologicalSort {
                 sortedPath.add(vtx);
                 IntStream.range(0,edges.length).filter(x->edges[x][0]==vtx).forEach(nbedgepairs->{
                     int nbid = edges[nbedgepairs][1];
-                    if(!visited[nbid]){
+              //      if(!visited[nbid]){
                         if(indegree[nbid] > 0){
                             indegree[nbid]--;
 
@@ -105,7 +105,7 @@ public class TopologicalSort {
                         if(indegree[nbid] == 0){
                             callqueue.offer(nbid);
                         }
-                    }
+               //     }
                 });
             }
 
