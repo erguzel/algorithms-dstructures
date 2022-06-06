@@ -144,25 +144,20 @@ public class Benchmarker {
     }
     public static void main(String[] args) {
 
-        //some();
+        int[][] input1 = {
+                {0, 1},
+                {0, 2},
+                {1, 2},
+                {1, 4},
+                {4, 5},
+                {4, 6},
+                {3, 2},
+        };
 
+        int asd [][] = DataUtil.Convertors.convertAdjListToAdjMatrix(          input1,false);
 
+        System.out.println("\n"+DataUtil.Printers.stringifyAdjacencyMatrix(asd));
 
-        int[][] gra = SampleData.EdgeLists.GRAPH01_NW_UNDCYX_DCY0_8;
-        int[][] mtx = DataUtil.Convertors.convertEdgeListToAdjMatrix(gra,true);
-       // gra = DataUtil.Convertors.convertAdjMatrixToAdjList(mtx,true);
-
-      //  System.out.println(gra.length);8
-
-        try {
-            ListyGraph listyGraph = new ListyGraph(mtx,8, IGraph.GraphTypes.ADJMTX);
-        }catch (Exception exception){
-            BaseException.HandleSlient("Catch here",false,true,exception);
-        }
-
-        traverse(gra,1);
-
-  //      System.out.println("b");
     }
 
     public static void  traverse(int [][] graph, int startId){
@@ -172,6 +167,7 @@ public class Benchmarker {
 
         while (!vertexStack.isEmpty()){
             IVertex current = vertexStack.pop();
+            System.out.println(current.getId());
             if(!current.isVisited()){
                 System.out.println(current.getId()); // sour vertexid // O(1)
                 current.setVisited(true);
@@ -184,6 +180,14 @@ public class Benchmarker {
             }
 
         }
+
+    }
+
+    public static int pollCount = 0;
+    public static void testMethod(int[][] graph, int nofver, int source){
+
+        
+
 
     }
 

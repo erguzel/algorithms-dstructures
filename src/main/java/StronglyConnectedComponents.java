@@ -32,8 +32,8 @@ public class StronglyConnectedComponents {
         String dsd = "Ollggun";
 
 
-        int[][] test1 = DataUtil.Convertors._convertAdjListToAdjMtx(DataUtil.Generators.generateRandomGraph(1000,true));
-        int[][] test = DataUtil.Convertors._convertAdjMtxToEdgeList(test1);
+        int[][] test1 =null;// DataUtil.Convertors._convertAdjListToAdjMtx(DataUtil.Generators.generateRandomGraph(1000,true));
+        int[][] test = null;//DataUtil.Convertors._convertAdjMtxToEdgeList(test1);
         ALogger.TIMER timer = new ALogger.TIMER();
         timer.startTimer();
         StronglyConnectedComponents stronglyConnectedComponents = new StronglyConnectedComponents();

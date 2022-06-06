@@ -3,7 +3,7 @@ package lib.model.abstraction.graph;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-class Vertex implements IVertex {
+class Vertex  implements IVertex {
 
     @Override
     public void setId(int id) {

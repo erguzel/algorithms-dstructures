@@ -21,7 +21,7 @@ public class FloydWarshall {
 
         int[][] edges = SampleData.Csacademy.DIRECTED_CYCLED_7_WEIGHTEDNEG;
         LOGGER.info("\n" + DataUtil.Printers.stringifyEdgeList(edges));
-        int[][] adjmtx = DataUtil.Convertors._convertEdgelistToAdjMtx(edges);
+        int[][] adjmtx = null;//DataUtil.Convertors._convertEdgelistToAdjMtx(edges);
         LOGGER.info("\n" + DataUtil.Printers.stringifyAdjacencyMatrix(adjmtx));
 
         FloydWarshall floydWarshall = new FloydWarshall();

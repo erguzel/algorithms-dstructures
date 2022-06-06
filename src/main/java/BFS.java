@@ -31,7 +31,7 @@ public class BFS {
     ALogger<BFS> LOGGER = new ALogger<>(BFS.class);
 
     public static void main(String[] args) {
-        int[][][] graph = DataUtil.Convertors._convertAdjmtxToAdjList(SampleData.GraphOnlineRu.DUCK_DIR_WEG);
+        int[][][] graph = null;//DataUtil.Convertors._convertAdjmtxToAdjList(SampleData.GraphOnlineRu.DUCK_DIR_WEG);
 
         System.out.println();
 

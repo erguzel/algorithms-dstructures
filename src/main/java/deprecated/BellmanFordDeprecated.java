@@ -1,3 +1,5 @@
+package deprecated;
+
 import lib.util.ALogger;
 import lib.util.DataUtil;
 import lib.util.SampleData;
@@ -46,7 +48,7 @@ public class BellmanFordDeprecated {
 //        new Thread(() -> {
 //            ALogger.TIMER timer = new ALogger.TIMER();
 //            timer.startTimer();
-//            BellmanFordDeprecated ford1 = new BellmanFordDeprecated();
+//            deprecated.BellmanFordDeprecated ford1 = new deprecated.BellmanFordDeprecated();
 //            ford1.findShortestPathAndDistanceSolidMap(sample, 3, 5);
 //            timer.getBenchmark(timer, "SolidMap");
 //        }).start();
@@ -54,7 +56,7 @@ public class BellmanFordDeprecated {
 //        new Thread(() -> {
 //            ALogger.TIMER timer = new ALogger.TIMER();
 //            timer.startTimer();
-//            BellmanFordDeprecated ford1 = new BellmanFordDeprecated();
+//            deprecated.BellmanFordDeprecated ford1 = new deprecated.BellmanFordDeprecated();
 //            ford1.findShortestPathAndDistanceSolidArray(sample, 3, 5);
 //            timer.getBenchmark(timer, "Solid Array");
 //        }).start();
