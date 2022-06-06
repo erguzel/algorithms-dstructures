@@ -1,10 +1,8 @@
 package lib.util;
 
-import com.sun.source.tree.Tree;
 import lib.model.abstraction.IBinaryTreeNode;
+import lib.util.exception.*;
 
-import javax.security.auth.login.LoginException;
-import javax.xml.crypto.Data;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -15,48 +13,61 @@ public class DataUtil {
 
     private static ALogger<DataUtil> LOGGER = new ALogger<>(DataUtil.class);
 
-    // converts adj mtx list edges etc
-    public static class Convertors {
 
+    public static class Validators{
         //
         //Validators
         //
-        private static void emptyListAndNullEntryCheck(int[][] d2array) {
-            boolean validatorBoolean = d2array.length == 0;
-            if (validatorBoolean) {
-                LOGGER.info("this 2darray can not be empty");
-                System.exit(-1);
-            }
-            validatorBoolean = IntStream.range(0, d2array.length).anyMatch(a -> d2array[a] == null);
-            if (validatorBoolean) {
-                LOGGER.info("this 2darray can not have null entries");
-                System.exit(-1);
+        public static void emptyListAndNullEntryCheck(int[][] d2array) {
+            Predicate<int[][]> empty2DArray = (a->a.length==0);
+            Predicate<int[][]> nullElement2DArray = k-> IntStream.range(0, k.length).anyMatch(a -> k[a] == null);
 
-            }
+            BaseException.exceptionValidator(d2array,
+                    empty2DArray,
+                    new MultiDimentionalArrayEmptyException("this 2darray can not be empty",null)
+                            .logIt()
+                            .throwIt()
+            );
+
+            BaseException.exceptionValidator(d2array,
+                    nullElement2DArray,
+                    new MultiDimentionalArrayHasNullElementsException("this 2darray can not have null entries",null)
+                            .logIt()
+                            .throwIt()
+            );
         }
 
-        private static void isArrayElementsUnique(int[][] d2array) {
-            boolean hasRepeatingElements = IntStream.range(0, d2array.length)
-                    .filter(r -> Arrays.stream(d2array[r]).boxed().collect(Collectors.toSet()).size() != d2array[r].length)
+        public static void isArrayElementsUnique(int[][] d2array) {
+            Predicate<int[][]> hasRepeatingElementCheck = arr->IntStream.range(0, arr.length)
+                    .filter(r -> Arrays.stream(arr[r]).boxed().collect(Collectors.toSet()).size() != arr[r].length)
                     .count() > 0;
-            if (hasRepeatingElements) {
-                LOGGER.info("this 2darray can not have non-unique entries");
-                System.exit(-1);
 
-            }
+            BaseException.exceptionValidator(d2array,
+                    hasRepeatingElementCheck,
+                    new NonUniqueElementsException("This 2d array can not have non-unique elements",null)
+                            .logIt()
+                            .throwIt()
+            );
+
         }
 
-        private static void emptyListAndNullEntryCheck(int[][][] d3array) {
-            boolean validatorBoolean = d3array.length == 0;
-            if (validatorBoolean) {
-                LOGGER.info("EdgeList can not be empty");
-                System.exit(-1);
-            }
-            validatorBoolean = IntStream.range(0, d3array.length).anyMatch(a -> d3array[a] == null);
-            if (validatorBoolean) {
-                LOGGER.info("EdgeList can not have null entries");
-                System.exit(-1);
-            }
+        public static void emptyListAndNullEntryCheck(int[][][] d3array) {
+            Predicate<int[][][]> empty3DArray = (a->a.length==0);
+            Predicate<int[][][]> nullElement3DArray = k-> IntStream.range(0, k.length).anyMatch(a -> k[a] == null);
+
+            BaseException.exceptionValidator(d3array,
+                    empty3DArray,
+                    new MultiDimentionalArrayEmptyException("this 3darray can not be empty",null)
+                            .logIt()
+                            .throwIt()
+            );
+
+            BaseException.exceptionValidator(d3array,
+                    nullElement3DArray,
+                    new MultiDimentionalArrayHasNullElementsException("this 3darray can not have null entries",null)
+                            .logIt()
+                            .throwIt()
+            );
 
             var streamBoolean = new Object() {
                 boolean anyMatch = false;
@@ -70,35 +81,45 @@ public class DataUtil {
             });
         }
 
-        private static void emptyEdgeWeightPair(int[][][] d3adjListWeighted) {
-            boolean validator = IntStream.range(0, d3adjListWeighted.length)
-                    .mapToObj(o -> d3adjListWeighted[o])
+        public static void emptyEdgeWeightPair(int[][][] d3adjListWeighted) {
+
+            Predicate<int[][][]> invalidEdgeWeightPairCheck = ew-> IntStream.range(0, ew.length)
+                    .mapToObj(o -> ew[o])
                     .flatMap(Stream::of)
                     .anyMatch(k -> k.length == 0 || k.length > 2);
 
-            if (validator) {
-                LOGGER.info("AdjList edge-weight pair array can not be empty or longer than 2");
-                System.exit(-1);
-            }
+            BaseException.exceptionValidator(d3adjListWeighted,
+                    invalidEdgeWeightPairCheck,
+                    new InvalidEdgeWeightPairException("AdjList edge-weight pair array can not be empty or longer than 2",null)
+                            .logIt()
+                            .throwIt()
+            );
         }
 
-        private static void differentWeightsInUndirectedAdjMatrix(int[][] adjMtx)  {
-            boolean differentWeightsOnUndirectedGraph = IntStream.range(0,adjMtx.length)
+        public static void differentWeightsInUndirectedAdjMatrix(int[][] adjMtx)  {
+            Predicate<int[][]> differentWeightsOnUndirectedGraphCheck = dw-> IntStream.range(0,dw.length)
                     .anyMatch(v->{
-                      return IntStream.range(0,adjMtx[v].length).anyMatch(e->{
-                            return adjMtx[v][e] != adjMtx[e][v];
+                        return IntStream.range(0,dw[v].length).anyMatch(e->{
+                            return dw[v][e] != dw[e][v];
                         });
                     });
 
-            if (differentWeightsOnUndirectedGraph){
-                LOGGER.info("Undirected graph can not have different weight values for the same edge");
-                new Exception("e").printStackTrace();
-                System.exit(-1);
-            }
+            BaseException.exceptionValidator(adjMtx,
+                    differentWeightsOnUndirectedGraphCheck,
+                    new InconsistentGraphException("Undirected graph can not have different weight values for the same edge",null)
+                            .logIt()
+                            .throwIt()
+            );
         }
         //
         // Validators end
         //
+    }
+
+    // converts adj mtx list edges etc
+    public static class Convertors {
+
+
 
 
         /**
@@ -112,8 +133,8 @@ public class DataUtil {
          */
         public static int[][] convertAdjListToAdjMatrix(int[][] adjlist, boolean isDirected) {
             //validate
-            emptyListAndNullEntryCheck(adjlist);
-            isArrayElementsUnique(adjlist);
+            Validators.emptyListAndNullEntryCheck(adjlist);
+            Validators.isArrayElementsUnique(adjlist);
             //validate
 
             OptionalInt max = IntStream.range(0, adjlist.length)
@@ -175,8 +196,8 @@ public class DataUtil {
          */
         public static int[][] convertAdjListToAdjMatrixWeighted(int[][][] adjlist, boolean isDirected) {
             //validate
-            emptyListAndNullEntryCheck(adjlist);
-            emptyEdgeWeightPair(adjlist);
+            Validators.emptyListAndNullEntryCheck(adjlist);
+            Validators.emptyEdgeWeightPair(adjlist);
             //validate
 
 
@@ -264,7 +285,7 @@ public class DataUtil {
          */
         public static int[][] convertAdjMatrixToAdjList(int[][] adjmtx, boolean isDirected) {
             // validate
-            emptyListAndNullEntryCheck(adjmtx);
+            Validators.emptyListAndNullEntryCheck(adjmtx);
 
             IntStream.range(0, adjmtx.length).forEach(vt -> {
                 IntStream.range(0, adjmtx.length).forEach(ed -> {
@@ -335,9 +356,9 @@ public class DataUtil {
          */
         public static int[][][] convertAdjMatrixToAdjListWeighted(int[][] adjmtx, boolean isDirected) {
             // validate
-            emptyListAndNullEntryCheck(adjmtx);
+            Validators.emptyListAndNullEntryCheck(adjmtx);
             if(!isDirected)
-                differentWeightsInUndirectedAdjMatrix(adjmtx);
+                Validators.differentWeightsInUndirectedAdjMatrix(adjmtx);
             // validate
 
             Comparator<int[]> excludeIdenticalEdgeWeightPair = (a, b) -> a[0] == b[0] && a[1] == b[1] ? 0 : 1;
@@ -391,7 +412,7 @@ public class DataUtil {
 
         public static int[][] convertAdjMatrixToEdgeList(int[][] adjmtx, boolean isDirected) {
             // validate
-            emptyListAndNullEntryCheck(adjmtx);
+            Validators.emptyListAndNullEntryCheck(adjmtx);
             // validate
 
             List<int[]> result = new ArrayList<>();
@@ -419,7 +440,7 @@ public class DataUtil {
 
         public static int[][] convertEdgeListToAdjMatrix(int[][] edges, boolean isDirected) {
             // validate
-            emptyListAndNullEntryCheck(edges);
+            Validators.emptyListAndNullEntryCheck(edges);
             // validate
 
             var streamData = new Object() {
@@ -457,188 +478,189 @@ public class DataUtil {
         }
 
         // will be deprecated
-        public static int[][] _convertEdgelistToAdjMtx(int[][] edges) {
-            // {{1,2,1},{1,3,1}..}//
-
-            int numOfVertices = Integer.MIN_VALUE;
-            for (int i = 0; i < edges.length; i++) {
-
-                if (edges[i].length > 0) {
-                    if (edges[i][0] > numOfVertices) numOfVertices = edges[i][0];
-                }
-                if (edges[i].length > 1) {
-                    if (edges[i][1] > numOfVertices) numOfVertices = edges[i][1];
-                }
-
-            }
-
-            numOfVertices = numOfVertices + 1;
-
-            int[][] res = new int[numOfVertices][numOfVertices];
-
-            for (int i = 0; i < edges.length; i++) {
-
-                // {1,4,5} // {1,5}
-                int fridx = Integer.MAX_VALUE;
-                try {
-                    fridx = edges[i][0];
-                } catch (Exception e) {
-                    fridx = Integer.MAX_VALUE;
-                }
-                int toidx = Integer.MAX_VALUE;
-                try {
-                    toidx = edges[i][1];
-                } catch (Exception e) {
-                    toidx = Integer.MAX_VALUE;
-                }
-                int weight = 0;
-                try {
-                    weight = edges[i][2];
-                } catch (Exception e) {
-                    weight = 0;
-                }
-
-                if (fridx != Integer.MAX_VALUE && toidx != Integer.MAX_VALUE) {
-                    res[fridx][toidx] = weight;
-                }
-            }
-
-            return res;
-        }
-
-        public static int[][] _convertEdgelistToAdjMtx(int[][] edges, int paramfromidx, int paramtoidx, Object paramweightidx) {
-            // {{1,2,1},{1,3,1}..}//
-
-            int numOfVertices = Integer.MIN_VALUE;
-            for (int i = 0; i < edges.length; i++) {
-
-                if (edges[i].length > paramfromidx) {
-                    if (edges[i][paramfromidx] > numOfVertices) numOfVertices = edges[i][paramfromidx];
-                }
-                if (edges[i].length > paramtoidx) {
-                    if (edges[i][paramtoidx] > numOfVertices) numOfVertices = edges[i][paramtoidx];
-                }
-
-            }
-
-            int[][] res = new int[numOfVertices][numOfVertices];
-
-            for (int i = 0; i < edges.length; i++) {
-
-                // {1,4,5} // {1,5}
-                int fridx = Integer.MAX_VALUE;
-                try {
-                    fridx = edges[i][0];
-                } catch (Exception e) {
-                    fridx = Integer.MAX_VALUE;
-                }
-                int toidx = Integer.MAX_VALUE;
-                try {
-                    toidx = edges[i][1];
-                } catch (Exception e) {
-                    toidx = Integer.MAX_VALUE;
-                }
-                int weight = 0;
-                try {
-                    if (paramweightidx != null) {
-
-                        weight = edges[i][(int) paramweightidx];
-                    }
-                } catch (Exception e) {
-                    weight = 0;
-                }
-
-                if (fridx != Integer.MAX_VALUE && toidx != Integer.MAX_VALUE) {
-                    res[fridx][toidx] = weight;
-                }
-            }
-
-            return res;
-        }
-
-        public static int[][] _convertAdjMtxToEdgeList(int[][] adjMtx) {
-
-            List<int[]> edges = new ArrayList<>();
-            for (int i = 0; i < adjMtx.length; i++) {
-
-                int from = i;
-                for (int j = 0; j < adjMtx[i].length; j++) {
-                    if (adjMtx[i][j] == 0) continue;
-                    int to = j;
-                    int weight = j == 0 ? Integer.MAX_VALUE : adjMtx[i][j];
-                    int[] edge = {i, j, weight};
-                    if (weight != Integer.MAX_VALUE)
-                        edges.add(edge);
-                }
-            }
-
-
-            int[][] res = new int[edges.size()][3];
-
-            for (int i = 0; i < edges.size(); i++) {
-                res[i] = edges.get(i);
-            }
-
-            return res;
-        }
-
-        public static int[][][] _convertAdjmtxToAdjList(int[][] adjmtx) {
-
-            int[][][] adjList = new int[adjmtx.length][][];
-
-            for (int i = 0; i < adjmtx.length; i++) {
-
-                int[][] neighbours = null;
-
-                int nbNumber = 0;
-
-                for (int k = 0; k < adjmtx[i].length; k++) {
-
-                    if (adjmtx[i][k] != 0) {
-                        nbNumber++;
-                    }
-                }
-
-
-                int insertIndex = 0;
-                for (int j = 0; j < adjmtx[i].length; j++) {
-
-                    if (adjmtx[i][j] != 0) {
-                        int currentPointIndex = i;
-                        int neighbourIndex = j;
-                        int weight = adjmtx[i][j];
-                        if (adjList[currentPointIndex] == null) {
-                            adjList[currentPointIndex] = new int[nbNumber][2];
-                        }
-                        int idx =
-                                adjList[i][insertIndex][0] = neighbourIndex;
-                        adjList[i][insertIndex][1] = weight;
-                        insertIndex++;
-                    }
-                }
-            }
-
-            return adjList;
-        }
-
-        public static int[][] _convertAdjListToAdjMtx(int[][][] adjlist) {
-
-            int[][] res = new int[adjlist.length][adjlist.length];
-
-            for (int i = 0; i < adjlist.length; i++) {
-
-                for (int j = 0; j < adjlist[i].length; j++) {
-                    int nbid = adjlist[i][j][0];
-                    int weight = adjlist[i][j][1];
-
-                    res[i][nbid] = weight;
-                }
-
-            }
-
-            return res;
-
-        }
+//
+//        public static int[][] _convertEdgelistToAdjMtx(int[][] edges) {
+//            // {{1,2,1},{1,3,1}..}//
+//
+//            int numOfVertices = Integer.MIN_VALUE;
+//            for (int i = 0; i < edges.length; i++) {
+//
+//                if (edges[i].length > 0) {
+//                    if (edges[i][0] > numOfVertices) numOfVertices = edges[i][0];
+//                }
+//                if (edges[i].length > 1) {
+//                    if (edges[i][1] > numOfVertices) numOfVertices = edges[i][1];
+//                }
+//
+//            }
+//
+//            numOfVertices = numOfVertices + 1;
+//
+//            int[][] res = new int[numOfVertices][numOfVertices];
+//
+//            for (int i = 0; i < edges.length; i++) {
+//
+//                // {1,4,5} // {1,5}
+//                int fridx = Integer.MAX_VALUE;
+//                try {
+//                    fridx = edges[i][0];
+//                } catch (Exception e) {
+//                    fridx = Integer.MAX_VALUE;
+//                }
+//                int toidx = Integer.MAX_VALUE;
+//                try {
+//                    toidx = edges[i][1];
+//                } catch (Exception e) {
+//                    toidx = Integer.MAX_VALUE;
+//                }
+//                int weight = 0;
+//                try {
+//                    weight = edges[i][2];
+//                } catch (Exception e) {
+//                    weight = 0;
+//                }
+//
+//                if (fridx != Integer.MAX_VALUE && toidx != Integer.MAX_VALUE) {
+//                    res[fridx][toidx] = weight;
+//                }
+//            }
+//
+//            return res;
+//        }
+//
+//        public static int[][] _convertEdgelistToAdjMtx(int[][] edges, int paramfromidx, int paramtoidx, Object paramweightidx) {
+//            // {{1,2,1},{1,3,1}..}//
+//
+//            int numOfVertices = Integer.MIN_VALUE;
+//            for (int i = 0; i < edges.length; i++) {
+//
+//                if (edges[i].length > paramfromidx) {
+//                    if (edges[i][paramfromidx] > numOfVertices) numOfVertices = edges[i][paramfromidx];
+//                }
+//                if (edges[i].length > paramtoidx) {
+//                    if (edges[i][paramtoidx] > numOfVertices) numOfVertices = edges[i][paramtoidx];
+//                }
+//
+//            }
+//
+//            int[][] res = new int[numOfVertices][numOfVertices];
+//
+//            for (int i = 0; i < edges.length; i++) {
+//
+//                // {1,4,5} // {1,5}
+//                int fridx = Integer.MAX_VALUE;
+//                try {
+//                    fridx = edges[i][0];
+//                } catch (Exception e) {
+//                    fridx = Integer.MAX_VALUE;
+//                }
+//                int toidx = Integer.MAX_VALUE;
+//                try {
+//                    toidx = edges[i][1];
+//                } catch (Exception e) {
+//                    toidx = Integer.MAX_VALUE;
+//                }
+//                int weight = 0;
+//                try {
+//                    if (paramweightidx != null) {
+//
+//                        weight = edges[i][(int) paramweightidx];
+//                    }
+//                } catch (Exception e) {
+//                    weight = 0;
+//                }
+//
+//                if (fridx != Integer.MAX_VALUE && toidx != Integer.MAX_VALUE) {
+//                    res[fridx][toidx] = weight;
+//                }
+//            }
+//
+//            return res;
+//        }
+//
+//        public static int[][] _convertAdjMtxToEdgeList(int[][] adjMtx) {
+//
+//            List<int[]> edges = new ArrayList<>();
+//            for (int i = 0; i < adjMtx.length; i++) {
+//
+//                int from = i;
+//                for (int j = 0; j < adjMtx[i].length; j++) {
+//                    if (adjMtx[i][j] == 0) continue;
+//                    int to = j;
+//                    int weight = j == 0 ? Integer.MAX_VALUE : adjMtx[i][j];
+//                    int[] edge = {i, j, weight};
+//                    if (weight != Integer.MAX_VALUE)
+//                        edges.add(edge);
+//                }
+//            }
+//
+//
+//            int[][] res = new int[edges.size()][3];
+//
+//            for (int i = 0; i < edges.size(); i++) {
+//                res[i] = edges.get(i);
+//            }
+//
+//            return res;
+//        }
+//
+//        public static int[][][] _convertAdjmtxToAdjList(int[][] adjmtx) {
+//
+//            int[][][] adjList = new int[adjmtx.length][][];
+//
+//            for (int i = 0; i < adjmtx.length; i++) {
+//
+//                int[][] neighbours = null;
+//
+//                int nbNumber = 0;
+//
+//                for (int k = 0; k < adjmtx[i].length; k++) {
+//
+//                    if (adjmtx[i][k] != 0) {
+//                        nbNumber++;
+//                    }
+//                }
+//
+//
+//                int insertIndex = 0;
+//                for (int j = 0; j < adjmtx[i].length; j++) {
+//
+//                    if (adjmtx[i][j] != 0) {
+//                        int currentPointIndex = i;
+//                        int neighbourIndex = j;
+//                        int weight = adjmtx[i][j];
+//                        if (adjList[currentPointIndex] == null) {
+//                            adjList[currentPointIndex] = new int[nbNumber][2];
+//                        }
+//                        int idx =
+//                                adjList[i][insertIndex][0] = neighbourIndex;
+//                        adjList[i][insertIndex][1] = weight;
+//                        insertIndex++;
+//                    }
+//                }
+//            }
+//
+//            return adjList;
+//        }
+//
+//        public static int[][] _convertAdjListToAdjMtx(int[][][] adjlist) {
+//
+//            int[][] res = new int[adjlist.length][adjlist.length];
+//
+//            for (int i = 0; i < adjlist.length; i++) {
+//
+//                for (int j = 0; j < adjlist[i].length; j++) {
+//                    int nbid = adjlist[i][j][0];
+//                    int weight = adjlist[i][j][1];
+//
+//                    res[i][nbid] = weight;
+//                }
+//
+//            }
+//
+//            return res;
+//
+//        }
 
 
     }
