@@ -1,3 +1,5 @@
+package graph;
+
 import graph.Dijkstara;
 import lib.model.ProblemBase;
 import lib.util.DataUtil;

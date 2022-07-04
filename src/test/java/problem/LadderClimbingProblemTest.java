@@ -1,3 +1,5 @@
+package problem;
+
 import org.junit.jupiter.api.Test;
 import problem.LadderClimbingProblem;
 

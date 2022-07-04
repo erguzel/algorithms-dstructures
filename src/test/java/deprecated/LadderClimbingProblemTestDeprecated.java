@@ -1,4 +1,5 @@
-import deprecated.LadderClimbingProblemDeprecated;
+package deprecated;
+
 import lib.model.ProblemBase;
 import lib.util.ALogger;
 import org.junit.jupiter.api.*;

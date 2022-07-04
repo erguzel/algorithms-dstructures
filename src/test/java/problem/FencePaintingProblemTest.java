@@ -1,3 +1,5 @@
+package problem;
+
 import lib.model.ProblemBase;
 import org.junit.jupiter.api.Test;
 import problem.FencePaintingProblem;

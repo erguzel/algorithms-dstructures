@@ -1,3 +1,5 @@
+package problem;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import problem.AllStringConstructProblem;

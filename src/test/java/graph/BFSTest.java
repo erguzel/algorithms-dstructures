@@ -1,3 +1,5 @@
+package graph;
+
 import graph.BFS;
 import lib.util.SampleData;
 import org.junit.jupiter.api.Test;

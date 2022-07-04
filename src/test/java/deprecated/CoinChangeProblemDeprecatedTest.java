@@ -1,3 +1,5 @@
+package deprecated;
+
 import deprecated.CoinChangeProblemDeprecated;
 import lib.model.ProblemBase;
 import org.junit.jupiter.api.Test;
