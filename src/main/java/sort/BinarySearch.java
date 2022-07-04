@@ -1,3 +1,5 @@
+package sort;
+
 /**
  * Searches in sorted arrays
  */

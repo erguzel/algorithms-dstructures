@@ -1,6 +1,6 @@
+package graph;
+
 import lib.util.ALogger;
-import lib.util.DataUtil;
-import lib.util.SampleData;
 
 import java.util.*;
 import java.util.stream.IntStream;

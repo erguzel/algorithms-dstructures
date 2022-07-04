@@ -1,3 +1,5 @@
+package graph;
+
 import lib.model.abstraction.graph.IEdge;
 import lib.model.abstraction.graph.IGraph;
 import lib.model.abstraction.graph.IVertex;

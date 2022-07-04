@@ -144,7 +144,7 @@ public class TopologicalSortDeprecated {
         }//for each vertex
 
         Integer[] as = path.toArray(new Integer[0]);
-      //  ReverseArray.reverse(as);
+      //  sort.ReverseArray.reverse(as);
 
         return Arrays.stream(as).mapToInt(a -> a).toArray();
     }// find topsort recursive

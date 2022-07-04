@@ -1,6 +1,7 @@
+package sort;
+
 import lib.util.ALogger;
 import lib.util.DataUtil;
-import lib.util.SampleData;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -15,7 +16,7 @@ public class MergeSort {
 //
 //        LOGGER.info("\n"+ Arrays.stream(arrr).boxed().collect(Collectors.toList()));
 //
-//        MergeSort mergeSort = new MergeSort();
+//        sort.MergeSort mergeSort = new sort.MergeSort();
 //        mergeSort.sortMerge(arrr);
 //
 //        LOGGER.info("\n"+ Arrays.stream(arrr).boxed().collect(Collectors.toList()));

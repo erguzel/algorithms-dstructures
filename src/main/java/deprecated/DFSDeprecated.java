@@ -20,7 +20,7 @@ public class DFSDeprecated {
 //
 //        lib.util.ALogger.TIMER timer = new lib.util.ALogger.TIMER();
 //        timer.startTimer();
-//        DFS df = new DFS();
+//        graph.DFS df = new graph.DFS();
 //        df.findTrajectoryAndPathExists(graph, 9, 2);
 //        timer.getBenchmark(timer);
     }
@@ -71,7 +71,7 @@ public class DFSDeprecated {
         }//while
 
         Object[] reversed = pathFound.toArray();
-   //     ReverseArray.reverse(reversed);
+   //     sort.ReverseArray.reverse(reversed);
 
 
         if (pathExists[paramtargetid]) {
@@ -113,7 +113,7 @@ public class DFSDeprecated {
             for (int i = 0; i < graph[current].length; i++) {
 
                 int nbid = graph[current][i][0];
-                int weight = graph[current][i][1]; // weight no of use in DFS
+                int weight = graph[current][i][1]; // weight no of use in graph.DFS
 
                 pathExists[nbid] = true;
 
@@ -146,7 +146,7 @@ public class DFSDeprecated {
         }
 
         Object[] reversed = path.toArray();
-   //     ReverseArray.reverse(reversed);
+   //     sort.ReverseArray.reverse(reversed);
 
   //      LOGGER.info("Path:" + Arrays.stream(reversed).collect(Collectors.toList()));
 //

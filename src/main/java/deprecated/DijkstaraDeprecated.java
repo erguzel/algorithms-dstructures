@@ -157,7 +157,7 @@ public class DijkstaraDeprecated {
 
         Collections.reverse(path);
 //        Object[] reversed = path.toArray();
-//        ReverseArray.reverse(reversed);
+//        sort.ReverseArray.reverse(reversed);
 
         LOGGER.info("Path:" + path);
        // LOGGER.info("Path:" + Arrays.stream(reversed).collect(Collectors.toList()));
@@ -234,7 +234,7 @@ public class DijkstaraDeprecated {
 
         Collections.reverse(path);
 //        Object[] reversed = path.toArray();
-//        ReverseArray.reverse(reversed);
+//        sort.ReverseArray.reverse(reversed);
 
         LOGGER.info("Path:" + path);
         //LOGGER.info("Path:" + Arrays.stream(reversed).collect(Collectors.toList()));
@@ -303,7 +303,7 @@ public class DijkstaraDeprecated {
 //
 //        Collections.reverse(path);
 ////        Object[] reversed = path.toArray();
-////        ReverseArray.reverse(reversed);
+////        sort.ReverseArray.reverse(reversed);
 //
 //        LOGGER.info("Path:" + path,stackTrace);
 //        //LOGGER.info("Path:" + Arrays.stream(reversed).collect(Collectors.toList()),stackTrace);
@@ -311,4 +311,4 @@ public class DijkstaraDeprecated {
 //    }//findTrajectoryAndShortestPath
 
 
-}//class Dijkstara
+}//class graph.Dijkstara

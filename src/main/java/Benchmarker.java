@@ -6,6 +6,7 @@ import lib.util.SampleData;
 import lib.util.exception.BaseException;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
@@ -156,7 +157,14 @@ public class Benchmarker {
 
         int asd [][] = DataUtil.Convertors.convertAdjListToAdjMatrix(          input1,false);
 
-        System.out.println("\n"+DataUtil.Printers.stringifyAdjacencyMatrix(asd));
+
+        var myHelper = new Object(){
+          int id = 0;
+          ConcurrentHashMap<Object,Object> data = new ConcurrentHashMap<>();
+          boolean visited = false;
+        };
+
+
 
     }
 

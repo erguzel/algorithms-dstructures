@@ -1,3 +1,5 @@
+package graph;
+
 import lib.util.ALogger;
 import sort.ReverseArray;
 
@@ -16,7 +18,7 @@ import java.util.stream.IntStream;
  * 5) GPS Navigation systems: Breadth First Search is used to find all neighboring locations.
  * 6) Broadcasting in Network: In networks, a broadcasted packet follows Breadth First Search to reach all nodes.
  * 7) In Garbage Collection: Breadth First Search is used in copying garbage collection using Cheney’s algorithm. Refer this and for details. Breadth First Search is preferred over Depth First Search because of better locality of reference:
-  * 8) Cycle detection in undirected graph: In undirected graphs, either Breadth First Search or Depth First Search can be used to detect cycle. We can use BFS to detect cycle in a directed graph also,
+  * 8) Cycle detection in undirected graph: In undirected graphs, either Breadth First Search or Depth First Search can be used to detect cycle. We can use graph.BFS to detect cycle in a directed graph also,
  * 9) Ford–Fulkerson algorithm In Ford-Fulkerson algorithm, we can either use Breadth First or Depth First Traversal to find the maximum flow. Breadth First Traversal is preferred as it reduces worst case time complexity to O(VE2).
  * 10) To test if a graph is Bipartite We can either use Breadth First or Depth First Traversal.
  * 11) Path Finding We can either use Breadth First or Depth First Traversal to find if there is a path between two vertices.

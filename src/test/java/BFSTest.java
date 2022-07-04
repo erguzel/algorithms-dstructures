@@ -1,4 +1,4 @@
-import lib.model.ProblemBase;
+import graph.BFS;
 import lib.util.SampleData;
 import org.junit.jupiter.api.Test;
 
