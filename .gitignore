@@ -6,3 +6,4 @@ build/
 *.task
 *.DS_Store
 bin/
+.vscode/

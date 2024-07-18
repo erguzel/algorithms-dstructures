@@ -40,7 +40,7 @@ To get started with the project, follow these steps:
 
 ## Usage
 - Play around and run/debug each class in their main, or call them via Benchmarker.
-- For graph excercises:
+- For your own graph excercises:
     - Create your graph with a graph visualisation tool of any. Or use existing graphs defined in ```com.egzel.lib.util.SampleData``` in. Below tools are some of graph visualizers;
         - https://csacademy.com/app/graph_editor/
         - https://graphonline.ru/en/
@@ -65,8 +65,6 @@ Remarks:
     - Topological sort,
     - Minimum cost spanning tree,
     - Strongly connected components,
-    - adjList - adjMatrix - edgeList convertors, validators, generators, printers,
-    - Sample datas creators,
 - Search algorithms:
     - Breadth first search,
     - Depth first search,
