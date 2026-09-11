@@ -15,7 +15,7 @@ import com.egzel.lib.model.abstraction.graph.ListyGraph;
  * Greedy- O(V log E)
  * Uses PriorityQueue
  */
-public class Dijkstara {
+public class Dijkstra {
 
     public int[] shortestPath(int[][] graph, int numberofvertex, int src, int dest, boolean isDirected) {
         Comparator<int[]> newEntrySmallerTop = (a, b) -> Integer.compare(a[0], b[0]);

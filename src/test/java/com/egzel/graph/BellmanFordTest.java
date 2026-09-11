@@ -7,7 +7,7 @@ import com.egzel.lib.util.SampleData;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BellmanFortTest {
+class BellmanFordTest {
 
     private BellmanFord instance = new BellmanFord();
     @Test

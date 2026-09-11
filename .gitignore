@@ -1,9 +1,9 @@
-*.idea/
-*.gradle/
+.idea/
+.gradle/
 gradlew
 gradle/
 build/
 *.task
-*.DS_Store
+.DS_Store
 bin/
 .vscode/

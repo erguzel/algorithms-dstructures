@@ -3,12 +3,12 @@ package com.egzel.sort;
 import java.util.Arrays;
 
 
-public class BubleSort {
+public class BubbleSort {
 
     public static void main(String[] args){
         int[] arrs = {4,3,5,12,3,0,-1};
 
-        BubleSort bs = new BubleSort();
+        BubbleSort bs = new BubbleSort();
         bs.bubbleSort(arrs);
 
 

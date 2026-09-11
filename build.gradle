@@ -10,6 +10,12 @@ repositories {
     mavenCentral()
 }
 
+// Compile against the Java 17 API using whichever JDK Gradle runs on,
+// so no specific JDK install or toolchain download is required.
+tasks.withType(JavaCompile).configureEach {
+    options.release = 17
+}
+
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
@@ -28,7 +34,6 @@ tasks.named('test', Test) {
     }
 
     reports {
-    
-        html.destination = file("${buildDir}/reports/tests")
+        html.outputLocation = layout.buildDirectory.dir("reports/tests")
     }
 }

@@ -2,16 +2,16 @@ package com.egzel.graph;
 
 import org.junit.jupiter.api.Test;
 
-import com.egzel.graph.Dijkstara;
+import com.egzel.graph.Dijkstra;
 import com.egzel.lib.model.ProblemBase;
 import com.egzel.lib.util.DataUtil;
 import com.egzel.lib.util.SampleData;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DijkstaraTest extends ProblemBase {
+class DijkstraTest extends ProblemBase {
 
-    public Dijkstara instance = new Dijkstara();
+    public Dijkstra instance = new Dijkstra();
 
     @Test
     void shortestPath() {
